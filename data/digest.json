@@ -1,0 +1,82 @@
+{
+  "schema": "btc-radar/v1",
+  "digest_date": "2026-10-07",
+  "window": { "from": "2026-09-24", "to": "2026-10-07" },
+  "generated_at": "2026-10-07T18:00:00Z",
+  "context": {
+    "latest_bitcoin_core_release": { "version": "v31.1", "date": "2026-07-08", "url": "https://github.com/bitcoin/bitcoin/releases/tag/v31.1" },
+    "note": "Items marked merged are in the master branch only. They are not in a release until a release containing them is published."
+  },
+  "status_scale": {
+    "discussion": "talked about on a list or forum, no concrete proposal",
+    "proposal": "written proposal (BIP draft, design doc, PR description) not yet merged",
+    "pr_open": "code under review, not merged",
+    "merged": "merged into a project's main branch, not yet released",
+    "released": "shipped in a tagged release of that software",
+    "activated": "consensus change enforced on mainnet",
+    "documentation": "specification or documentation change only; no software behavior changes",
+    "withdrawn": "closed, rejected or superseded"
+  },
+  "layer_scale": ["consensus", "policy", "p2p", "wallet", "rpc", "standards", "lightning", "tooling"],
+  "items": [
+    {
+      "id": "core-36080",
+      "project": "bitcoin-core",
+      "title": "Peers are no longer disconnected for a missed ping while they are sending us blocks",
+      "layer": "p2p",
+      "status": "merged",
+      "what_happened": "Bitcoin Core stops enforcing the 20-minute ping timeout against a peer while blocks are being downloaded from that peer.",
+      "why_it_matters": "During initial block download on a slow link, a peer busy serving our block requests could miss the ping deadline and be dropped although it was not at fault. This avoids needless disconnects for low-bandwidth nodes.",
+      "affects": ["node operators on low-bandwidth connections", "initial block download"],
+      "not_yet": "In master only; not in a release. No consensus or policy change.",
+      "uncertainty": "none noted",
+      "sources": [{ "publisher": "GitHub bitcoin/bitcoin", "type": "merged pull request", "date": "2026-10-05", "url": "https://github.com/bitcoin/bitcoin/pull/36080" }],
+      "verification": "primary"
+    },
+    {
+      "id": "core-36277",
+      "project": "bitcoin-core",
+      "title": "Private transaction broadcast now always completes all three initial connections",
+      "layer": "p2p",
+      "status": "merged",
+      "what_happened": "When a node initiates a private broadcast of a transaction, it now completes all three initial broadcast connections instead of stopping early when the transaction comes back or conflicts.",
+      "why_it_matters": "Stopping early could leak timing information that helps link a transaction to its origin. The PR addresses theoretical timing attacks raised in earlier review of the private-broadcast work.",
+      "affects": ["users who broadcast transactions privately through Bitcoin Core", "transaction-origin privacy"],
+      "not_yet": "In master only; not in a release. Check release notes for when private broadcast and this fix ship.",
+      "uncertainty": "The attacks addressed are described as theoretical in the PR.",
+      "sources": [{ "publisher": "GitHub bitcoin/bitcoin", "type": "merged pull request", "date": "2026-10-06", "url": "https://github.com/bitcoin/bitcoin/pull/36277" }],
+      "verification": "primary"
+    },
+    {
+      "id": "core-32895",
+      "project": "bitcoin-core",
+      "title": "Wallets record which client version last opened and decrypted them",
+      "layer": "wallet",
+      "status": "merged",
+      "what_happened": "The wallet now records the version of the last Bitcoin Core client that opened it and that decrypted it.",
+      "why_it_matters": "Groundwork for future automatic wallet upgrades: if a wallet is upgraded, opened in an older version, then opened in a newer one again, the newer client can detect this and redo the upgrade instead of leaving mixed upgraded and non-upgraded data.",
+      "affects": ["wallet users who switch between Bitcoin Core versions", "future wallet format upgrades"],
+      "not_yet": "In master only; no new automatic upgrade ships with this change. It prepares for later ones.",
+      "uncertainty": "none noted",
+      "sources": [{ "publisher": "GitHub bitcoin/bitcoin", "type": "merged pull request", "date": "2026-10-05", "url": "https://github.com/bitcoin/bitcoin/pull/32895" }],
+      "verification": "primary"
+    },
+    {
+      "id": "bips-2305",
+      "project": "bips",
+      "title": "PSBT type registry adds the missing PSBT_IN_P2C_TWEAK (0x19) entry",
+      "layer": "standards",
+      "status": "documentation",
+      "what_happened": "The BIP-174 PSBT field registry now lists input key type 0x19, PSBT_IN_P2C_TWEAK, defined in BIP-372 (pay-to-contract tweak fields). It had been left out when the tables moved into the registry.",
+      "why_it_matters": "The registry exists so new BIPs do not reuse a key type that is already taken. A missing row risks a collision in a future proposal.",
+      "affects": ["PSBT library and wallet developers", "authors of new PSBT-related BIPs"],
+      "not_yet": "Documentation fix only; no change to consensus, node software or existing PSBT behavior.",
+      "uncertainty": "none noted",
+      "sources": [{ "publisher": "GitHub bitcoin/bips", "type": "merged pull request", "date": "2026-09-25", "url": "https://github.com/bitcoin/bips/pull/2305" }],
+      "verification": "primary"
+    }
+  ],
+  "sources_checked": ["github.com/bitcoin/bitcoin merged pull requests", "github.com/bitcoin/bips merged pull requests", "github.com/bitcoin/bitcoin releases"],
+  "publisher": { "service": "Bitcoin Technical Radar by Aaron Zhang", "maker": "Aaron Zhang, independent developer", "url": "https://farcaster.xyz/aaronzhang" },
+  "disclaimer": "Summaries are written in our own words and link to the original source. Merged is not released; released is not activated. Not investment advice."
+}
