@@ -7,6 +7,8 @@ import { ExactEvmScheme } from "@x402/evm/exact/server";
 import { HTTPFacilitatorClient } from "@x402/core/server";
 import { declareDiscoveryExtension, bazaarResourceServerExtension } from "@x402/extensions/bazaar";
 import { facilitator } from "@coinbase/x402"; // reads CDP_API_KEY_ID / CDP_API_KEY_SECRET
+import { LIVE } from "./lib/live.js";
+import { RELATED } from "./lib/related.js";
 
 const PAY_TO = "0x4b5887B6E399C2E104becd01f7c406229c15891d";
 const MAKER = { name: "Aaron Zhang", role: "independent developer", url: "https://farcaster.xyz/aaronzhang" };
@@ -61,7 +63,8 @@ const status = () => ({
 
 const app = express();
 app.set("trust proxy", true); // Vercel terminates TLS; advertise https resource URLs
-app.use((req, res, next) => (req.method === "HEAD" && req.path === PAID_PATH ? res.status(402).end() : next()));
+const PAID_PATHS = new Set([PAID_PATH, ...LIVE.map((p) => p.path)]);
+app.use((req, res, next) => (req.method === "HEAD" && PAID_PATHS.has(req.path) ? res.status(402).end() : next()));
 
 app.use(paymentMiddleware({
   [`GET ${PAID_PATH}`]: {
@@ -73,7 +76,19 @@ app.use(paymentMiddleware({
     iconUrl: "https://btc-radar.vercel.app/icon.svg",
     extensions: { ...declareDiscoveryExtension({ output: { example: { digest_date: digest.digest_date, items: [sampleItem()] } } }) },
   },
+  ...Object.fromEntries(LIVE.map((p) => [`GET ${p.path}`, {
+    accepts: NETWORKS.map((network) => ({ scheme: "exact", price: `$${p.price}`, network, payTo: PAY_TO })),
+    description: p.description, mimeType: "application/json", serviceName: SERVICE_NAME, tags: p.tags,
+    iconUrl: "https://btc-radar.vercel.app/icon.svg",
+    extensions: { ...declareDiscoveryExtension({ output: { example: { dataset: p.path.slice(1).replace("/", "-"), generated_at: "2026-10-08T00:00:00Z" } } }) },
+  }])),
 }, server));
+for (const p of LIVE) {
+  app.get(p.path, async (req, res) => {
+    try { res.send({ ...(await p.build()), publisher: digest.publisher }); }
+    catch (e) { res.status(503).send({ error: "upstream unavailable", detail: String(e.message).slice(0, 160) }); }
+  });
+}
 
 const origin = (req) => `${req.protocol}://${req.get("host")}`;
 const howToPay = "GET the endpoint; receive HTTP 402 with a PAYMENT-REQUIRED header; sign and retry with PAYMENT-SIGNATURE (x402 v2, scheme exact). No API key, no account.";
@@ -81,7 +96,8 @@ const howToPay = "GET the endpoint; receive HTTP 402 with a PAYMENT-REQUIRED hea
 app.get("/", (req, res) => res.send({
   service: SERVICE.name, maker: MAKER, what: SERVICE.summary, not: SERVICE.notThis,
   pay: { protocol: "x402", asset: "USDC", networks: NETWORKS, price_usdc: PRICE },
-  paid: [PAID_PATH], free: ["/bitcoin/status", "/bitcoin/sample"],
+  paid: [PAID_PATH, ...LIVE.map((p) => p.path)], free: ["/bitcoin/status", "/bitcoin/sample"],
+  more_from_this_developer: RELATED.filter((r) => !r.url.includes("btc-radar")),
   discovery: ["/llms.txt", "/.well-known/x402", "/openapi.json", "/agents.json"],
 }));
 app.get("/bitcoin/status", (req, res) => res.send(status()));
@@ -100,7 +116,9 @@ app.get("/.well-known/x402", (req, res) => {
       { resource: `${o}/bitcoin/status`, method: "GET", description: "Free: digest date, window, item counts by status.", priceUsd: 0, free: true },
       { resource: `${o}/bitcoin/sample`, method: "GET", description: "Free: one item from the current digest.", priceUsd: 0, free: true },
       { resource: `${o}${PAID_PATH}`, method: "GET", description: DESCRIPTION, priceUsd: Number(PRICE), free: false, networks: NETWORKS, tags: TAGS, digest_date: digest.digest_date },
+      ...LIVE.map((p) => ({ resource: `${o}${p.path}`, method: "GET", description: p.description, priceUsd: Number(p.price), free: false, networks: NETWORKS, tags: p.tags })),
     ],
+    related_services: RELATED.filter((r) => !r.url.includes("btc-radar")),
   });
 });
 
@@ -122,6 +140,9 @@ app.get("/openapi.json", (req, res) => {
           402: { description: "Payment required. Terms in the PAYMENT-REQUIRED header (base64 JSON)." },
         },
       } },
+      ...Object.fromEntries(LIVE.map((p) => [p.path, { get: { summary: p.path, description: p.description, tags: p.tags,
+        "x-payment-info": { protocol: "x402", version: 2, scheme: "exact", priceUsd: Number(p.price), asset: "USDC", networks: NETWORKS, payTo: PAY_TO },
+        responses: { 200: { description: "Dataset JSON with generated_at, method and sources." }, 402: { description: "Payment required." } } } }])),
     },
     components: { schemas: { Digest: {
       type: "object", required: ["schema", "digest_date", "items"],
@@ -160,6 +181,7 @@ ${SERVICE.maker} Contact: ${MAKER.url}
 - [Status](${o}/bitcoin/status): free. Digest date, window, counts by status.
 - [Sample](${o}/bitcoin/sample): free. One item.
 - [Technical updates](${o}${PAID_PATH}): ${PRICE} USDC per call. Current digest dated ${digest.digest_date}, ${digest.items.length} items.
+${LIVE.map((p) => `- [${p.path}](${o}${p.path}): ${p.price} USDC. ${p.description}`).join("\n")}
 
 ## How to pay
 ${howToPay}
@@ -167,6 +189,9 @@ Networks: ${NETWORKS.join(", ")} (USDC). Pay to ${PAY_TO}.
 
 ## Status scale
 ${Object.entries(digest.status_scale).map(([k, v]) => `- ${k}: ${v}`).join("\n")}
+
+## More from this developer
+${RELATED.filter((r) => !r.url.includes("btc-radar")).map((r) => `- [${r.name}](${r.url}/llms.txt): ${r.what}`).join("\n")}
 
 ## Machine-readable
 - [x402 manifest](${o}/.well-known/x402)
@@ -181,7 +206,9 @@ app.get("/agents.json", (req, res) => {
   const o = origin(req);
   res.send({ name: SERVICE.name, description: SERVICE.summary, provider: MAKER, url: o,
     auth: { type: "x402", networks: NETWORKS, asset: "USDC", payTo: PAY_TO },
-    capabilities: [{ id: "bitcoin_technical_updates", description: DESCRIPTION, method: "GET", url: `${o}${PAID_PATH}`, priceUsd: Number(PRICE), tags: TAGS }],
+    capabilities: [{ id: "bitcoin_technical_updates", description: DESCRIPTION, method: "GET", url: `${o}${PAID_PATH}`, priceUsd: Number(PRICE), tags: TAGS },
+      ...LIVE.map((p) => ({ id: p.path.slice(1).replace(/\//g, "_"), description: p.description, method: "GET", url: `${o}${p.path}`, priceUsd: Number(p.price), tags: p.tags }))],
+    related_services: RELATED.filter((r) => !r.url.includes("btc-radar")),
     docs: { llms: `${o}/llms.txt`, openapi: `${o}/openapi.json`, x402: `${o}/.well-known/x402` } });
 });
 

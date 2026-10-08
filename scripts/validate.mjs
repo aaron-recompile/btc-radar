@@ -40,3 +40,11 @@ if (errors.length) {
   process.exit(1);
 }
 console.log(`✓ digest ${d.digest_date} valid (${d.items.length} items)`);
+
+// Live routes: metadata only (their data is read at request time).
+const { LIVE } = await import("../lib/live.js");
+for (const p of LIVE) {
+  if (!p.description || p.description.length > 500) { console.error(`✗ ${p.path}: description length`); process.exit(1); }
+  if (!(p.tags?.length >= 1 && p.tags.length <= 5 && p.tags.every((t) => /^[\x20-\x7E]{1,32}$/.test(t)))) { console.error(`✗ ${p.path}: tags`); process.exit(1); }
+}
+console.log(`✓ ${LIVE.length} live routes valid`);
