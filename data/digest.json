@@ -1,10 +1,17 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-07",
-  "window": { "from": "2026-09-24", "to": "2026-10-07" },
-  "generated_at": "2026-10-07T18:00:00Z",
+  "digest_date": "2026-10-08",
+  "window": {
+    "from": "2026-09-25",
+    "to": "2026-10-08"
+  },
+  "generated_at": "2026-10-08T04:09:28.099332Z",
   "context": {
-    "latest_bitcoin_core_release": { "version": "v31.1", "date": "2026-07-08", "url": "https://github.com/bitcoin/bitcoin/releases/tag/v31.1" },
+    "latest_bitcoin_core_release": {
+      "version": "v31.1",
+      "date": "2026-07-08",
+      "url": "https://github.com/bitcoin/bitcoin/releases/tag/v31.1"
+    },
     "note": "Items marked merged are in the master branch only. They are not in a release until a release containing them is published."
   },
   "status_scale": {
@@ -17,7 +24,16 @@
     "documentation": "specification or documentation change only; no software behavior changes",
     "withdrawn": "closed, rejected or superseded"
   },
-  "layer_scale": ["consensus", "policy", "p2p", "wallet", "rpc", "standards", "lightning", "tooling"],
+  "layer_scale": [
+    "consensus",
+    "policy",
+    "p2p",
+    "wallet",
+    "rpc",
+    "standards",
+    "lightning",
+    "tooling"
+  ],
   "items": [
     {
       "id": "core-36080",
@@ -27,10 +43,20 @@
       "status": "merged",
       "what_happened": "Bitcoin Core stops enforcing the 20-minute ping timeout against a peer while blocks are being downloaded from that peer.",
       "why_it_matters": "During initial block download on a slow link, a peer busy serving our block requests could miss the ping deadline and be dropped although it was not at fault. This avoids needless disconnects for low-bandwidth nodes.",
-      "affects": ["node operators on low-bandwidth connections", "initial block download"],
+      "affects": [
+        "node operators on low-bandwidth connections",
+        "initial block download"
+      ],
       "not_yet": "In master only; not in a release. No consensus or policy change.",
       "uncertainty": "none noted",
-      "sources": [{ "publisher": "GitHub bitcoin/bitcoin", "type": "merged pull request", "date": "2026-10-05", "url": "https://github.com/bitcoin/bitcoin/pull/36080" }],
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-05",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36080"
+        }
+      ],
       "verification": "primary"
     },
     {
@@ -41,10 +67,20 @@
       "status": "merged",
       "what_happened": "When a node initiates a private broadcast of a transaction, it now completes all three initial broadcast connections instead of stopping early when the transaction comes back or conflicts.",
       "why_it_matters": "Stopping early could leak timing information that helps link a transaction to its origin. The PR addresses theoretical timing attacks raised in earlier review of the private-broadcast work.",
-      "affects": ["users who broadcast transactions privately through Bitcoin Core", "transaction-origin privacy"],
+      "affects": [
+        "users who broadcast transactions privately through Bitcoin Core",
+        "transaction-origin privacy"
+      ],
       "not_yet": "In master only; not in a release. Check release notes for when private broadcast and this fix ship.",
       "uncertainty": "The attacks addressed are described as theoretical in the PR.",
-      "sources": [{ "publisher": "GitHub bitcoin/bitcoin", "type": "merged pull request", "date": "2026-10-06", "url": "https://github.com/bitcoin/bitcoin/pull/36277" }],
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-06",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36277"
+        }
+      ],
       "verification": "primary"
     },
     {
@@ -55,10 +91,20 @@
       "status": "merged",
       "what_happened": "The wallet now records the version of the last Bitcoin Core client that opened it and that decrypted it.",
       "why_it_matters": "Groundwork for future automatic wallet upgrades: if a wallet is upgraded, opened in an older version, then opened in a newer one again, the newer client can detect this and redo the upgrade instead of leaving mixed upgraded and non-upgraded data.",
-      "affects": ["wallet users who switch between Bitcoin Core versions", "future wallet format upgrades"],
-      "not_yet": "In master only; no new automatic upgrade ships with this change. It prepares for later ones.",
+      "affects": [
+        "wallet users who switch between Bitcoin Core versions",
+        "future wallet format upgrades"
+      ],
+      "not_yet": "In master only; not in a release. No new automatic upgrade ships with this change; it prepares for later ones.",
       "uncertainty": "none noted",
-      "sources": [{ "publisher": "GitHub bitcoin/bitcoin", "type": "merged pull request", "date": "2026-10-05", "url": "https://github.com/bitcoin/bitcoin/pull/32895" }],
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-05",
+          "url": "https://github.com/bitcoin/bitcoin/pull/32895"
+        }
+      ],
       "verification": "primary"
     },
     {
@@ -69,14 +115,184 @@
       "status": "documentation",
       "what_happened": "The BIP-174 PSBT field registry now lists input key type 0x19, PSBT_IN_P2C_TWEAK, defined in BIP-372 (pay-to-contract tweak fields). It had been left out when the tables moved into the registry.",
       "why_it_matters": "The registry exists so new BIPs do not reuse a key type that is already taken. A missing row risks a collision in a future proposal.",
-      "affects": ["PSBT library and wallet developers", "authors of new PSBT-related BIPs"],
+      "affects": [
+        "PSBT library and wallet developers",
+        "authors of new PSBT-related BIPs"
+      ],
       "not_yet": "Documentation fix only; no change to consensus, node software or existing PSBT behavior.",
       "uncertainty": "none noted",
-      "sources": [{ "publisher": "GitHub bitcoin/bips", "type": "merged pull request", "date": "2026-09-25", "url": "https://github.com/bitcoin/bips/pull/2305" }],
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bips",
+          "type": "merged pull request",
+          "date": "2026-09-25",
+          "url": "https://github.com/bitcoin/bips/pull/2305"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "bitcoin-core-36340",
+      "project": "bitcoin-core",
+      "title": "Large socket timeouts no longer break bitcoin-cli connections on macOS",
+      "layer": "rpc",
+      "status": "merged",
+      "what_happened": "Socket waits cap each timeout at INT_MAX milliseconds, avoiding macOS select() errors for bitcoin-cli -rpcclienttimeout=0 and other very large values.",
+      "why_it_matters": "The documented no-timeout setting could instead fail to connect on macOS. The shared cap also avoids integer narrowing in poll() on Linux.",
+      "affects": [
+        "bitcoin-core users and developers"
+      ],
+      "not_yet": "In master only; not in a release. A requested 32.x backport is not evidence of a shipped fix.",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-07",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36340"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "bitcoin-core-36338",
+      "project": "bitcoin-core",
+      "title": "Silent Payments extraction rejects misleading P2PKH scriptSig public keys",
+      "layer": "wallet",
+      "status": "merged",
+      "what_happened": "Bitcoin Core finds the compressed public-key push whose HASH160 matches the spent P2PKH output, rather than evaluating scriptSig with a dummy signature checker.",
+      "why_it_matters": "A third party could modify scriptSig so the dummy checker selected the wrong public key. Correct extraction is necessary for Silent Payments processing.",
+      "affects": [
+        "bitcoin-core users and developers"
+      ],
+      "not_yet": "In master only; not in a release. This does not establish release availability of Silent Payments or change consensus.",
+      "uncertainty": "The author reports existing Silent Payments implementations appeared unaffected; this is not evidence of deployed wallet losses.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-07",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36338"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "lnd-11290",
+      "project": "lnd",
+      "title": "LND checks blinded-path fee arithmetic instead of wrapping uint32 totals",
+      "layer": "lightning",
+      "status": "merged",
+      "what_happened": "Blinded-path fee aggregation uses checked uint64 arithmetic and rejects totals that cannot fit invoice payinfo fields. An invalid candidate route is skipped without discarding other usable routes.",
+      "why_it_matters": "Overflow could advertise fees below the actual forwarding policy, leading to underpayment and failure after the multipart-payment timeout. The report traces the issue to blinded receiving introduced in v0.18.3.",
+      "affects": [
+        "lnd users and developers"
+      ],
+      "not_yet": "In master only; not in a release. This is an LND implementation fix, not a Lightning protocol change.",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-07",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11290"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "lnd-11219",
+      "project": "lnd",
+      "title": "LND fixes address aliasing and short reads in NodeAnnouncement2",
+      "layer": "lightning",
+      "status": "merged",
+      "what_happened": "NodeAnnouncement2 decoding stops sharing address backing storage across loop iterations and reads fixed-width address fields completely, rejecting truncated records.",
+      "why_it_matters": "Multiple addresses could collapse onto the last decoded address, and incomplete IPv4, IPv6 or Tor v3 records could be accepted with zero-filled bytes.",
+      "affects": [
+        "lnd users and developers"
+      ],
+      "not_yet": "In master only; not in a release. No wire-format change is implied.",
+      "uncertainty": "The linked issue reports parser correctness failures, not a confirmed live exploit or network-wide gossip impact.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-07",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11219"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "cln-v26.06.9",
+      "project": "cln",
+      "title": "Core Lightning v26.06.9 ships security fixes and repairs gossip throttling",
+      "layer": "lightning",
+      "status": "released",
+      "what_happened": "Core Lightning released v26.06.9 with security fixes across channel and message handling, rune authorization and configuration. It fixes the v26.06.8 gossip-throttle regression and adds reproducible ARM binaries.",
+      "why_it_matters": "Maintainers strongly recommend upgrading. Ordinary gossip, pings and onion messages no longer consume the gossip-query throttle budget; restricted runes cannot bypass restrictions through the documented creation and relisting paths.",
+      "affects": [
+        "cln users and developers"
+      ],
+      "not_yet": "Released for Core Lightning only; not a Bitcoin consensus activation. Dual funding remains experimental, and newer master database schemas cannot downgrade to 26.06.x.",
+      "uncertainty": "Security regression tests are temporarily withheld by maintainers; release notes do not provide complete exploit details.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "release",
+          "date": "2026-10-07",
+          "url": "https://github.com/ElementsProject/lightning/releases/tag/v26.06.9"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "lnd-11300",
+      "project": "lnd",
+      "title": "LND backports BOLT 2 fee-state handling to 0.20.x and 0.21.x",
+      "layer": "lightning",
+      "status": "merged",
+      "what_happened": "The fee-state fix already merged into master in August was backported to v0.20.x-branch and v0.21.x-branch. Unobserved fee updates replace the previous value; mailbox admission has message-count and serialized-size limits.",
+      "why_it_matters": "This aligns in-memory fee updates with BOLT 2 replacement semantics and bounds queued channel messages. Admission failures reconnect rather than silently dropping ordered messages.",
+      "affects": [
+        "lnd users and developers"
+      ],
+      "not_yet": "The merged status refers to upstream master PR #11023, not the maintenance branches. These backports are not in a release verified by this review; branch merges alone do not establish availability.",
+      "uncertainty": "Upstream merged on August 7, outside this window; the new events are the October 8 backports. No tagged release containing these backports was established.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-08",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11300"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-08",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11301"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-08-07",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11023"
+        }
+      ],
       "verification": "primary"
     }
   ],
-  "sources_checked": ["github.com/bitcoin/bitcoin merged pull requests", "github.com/bitcoin/bips merged pull requests", "github.com/bitcoin/bitcoin releases"],
-  "publisher": { "service": "Bitcoin Technical Radar by Aaron Zhang", "maker": "Aaron Zhang, independent developer", "url": "https://farcaster.xyz/aaronzhang" },
+  "sources_checked": [
+    "github.com/bitcoin/bitcoin merged pull requests",
+    "github.com/bitcoin/bips merged pull requests",
+    "github.com/bitcoin/bitcoin releases",
+    "github.com/lightningnetwork/lnd merged pull requests and linked issue",
+    "github.com/ElementsProject/lightning releases"
+  ],
+  "publisher": {
+    "service": "Bitcoin Technical Radar by Aaron Zhang",
+    "maker": "Aaron Zhang, independent developer",
+    "url": "https://farcaster.xyz/aaronzhang"
+  },
   "disclaimer": "Summaries are written in our own words and link to the original source. Merged is not released; released is not activated. Not investment advice."
 }
