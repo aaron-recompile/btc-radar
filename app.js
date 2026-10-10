@@ -7,7 +7,7 @@ import { ExactEvmScheme } from "@x402/evm/exact/server";
 import { HTTPFacilitatorClient } from "@x402/core/server";
 import { declareDiscoveryExtension, bazaarResourceServerExtension } from "@x402/extensions/bazaar";
 import { facilitator } from "@coinbase/x402"; // reads CDP_API_KEY_ID / CDP_API_KEY_SECRET
-import { LIVE } from "./lib/live.js";
+import { LIVE, GAPS } from "./lib/live.js";
 import { RELATED } from "./lib/related.js";
 
 const PAY_TO = "0x4b5887B6E399C2E104becd01f7c406229c15891d";
@@ -101,7 +101,8 @@ app.get("/", (req, res) => res.send({
   discovery: ["/llms.txt", "/.well-known/x402", "/openapi.json", "/agents.json"],
 }));
 app.get("/bitcoin/status", (req, res) => res.send(status()));
-app.get("/bitcoin/sample", (req, res) => res.send({ note: "One free item from the current digest. The paid endpoint returns all items.", item: sampleItem(), status: status() }));
+app.get("/bitcoin/sample", (req, res) => res.send({ note: "One free item from the current digest. The paid endpoint returns all items.", item: sampleItem(), status: status(),
+  closed_market_gaps: { note: "Summary and three rows of /bitcoin/closed-market-gaps (paid endpoint returns all rows).", summary: GAPS.summary, rows_total: GAPS.rows.length, rows: [GAPS.rows[0], GAPS.rows.find((r) => r.instrument !== "IBIT"), GAPS.rows.at(-1)] } }));
 app.get(PAID_PATH, (req, res) => res.send(digest));
 
 app.get("/.well-known/x402", (req, res) => {
