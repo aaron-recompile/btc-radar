@@ -22,7 +22,8 @@
     "released": "shipped in a tagged release of that software",
     "activated": "consensus change enforced on mainnet",
     "documentation": "specification or documentation change only; no software behavior changes",
-    "withdrawn": "closed, rejected or superseded"
+    "withdrawn": "closed, rejected or superseded",
+    "backport_merged": "merged into a maintenance branch; tagged release inclusion is not established by the merge"
   },
   "layer_scale": [
     "consensus",
@@ -384,7 +385,7 @@
       "title": "Silent Payments extracts the correct P2PKH key",
       "layer": "wallet",
       "status": "merged",
-      "what_happened": "Bitcoin Core scans compressed key pushes for a match to the spent output hash instead of using a dummy signature checker.",
+      "what_happened": "The authors report: Bitcoin Core scans compressed key pushes for a match to the spent output hash instead of using a dummy signature checker. We have not independently reproduced these claims.",
       "why_it_matters": "A malleated scriptSig could otherwise cause extraction of the wrong public key.",
       "affects": [
         "bitcoin-core users and integrators"
@@ -399,7 +400,7 @@
           "url": "https://github.com/bitcoin/bitcoin/pull/36338"
         }
       ],
-      "verification": "primary"
+      "verification": "author-reported"
     },
     {
       "id": "lnd-11290",
@@ -453,7 +454,7 @@
       "title": "Core Lightning v26.06.9 ships security and gossip fixes",
       "layer": "lightning",
       "status": "released",
-      "what_happened": "Core Lightning released fixes for reestablishment, splicing, shutdown HTLCs, runes and remote crashes, plus the gossip CPU-throttling regression.",
+      "what_happened": "The authors report: Core Lightning released fixes for reestablishment, splicing, shutdown HTLCs, runes and remote crashes, plus the gossip CPU-throttling regression. We have not independently reproduced these claims.",
       "why_it_matters": "Maintainers recommend upgrading. Restricted runes cannot create unrestricted ones, sensitive listconfigs values are masked, and accepted splices enforce negotiated feerates.",
       "affects": [
         "cln users and integrators"
@@ -468,7 +469,7 @@
           "url": "https://github.com/ElementsProject/lightning/releases/tag/v26.06.9"
         }
       ],
-      "verification": "primary"
+      "verification": "author-reported"
     },
     {
       "id": "core-36462",
@@ -499,7 +500,7 @@
       "title": "Recovery signing discards its nonce after one signature",
       "layer": "lightning",
       "status": "merged",
-      "what_happened": "Eclair removes the spendfromchanneladdress nonce after signing.",
+      "what_happened": "The authors report: Eclair removes the spendfromchanneladdress nonce after signing. We have not independently reproduced these claims.",
       "why_it_matters": "One-use handling prevents retained nonces from being reused during manual recovery.",
       "affects": [
         "eclair users and integrators"
@@ -514,7 +515,7 @@
           "url": "https://github.com/ACINQ/eclair/pull/3392"
         }
       ],
-      "verification": "primary"
+      "verification": "author-reported"
     },
     {
       "id": "core-36471",
@@ -653,6 +654,56 @@
         }
       ],
       "verification": "primary"
+    },
+    {
+      "id": "lnd-11300",
+      "project": "lnd",
+      "title": "LND v0.20.x-branch: critical update_fee and mailbox-handling backport",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into maintenance branch v0.20.x-branch on 2026-10-08, not master. The prior merged category means main-branch merge, so backport_merged records this critical event without claiming a release.",
+      "severity": "critical",
+      "what_happened": "The authors report a backport of #11023: replace fee updates not yet observed by either commitment chain, validate fee-update roles before calculations, and bound channel-mailbox message count and serialized size. We have not independently reproduced these claims.",
+      "why_it_matters": "Operators following v0.20.x-branch need visibility into this severity-critical maintenance fix. Mailbox admission failures trigger reconnection rather than silently omitting ordered messages.",
+      "affects": [
+        "LND operators on v0.20.x-branch"
+      ],
+      "not_yet": "Merged into a maintenance branch only; tagged release inclusion has not been verified. Not a new Lightning protocol rule or Bitcoin consensus activation.",
+      "uncertainty": "Critical severity comes from the upstream label; we did not independently reproduce the tests or establish exploitation or fund loss.",
+      "verification": "author-reported",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged maintenance-branch pull request",
+          "date": "2026-10-08",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11300"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11301",
+      "project": "lnd",
+      "title": "LND v0.21.x-branch: critical update_fee and mailbox-handling backport",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into maintenance branch v0.21.x-branch on 2026-10-08, not master. The prior merged category means main-branch merge, so backport_merged records this critical event without claiming a release.",
+      "severity": "critical",
+      "what_happened": "The authors report a backport of #11023: replace fee updates not yet observed by either commitment chain, validate fee-update roles before calculations, and bound channel-mailbox message count and serialized size. We have not independently reproduced these claims.",
+      "why_it_matters": "Operators following v0.21.x-branch need visibility into this severity-critical maintenance fix. Mailbox admission failures trigger reconnection rather than silently omitting ordered messages.",
+      "affects": [
+        "LND operators on v0.21.x-branch"
+      ],
+      "not_yet": "Merged into a maintenance branch only; tagged release inclusion has not been verified. Not a new Lightning protocol rule or Bitcoin consensus activation.",
+      "uncertainty": "Critical severity comes from the upstream label; we did not independently reproduce the tests or establish exploitation or fund loss.",
+      "verification": "author-reported",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged maintenance-branch pull request",
+          "date": "2026-10-08",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11301"
+        }
+      ]
     }
   ],
   "sources_checked": [
@@ -669,5 +720,8 @@
     "maker": "Aaron Zhang, independent developer",
     "url": "https://farcaster.xyz/aaronzhang"
   },
-  "disclaimer": "Summaries are written in our own words and link to the original source. Merged is not released; released is not activated. Not investment advice."
+  "disclaimer": "Summaries are written in our own words and link to the original source. Merged is not released; released is not activated. Not investment advice.",
+  "inclusion_policy": {
+    "critical_security": "Include critical or security events even when existing status categories do not fit; require status_note explaining the exact branch/stage and mismatch. Never infer a tagged release or activation from a maintenance-branch merge."
+  }
 }
