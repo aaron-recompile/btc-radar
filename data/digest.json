@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-09",
+  "digest_date": "2026-10-11",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-09"
+    "to": "2026-10-11"
   },
-  "generated_at": "2026-10-09T00:09:08.425627Z",
+  "generated_at": "2026-10-11T18:31:51.038Z",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v31.1",
@@ -702,6 +702,77 @@
           "type": "merged maintenance-branch pull request",
           "date": "2026-10-08",
           "url": "https://github.com/lightningnetwork/lnd/pull/11301"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11068",
+      "project": "lnd",
+      "title": "Critical: reject commitments missing auxiliary HTLC signatures",
+      "severity": "critical",
+      "what_happened": "The authors report a consistency check requiring one auxiliary HTLC signature per commitment HTLC on taproot overlay channels, matching the existing BTC-level signature-count check. Test doubles and helpers now carry realistic auxiliary signatures. We have not independently reproduced these claims.",
+      "why_it_matters": "Taproot overlay channel integrators gain explicit rejection of incomplete auxiliary signature sets instead of relying only on the BTC-level check.",
+      "affects": [
+        "LND taproot overlay channel integrators"
+      ],
+      "uncertainty": "Critical severity is the upstream severity-critical label. Exploitation, fund loss and tagged release inclusion are not established. A backport label is not a verified backport merge.",
+      "layer": "lightning",
+      "status": "merged",
+      "verification": "author-reported",
+      "not_yet": "Merged into master on October 9; tagged release inclusion has not been verified. Not a new Lightning protocol rule or Bitcoin consensus activation.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-09",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11068"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11246",
+      "project": "lnd",
+      "title": "Critical: release transient MuSig2 signer sessions",
+      "severity": "critical",
+      "what_happened": "The authors report releasing backing MuSig2 signer sessions after commitment partial signatures are sent or verified, including failed verification. Force-close and cooperative-close paths retain sessions until CombineSigs completes. We have not independently reproduced these claims.",
+      "why_it_matters": "Commitment rounds no longer retain signer state that these paths do not need; cleanup also covers initial funding and reestablishment.",
+      "affects": [
+        "LND MuSig2 channel operators and signer integrators"
+      ],
+      "uncertainty": "Critical severity is the upstream severity-critical label. The described tests were not rerun. Backport labels for v0.20.x and v0.21.x do not establish merged backports or releases.",
+      "layer": "lightning",
+      "status": "merged",
+      "verification": "author-reported",
+      "not_yet": "Merged into master on October 9; tagged release inclusion has not been verified. Not a new Lightning protocol rule or Bitcoin consensus activation.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-09",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11246"
+        }
+      ]
+    },
+    {
+      "id": "cln-9606",
+      "project": "cln",
+      "title": "Core Lightning forwards v26.06.9 security fixes to master",
+      "what_happened": "The authors report forwarding v26.06.9 fixes to master, including channel reestablishment, splice handling, rune authorization, configuration redaction and plugin hardening. The PR also moves rune-alias deprecation to v26.12. We have not independently reproduced these claims.",
+      "why_it_matters": "Development-branch users can distinguish forward-port integration from the already recorded v26.06.9 release; the point release itself does not deprecate the rune aliases.",
+      "affects": [
+        "Core Lightning development-branch operators and integrators"
+      ],
+      "uncertainty": "Security tests are temporarily withheld according to the author. Reported release-tree testing was not independently reproduced. No additional tagged release is established by this merge.",
+      "layer": "lightning",
+      "status": "merged",
+      "verification": "author-reported",
+      "not_yet": "Forward-port merged into master on October 9; the corresponding fixes were already shipped in v26.06.9. This merge is not a new release or consensus activation.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request",
+          "date": "2026-10-09",
+          "url": "https://github.com/ElementsProject/lightning/pull/9606"
         }
       ]
     }
