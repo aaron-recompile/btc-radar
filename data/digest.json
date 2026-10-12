@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-11",
+  "digest_date": "2026-10-12",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-11"
+    "to": "2026-10-12"
   },
-  "generated_at": "2026-10-11T18:31:51.038Z",
+  "generated_at": "2026-10-12T18:31:57.046223+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v31.1",
@@ -773,6 +773,56 @@
           "type": "merged pull request",
           "date": "2026-10-09",
           "url": "https://github.com/ElementsProject/lightning/pull/9606"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11312",
+      "project": "lnd",
+      "title": "LND v0.21.x: critical auxiliary HTLC signature-count backport",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into v0.21.x-branch on October 12, not master; backport_merged distinguishes maintenance integration from main-branch merge and release.",
+      "severity": "critical",
+      "what_happened": "The authors report backporting #11068: require the number of auxiliary HTLC signatures on taproot overlay channel commitments to match the HTLC count, alongside realistic auxiliary-signer test doubles and helpers. We have not independently reproduced these claims.",
+      "why_it_matters": "The maintenance-branch merge is now verified rather than merely requested, letting v0.21.x integrators distinguish backport availability from the earlier master merge.",
+      "affects": [
+        "LND v0.21.x taproot overlay channel integrators"
+      ],
+      "not_yet": "Maintenance-branch merge only; tagged release inclusion has not been verified. Not a Bitcoin consensus activation or new Lightning protocol rule.",
+      "uncertainty": "Severity comes from the upstream label. Tests and performance claims were not independently reproduced; this source does not establish exploitation or fund loss.",
+      "verification": "author-reported",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged maintenance-branch pull request",
+          "date": "2026-10-12",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11312"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11319",
+      "project": "lnd",
+      "title": "LND v0.21.x: transaction-scoped SQL bucket lookup cache",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into v0.21.x-branch on October 12, not master; backport_merged distinguishes maintenance integration from main-branch merge and release.",
+      "severity": "medium",
+      "what_happened": "The authors report backporting #11264: cache nested SQL bucket IDs, including absent buckets, within each transaction; update the cache on creation and clear it on deletion. The cache is capped at 10,000 entries and discarded when the transaction ends. We have not independently reproduced these claims.",
+      "why_it_matters": "Repeated wallet bucket lookups can incur database round trips. Transaction-scoped caching targets this overhead without treating author benchmarks as independently verified production performance.",
+      "affects": [
+        "LND v0.21.x PostgreSQL and SQLite operators"
+      ],
+      "not_yet": "Maintenance-branch merge only; tagged release inclusion has not been verified. Not a Bitcoin consensus activation or new Lightning protocol rule.",
+      "uncertainty": "Severity comes from the upstream label. Tests and performance claims were not independently reproduced; this source does not establish exploitation or fund loss.",
+      "verification": "author-reported",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged maintenance-branch pull request",
+          "date": "2026-10-12",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11319"
         }
       ]
     }
