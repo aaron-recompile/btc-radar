@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-13",
+  "digest_date": "2026-10-14",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-13"
+    "to": "2026-10-14"
   },
-  "generated_at": "2026-10-13T18:32:34.203111+00:00",
+  "generated_at": "2026-10-14T18:31:37.491579+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v31.1",
@@ -1103,6 +1103,113 @@
           "url": "https://github.com/ACINQ/eclair/pull/3397"
         }
       ]
+    },
+    {
+      "id": "lnd-11325",
+      "project": "lnd",
+      "title": "LND corrects KV graph record reader bounds",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-14T10:29:13Z; not verified tagged release inclusion.",
+      "what_happened": "The authors report allowing the full 10,008-byte serialized policy representation while retaining the 10,000-byte ExtraOpaqueData limit, and allowing an 8,192-byte feature vector plus its two-byte prefix. KV live and native SQL migration readers are updated; native SQL storage keeps max_htlc separate. Pruning now distinguishes absent edges from read or deletion errors. Behavior and tests have not been independently reproduced.",
+      "why_it_matters": "Preserves readability at valid serialization boundaries and reports pruning errors instead of treating them as missing edges.",
+      "verification": "author-reported",
+      "not_yet": "Tagged release inclusion and deployment are unverified. No Bitcoin consensus activation is implied.",
+      "uncertainty": "Merge and branch are verified from upstream metadata; behavior and impact remain author-reported. No verified exploitation or fund loss is asserted. Severity is an upstream label, not an independent assessment.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-14",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11325"
+        }
+      ],
+      "severity": "high"
+    },
+    {
+      "id": "cln-9493",
+      "project": "cln",
+      "title": "Core Lightning rejects dual-funding outputs above MAX_MONEY",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-14T14:51:27Z; not verified tagged release inclusion.",
+      "what_happened": "The authors report hardening tx_add_output handling by failing negotiation when the sum of outputs exceeds 21 million BTC. Behavior and tests have not been independently reproduced.",
+      "why_it_matters": "Records peer-input validation hardening in dualopend without inventing a severity rating, exploitation claim or release status.",
+      "verification": "author-reported",
+      "not_yet": "Tagged release inclusion and deployment are unverified. No Bitcoin consensus activation is implied.",
+      "uncertainty": "Merge and branch are verified from upstream metadata; behavior and impact remain author-reported. No verified exploitation or fund loss is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request",
+          "date": "2026-10-14",
+          "url": "https://github.com/ElementsProject/lightning/pull/9493"
+        }
+      ]
+    },
+    {
+      "id": "cln-9623",
+      "project": "cln",
+      "title": "Core Lightning fixes unknown failure reasons for sendonion payments",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-14T14:49:44Z; not verified tagged release inclusion.",
+      "what_happened": "The author reports fixing error 209, Payment failure reason unknown, for sendonion payments after a CI test expected WIRE_INVALID_ONION_PAYLOAD but received an unknown failure reason; routing failure object documentation is also cleaned up. Behavior and tests have not been independently reproduced.",
+      "why_it_matters": "Improves reported failure diagnostics for low-level onion payment callers; the cited CI observation is author-reported, not independently reproduced.",
+      "verification": "author-reported",
+      "not_yet": "Tagged release inclusion and deployment are unverified. No Bitcoin consensus activation is implied.",
+      "uncertainty": "Merge and branch are verified from upstream metadata; behavior and impact remain author-reported. No verified exploitation or fund loss is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request",
+          "date": "2026-10-14",
+          "url": "https://github.com/ElementsProject/lightning/pull/9623"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11332",
+      "project": "lnd",
+      "title": "LND v0.21.x: KV graph readability fix backported",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into v0.21.x-branch at 2026-10-14T17:56:24Z; not verified tagged release inclusion.",
+      "what_happened": "The authors report backporting #11325: correct serialized policy and feature-vector reader bounds and distinguish missing edges from read or deletion errors during pruning. Behavior and tests have not been independently reproduced.",
+      "why_it_matters": "Verifies maintenance-branch integration separately from the development merge; the extra opaque data limit is not raised.",
+      "verification": "author-reported",
+      "not_yet": "Tagged release inclusion and deployment are unverified. No Bitcoin consensus activation is implied.",
+      "uncertainty": "Merge and branch are verified from upstream metadata; behavior and impact remain author-reported. No verified exploitation or fund loss is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged maintenance-branch pull request",
+          "date": "2026-10-14",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11332"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11331",
+      "project": "lnd",
+      "title": "LND v0.20.x: KV graph readability fix backported",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into v0.20.x-branch at 2026-10-14T17:32:45Z; not verified tagged release inclusion.",
+      "what_happened": "The authors report backporting #11325: correct serialized policy and feature-vector reader bounds and distinguish missing edges from read or deletion errors during pruning. Behavior and tests have not been independently reproduced.",
+      "why_it_matters": "Verifies maintenance-branch integration separately from the development merge; the extra opaque data limit is not raised.",
+      "verification": "author-reported",
+      "not_yet": "Tagged release inclusion and deployment are unverified. No Bitcoin consensus activation is implied.",
+      "uncertainty": "Merge and branch are verified from upstream metadata; behavior and impact remain author-reported. No verified exploitation or fund loss is asserted. Severity is an upstream label, not an independent assessment.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged maintenance-branch pull request",
+          "date": "2026-10-14",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11331"
+        }
+      ],
+      "severity": "high"
     }
   ],
   "sources_checked": [
