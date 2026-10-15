@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-14",
+  "digest_date": "2026-10-15",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-14"
+    "to": "2026-10-15"
   },
-  "generated_at": "2026-10-14T18:31:37.491579+00:00",
+  "generated_at": "2026-10-15T18:31:20.037793+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v31.1",
@@ -1210,6 +1210,116 @@
         }
       ],
       "severity": "high"
+    },
+    {
+      "id": "lnd-11330",
+      "project": "lnd",
+      "title": "LND rejects unexpected revocations before bookkeeping updates",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-15T02:58:54Z; tagged release inclusion unverified.",
+      "what_happened": "The authors report ordering revocation state-transition and key checks before bookkeeping updates, explicitly representing the optional next revocation point, and preserving the on-disk format. Reported tests cover rejected and accepted transitions for tweakless and taproot channels, with rejected cases leaving bookkeeping unchanged.",
+      "why_it_matters": "Preserves explicit channel-state validation boundaries before revocation bookkeeping changes.",
+      "verification": "author-reported",
+      "severity": "critical",
+      "uncertainty": "Critical is the upstream severity-critical review label (requires expert review; security/consensus critical), not an independently assessed vulnerability severity. Behavior and tests have not been independently reproduced; no verified exploitation or fund loss is asserted.",
+      "not_yet": "Tagged release inclusion and deployment are unverified. No Bitcoin consensus activation is implied.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-15",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11330"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11334",
+      "project": "lnd",
+      "title": "LND caps external web API fee estimates",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-15T10:41:48Z; tagged release inclusion unverified.",
+      "what_happened": "The authors report capping external --fee.url block-target estimates at 10,000 sat/vB (2,500,000 sat/kw), and applying floor and ceiling bounds to min_relay_feerate at ingestion. The configured maximum fee rate derives from the same ceiling. Local bitcoind/btcd estimates are unaffected.",
+      "why_it_matters": "Bounds untrusted external fee inputs before they propagate through wallet fee estimation.",
+      "verification": "author-reported",
+      "severity": "critical",
+      "uncertainty": "Critical is the upstream severity-critical review label (requires expert review; security/consensus critical), not an independently assessed vulnerability severity. Behavior and tests have not been independently reproduced; no verified exploitation or fund loss is asserted.",
+      "not_yet": "Tagged release inclusion and deployment are unverified. No Bitcoin consensus activation is implied.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-15",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11334"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11336",
+      "project": "lnd",
+      "title": "LND rejects unexpected revocations before bookkeeping updates (v0.20.x-branch backport)",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into v0.20.x-branch at 2026-10-15T15:49:28Z; tagged release inclusion unverified.",
+      "what_happened": "Maintenance-branch backport of #11330. The authors report ordering revocation state-transition and key checks before bookkeeping updates, explicitly representing the optional next revocation point, and preserving the on-disk format. Reported tests cover rejected and accepted transitions for tweakless and taproot channels, with rejected cases leaving bookkeeping unchanged.",
+      "why_it_matters": "Preserves explicit channel-state validation boundaries before revocation bookkeeping changes.",
+      "verification": "author-reported",
+      "severity": "critical",
+      "uncertainty": "Critical is the upstream severity-critical review label (requires expert review; security/consensus critical), not an independently assessed vulnerability severity. Behavior and tests have not been independently reproduced; no verified exploitation or fund loss is asserted.",
+      "not_yet": "Tagged release inclusion and deployment are unverified. No Bitcoin consensus activation is implied.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged maintenance-branch pull request",
+          "date": "2026-10-15",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11336"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11338",
+      "project": "lnd",
+      "title": "LND caps external web API fee estimates (v0.20.x-branch backport)",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into v0.20.x-branch at 2026-10-15T17:45:42Z; tagged release inclusion unverified.",
+      "what_happened": "Maintenance-branch backport of #11334. The authors report capping external --fee.url block-target estimates at 10,000 sat/vB (2,500,000 sat/kw), and applying floor and ceiling bounds to min_relay_feerate at ingestion. The configured maximum fee rate derives from the same ceiling. Local bitcoind/btcd estimates are unaffected.",
+      "why_it_matters": "Bounds untrusted external fee inputs before they propagate through wallet fee estimation.",
+      "verification": "author-reported",
+      "severity": "critical",
+      "uncertainty": "Critical is the upstream severity-critical review label (requires expert review; security/consensus critical), not an independently assessed vulnerability severity. Behavior and tests have not been independently reproduced; no verified exploitation or fund loss is asserted.",
+      "not_yet": "Tagged release inclusion and deployment are unverified. No Bitcoin consensus activation is implied.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged maintenance-branch pull request",
+          "date": "2026-10-15",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11338"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11337",
+      "project": "lnd",
+      "title": "LND rejects unexpected revocations before bookkeeping updates (v0.21.x-branch backport)",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into v0.21.x-branch at 2026-10-15T17:45:01Z; tagged release inclusion unverified.",
+      "what_happened": "Maintenance-branch backport of #11330. The authors report ordering revocation state-transition and key checks before bookkeeping updates, explicitly representing the optional next revocation point, and preserving the on-disk format. Reported tests cover rejected and accepted transitions for tweakless and taproot channels, with rejected cases leaving bookkeeping unchanged.",
+      "why_it_matters": "Preserves explicit channel-state validation boundaries before revocation bookkeeping changes.",
+      "verification": "author-reported",
+      "severity": "critical",
+      "uncertainty": "Critical is the upstream severity-critical review label (requires expert review; security/consensus critical), not an independently assessed vulnerability severity. Behavior and tests have not been independently reproduced; no verified exploitation or fund loss is asserted.",
+      "not_yet": "Tagged release inclusion and deployment are unverified. No Bitcoin consensus activation is implied.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged maintenance-branch pull request",
+          "date": "2026-10-15",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11337"
+        }
+      ]
     }
   ],
   "sources_checked": [
