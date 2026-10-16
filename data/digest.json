@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-15",
+  "digest_date": "2026-10-16",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-15"
+    "to": "2026-10-16"
   },
-  "generated_at": "2026-10-15T18:31:20.037793+00:00",
+  "generated_at": "2026-10-16T18:31:38.553366+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v31.1",
@@ -1320,6 +1320,135 @@
           "url": "https://github.com/lightningnetwork/lnd/pull/11337"
         }
       ]
+    },
+    {
+      "id": "lnd-11339",
+      "project": "lnd",
+      "title": "LND backports external fee estimate bounds to v0.21.x",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into v0.21.x-branch at 2026-10-15T18:59:21Z; tagged release inclusion unverified.",
+      "what_happened": "The authors report backporting #11334: external --fee.url estimates are capped at 10,000 sat/vB (2,500,000 sat/kw), with floor and ceiling bounds on min_relay_feerate. Local bitcoind/btcd estimates are unaffected.",
+      "why_it_matters": "Bounds untrusted external fee inputs on a maintenance branch.",
+      "not_yet": "Tagged release inclusion and deployment remain unverified.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior, tests and security claims are author-reported and not independently reproduced. No observed exploitation or fund loss is asserted. Critical is the upstream expert-review label, not an independently assessed vulnerability rating.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-15",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11339"
+        }
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "eclair-v0.14.4",
+      "project": "eclair",
+      "title": "Eclair v0.14.4 publishes security-hardening release",
+      "layer": "lightning",
+      "status": "released",
+      "status_note": "Published at 2026-10-15T19:30:15Z",
+      "what_happened": "The maintainers published v0.14.4 as a security-hardening patch release and recommend upgrading because they report some issues can be exploited by malicious nodes. They describe compatibility with previous versions and an upgrade without closing channels.",
+      "why_it_matters": "Turns a release-preparation signal into a published security update with an explicit maintainer warning.",
+      "not_yet": "Exploitability, binary signatures, reproducible builds and deployment have not been independently verified.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior, tests and security claims are author-reported and not independently reproduced. No observed exploitation or fund loss is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub ACINQ/eclair",
+          "type": "release announcement",
+          "date": "2026-10-15",
+          "url": "https://github.com/ACINQ/eclair/releases/tag/v0.14.4"
+        }
+      ]
+    },
+    {
+      "id": "core-36535",
+      "project": "bitcoin-core",
+      "title": "Bitcoin Core widens package-weight accumulation",
+      "layer": "policy",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-16T01:27:47Z; tagged release inclusion unverified.",
+      "what_happened": "The author reports starting package-weight accumulation with int64_t instead of int to avoid overflow above INT_MAX. Current RPC and P2P size caps prevent such packages from reaching this check, making this defense in depth. A local throwaway test is reported; no persistent regression test was added.",
+      "why_it_matters": "Hardens package-policy arithmetic without claiming an exploitable current bypass.",
+      "not_yet": "No current reachable exploit or consensus activation is established; release inclusion is unverified.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior, tests and security claims are author-reported and not independently reproduced. No observed exploitation or fund loss is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-16",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36535"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11335",
+      "project": "lnd",
+      "title": "LND removes unused close-summary deserializer",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-16T12:48:06Z; tagged release inclusion unverified.",
+      "what_happened": "The authors report removing the unreferenced top-level deserializeCloseChannelSummaryV6 helper. The frozen v1-to-v11 migration implementation is unchanged; existing channeldb tests are reported passing.",
+      "why_it_matters": "Tracks a critical-labeled database cleanup without implying a new user-visible behavior or migration.",
+      "not_yet": "No user-visible behavior change is claimed; release inclusion is unverified.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior, tests and security claims are author-reported and not independently reproduced. No observed exploitation or fund loss is asserted. Critical is the upstream expert-review label, not an independently assessed vulnerability rating.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-16",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11335"
+        }
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "lnd-11307",
+      "project": "lnd",
+      "title": "LND merges unconnected BOLT 12 invoice generation component",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-16T12:14:35Z; tagged release inclusion unverified.",
+      "what_happened": "The authors report generating and signing invoices from validated requests, including blinded payment paths with a single-hop fallback. Nothing calls this component yet, so daemon behavior is unchanged. Currency-priced offers are rejected; remote-signing mode cannot create BOLT 12 invoices through this signer.",
+      "why_it_matters": "Separates receiver implementation progress from usable end-to-end BOLT 12 support.",
+      "not_yet": "Not an enabled receiver feature: caller integration, currency conversion and remote-signing support remain absent per the author.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior, tests and security claims are author-reported and not independently reproduced. No observed exploitation or fund loss is asserted. The upstream severity-high label requests knowledgeable-engineer review; it is not an independent vulnerability rating.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-16",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11307"
+        }
+      ]
+    },
+    {
+      "id": "lnd-10919",
+      "project": "lnd",
+      "title": "LND adds log-only local reputation subsystem",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-16T16:43:17Z; tagged release inclusion unverified.",
+      "what_happened": "The authors report recording HTLC add, settle and fail times and calculating revenue/reputation averages. Protected-slot decisions are logged as mock decisions; insufficient reputation does not reject forwarded HTLCs. Cold-start historical reads and restart handling are deferred to a later part.",
+      "why_it_matters": "Provides observational groundwork for channel-jamming research, not enforcement or demonstrated mitigation.",
+      "not_yet": "No reputation-based forwarding enforcement or proven channel-jamming protection is established; tagged release inclusion is unverified.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior, tests and security claims are author-reported and not independently reproduced. No observed exploitation or fund loss is asserted. Critical is the upstream expert-review label, not an independently assessed vulnerability rating.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-16",
+          "url": "https://github.com/lightningnetwork/lnd/pull/10919"
+        }
+      ],
+      "severity": "critical"
     }
   ],
   "sources_checked": [
