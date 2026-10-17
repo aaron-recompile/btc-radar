@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-16",
+  "digest_date": "2026-10-17",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-16"
+    "to": "2026-10-17"
   },
-  "generated_at": "2026-10-16T18:31:38.553366+00:00",
+  "generated_at": "2026-10-17T18:31:50.615362+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v31.1",
@@ -1449,6 +1449,27 @@
         }
       ],
       "severity": "critical"
+    },
+    {
+      "id": "core-36294",
+      "project": "bitcoin-core",
+      "title": "Bitcoin Core removes legacy mempool persistence write option",
+      "layer": "policy",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-13T07:59:26Z; tagged release inclusion unverified.",
+      "what_happened": "The author reports removing -persistmempoolv1, a temporary option for writing mempool.dat compatible with v26 and earlier. Reading legacy v1 files remains supported, so direct upgrades can retain the persisted mempool. The compatibility test now uses v28.2 as its old node.",
+      "why_it_matters": "Distinguishes removal of a legacy downgrade option from removal of upgrade compatibility; operators maintaining configuration templates can track the pending option change.",
+      "not_yet": "This is a merged source change, not a verified released or deployed behavior. Legacy-file read compatibility is author-reported, not independently tested.",
+      "verification": "author-reported",
+      "uncertainty": "No consensus change, security vulnerability, loss of funds or automatic deletion of persisted transactions is established. This October 13 change is newly covered here, not a new October 17 upstream event.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-13",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36294"
+        }
+      ]
     }
   ],
   "sources_checked": [
