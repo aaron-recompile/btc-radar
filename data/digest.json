@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-17",
+  "digest_date": "2026-10-18",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-17"
+    "to": "2026-10-18"
   },
-  "generated_at": "2026-10-17T18:31:50.615362+00:00",
+  "generated_at": "2026-10-18T18:31:08.680973+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v31.1",
@@ -1468,6 +1468,50 @@
           "type": "merged pull request",
           "date": "2026-10-13",
           "url": "https://github.com/bitcoin/bitcoin/pull/36294"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11329",
+      "project": "lnd",
+      "title": "LND fixes stranded cooperative-close callers and blocking error delivery",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-17T23:04:11Z; tagged release inclusion unverified.",
+      "what_happened": "The author reports notifying waiting callers when cooperative closers retire, replacing error channels with idempotent nonblocking promises, and requiring IsChannelClean before a missing link implies flushing. Previously, retired closers could leave CloseChannel waiting until daemon shutdown; blocked error writes could stall peer operations.",
+      "why_it_matters": "Tracks a critical-labeled channel-close reliability fix without conflating upstream merge with a released fix.",
+      "not_yet": "Tagged release inclusion and deployed behavior are unverified. Backport labels alone do not establish a v0.20 branch merge.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test claims are author-reported, not independently reproduced. Critical is the upstream expert-review label, not an independently assessed vulnerability rating. No observed exploitation, fund loss or consensus failure is asserted.",
+      "severity": "critical",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-17",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11329"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11349",
+      "project": "lnd",
+      "title": "LND backports cooperative-close caller fixes to v0.21 maintenance branch",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into v0.21.x-branch at 2026-10-18T17:34:26Z; maintenance-branch merge, not a tagged release.",
+      "what_happened": "The author reports notifying waiting callers when cooperative closers retire, replacing error channels with idempotent nonblocking promises, and requiring IsChannelClean before a missing link implies flushing. Previously, retired closers could leave CloseChannel waiting until daemon shutdown; blocked error writes could stall peer operations. This backports #11329.",
+      "why_it_matters": "Tracks a critical-labeled channel-close reliability fix reaching the v0.21 maintenance branch, separately from release availability.",
+      "not_yet": "Tagged release inclusion and deployed behavior are unverified. Backport labels alone do not establish a v0.20 branch merge.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test claims are author-reported, not independently reproduced. Critical is the upstream expert-review label, not an independently assessed vulnerability rating. No observed exploitation, fund loss or consensus failure is asserted.",
+      "severity": "critical",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-18",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11349"
         }
       ]
     }
