@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-18",
+  "digest_date": "2026-10-19",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-18"
+    "to": "2026-10-19"
   },
-  "generated_at": "2026-10-18T18:31:08.680973+00:00",
+  "generated_at": "2026-10-19T18:31:52.208218+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v31.1",
@@ -1512,6 +1512,176 @@
           "type": "merged pull request",
           "date": "2026-10-18",
           "url": "https://github.com/lightningnetwork/lnd/pull/11349"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-core-36341",
+      "project": "bitcoin-core",
+      "title": "bitcoin-wallet create reports failure through its exit code",
+      "layer": "wallet",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-19T14:04:07Z",
+      "what_happened": "The create command now returns failure when MakeWallet fails, rather than exiting successfully after an unsuccessful wallet creation.",
+      "why_it_matters": "Scripts can distinguish a failed wallet creation from success.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-19",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36341"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-core-36339",
+      "project": "bitcoin-core",
+      "title": "Bitcoin Core prevents listtransactions integer overflow",
+      "layer": "rpc",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-19T13:42:06Z",
+      "what_happened": "The author reports that large count and skip values could overflow their signed sum and crash the node. The merged change parses unsigned 32-bit arguments and adds them in 64 bits.",
+      "why_it_matters": "Wallet RPC robustness: a malformed large pagination request should not crash the node.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-19",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36339"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-core-36368",
+      "project": "bitcoin-core",
+      "title": "bitcoin-tx rejects extra separators instead of dropping script flags",
+      "layer": "tooling",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-19T07:53:11Z",
+      "what_happened": "The author reports that extra separators in outscript arguments could silently drop wrapping flags and produce a raw script instead of the requested P2SH or P2WSH wrapper. The merged change rejects excess fields in outscript and in arguments.",
+      "why_it_matters": "Rejecting malformed transaction arguments reduces the risk of silently constructing an unintended output script.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-19",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36368"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11343",
+      "project": "lnd",
+      "title": "LND removes expired and unused release verification keys",
+      "layer": "tooling",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-19T02:41:01Z",
+      "what_happened": "The release verification script and bundled public signing-key set remove one expired and four unused keys. The author reports eleven remaining keys and an unchanged five-signature minimum.",
+      "why_it_matters": "Updates the release verification trust set; removal does not itself establish a compromised key.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-19",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11343"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11327",
+      "project": "lnd",
+      "title": "LND counts forwarding packages and hardens SQL iteration",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-19T17:45:05Z",
+      "what_happened": "PendingChannels uses a count-only forwarding-package path instead of loading all packages. SQL iteration now propagates row errors and distinguishes nested buckets from empty leaf values. Counting still accepts buckets with missing internal contents; malformed keys and stray leaves return corruption errors.",
+      "why_it_matters": "Avoids loading unnecessary HTLC data while preventing interrupted SQL reads from being accepted as successful partial counts.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted. Critical is the upstream expert-review label, not an independent vulnerability rating.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-19",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11327"
+        }
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "lnd-11348",
+      "project": "lnd",
+      "title": "LND cooperative-close caller fixes reach v0.20 maintenance branch",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into v0.20.x-branch at 2026-10-19T17:58:30Z",
+      "what_happened": "The cooperative-close caller retirement and nonblocking error-notification changes from #11329 were backported to v0.20.x-branch. This follows the previously tracked main and v0.21 branch merges.",
+      "why_it_matters": "Tracks maintenance-branch availability without treating a backport as a tagged release or a separate vulnerability.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted. Critical is the upstream expert-review label, not an independent vulnerability rating.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-19",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11348"
+        }
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "lnd-11347",
+      "project": "lnd",
+      "title": "LND uses transaction-bound invoice queries",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-19T17:37:16Z",
+      "what_happened": "InvoicesSettledSince now uses the transaction-bound query object rather than obtaining another connection from the pool inside ExecTx. A txscope analyzer checks callbacks for access to their originating executor.",
+      "why_it_matters": "Improves invoice-query transaction handling; the author supplies a single-connection regression test.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-19",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11347"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11351",
+      "project": "lnd",
+      "title": "LND TLV decoder avoids upfront declared-length allocations",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-19T16:41:27Z",
+      "what_happened": "Variable-length TLV values grow as bytes arrive rather than reserving the declared size upfront. Lengths exceeding int64 return ErrRecordTooLarge; truncated readers retain EOF behavior and valid large non-P2P records remain supported.",
+      "why_it_matters": "Hardens decoding against unnecessary memory reservations from short or truncated input.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-19",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11351"
         }
       ]
     }
