@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-19",
+  "digest_date": "2026-10-20",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-19"
+    "to": "2026-10-20"
   },
-  "generated_at": "2026-10-19T18:31:52.208218+00:00",
+  "generated_at": "2026-10-20T18:31:52.066268+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v31.1",
@@ -1682,6 +1682,303 @@
           "type": "merged pull request",
           "date": "2026-10-19",
           "url": "https://github.com/lightningnetwork/lnd/pull/11351"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-core-36177",
+      "project": "bitcoin-core",
+      "title": "Core aligns proxy parsing with canonical onion network names",
+      "layer": "p2p",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-20T06:31:25Z",
+      "what_happened": "The proxy option now uses the shared network parser and its help and Tor documentation consistently use onion. The author reports that the stale tor examples caused startup failures.",
+      "why_it_matters": "Keeps documented proxy configuration aligned with accepted network names.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36177"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-core-35321",
+      "project": "bitcoin-core",
+      "title": "Core handles malformed optimistic compact blocks consistently",
+      "layer": "p2p",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-20T03:17:24Z",
+      "what_happened": "Optimistic compact-block reconstruction now calls Misbehaving when InitData returns READ_STATUS_INVALID, instead of silently ignoring malformed data.",
+      "why_it_matters": "Applies peer misbehavior handling consistently with the primary compact-block path.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/bitcoin/bitcoin/pull/35321"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11164",
+      "project": "lnd",
+      "title": "LND aligns gossip v2 messages with taproot-gossip review changes",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-20T18:26:48Z",
+      "what_happened": "Wire updates include required-TLV checks, a larger signed TLV range, explicit funding transaction IDs, separate MuSig2 partial signatures and revised channel direction encoding. Tor v3 addresses with port zero are rejected.",
+      "why_it_matters": "Tracks implementation of the evolving gossip v2 proposal, not specification finalization or network activation.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted. Critical is the upstream expert-review label, not an independent vulnerability rating.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11164"
+        }
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "lnd-11377",
+      "project": "lnd",
+      "title": "LND updates wallet dependencies for reorgs during synchronization",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-20T16:50:44Z",
+      "what_happened": "The author reports that ignored block disconnects during wallet sync could leave stale transaction history. Coordinated btcwallet and wtxmgr updates enforce stored block identity and reconcile canonical and orphaned history atomically.",
+      "why_it_matters": "Prevents new inconsistent history; does not repair an already inconsistent database. Release backports require different compatible dependency pins.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11377"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11373",
+      "project": "lnd",
+      "title": "LND enforces the commitment fee-rate floor",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-20T14:12:37Z",
+      "what_happened": "Inbound channel proposals below 253 sat/kw are rejected before reservation. Outbound proposals and fee updates are floored when estimates or anchor caps are too low. The author reports that previously accepted below-floor channels could not carry HTLCs until their initiator raised the fee.",
+      "why_it_matters": "Older peers using max-commit-fee-rate-anchors=1 may now be rejected. Future zero-fee commitment support needs explicit exceptions; it is not enabled here.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted. Critical is the upstream expert-review label, not an independent vulnerability rating.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11373"
+        }
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "lnd-11368",
+      "project": "lnd",
+      "title": "LND rejects channel announcements with identical node IDs",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into v0.20.x-branch at 2026-10-20T01:52:13Z",
+      "what_happened": "V1 channel announcements must identify distinct nodes. Validation-barrier cleanup removes a repeated node identifier only once when rejecting an announcement.",
+      "why_it_matters": "Hardens announcement validation on the v0.20 maintenance branch without changing valid announcements.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11368"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11363",
+      "project": "lnd",
+      "title": "LND forwarding-package counting fix reaches v0.21",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into v0.21.x-branch at 2026-10-20T00:59:55Z",
+      "what_happened": "The count-only forwarding-package path and SQL iterator hardening from #11327 were backported to v0.21.x-branch.",
+      "why_it_matters": "Tracks the second maintenance branch without claiming release availability.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11363"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11362",
+      "project": "lnd",
+      "title": "LND forwarding-package counting fix reaches v0.20",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into v0.20.x-branch at 2026-10-20T00:59:15Z",
+      "what_happened": "The count-only forwarding-package path and SQL row-error and empty-leaf handling from #11327 were backported to v0.20.x-branch.",
+      "why_it_matters": "Maintenance-branch progress for the existing fix, not a new vulnerability or tagged release.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted. Critical is the upstream expert-review label, not an independent vulnerability rating.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11362"
+        }
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "lnd-11356",
+      "project": "lnd",
+      "title": "LND incremental TLV allocation fix reaches v0.21",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into v0.21.x-branch at 2026-10-20T00:56:52Z",
+      "what_happened": "The #11351 incremental variable-length decoder and int64 length bounds were backported to v0.21.x-branch.",
+      "why_it_matters": "Tracks maintenance-branch coverage, not a tagged LND release.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11356"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11355",
+      "project": "lnd",
+      "title": "LND incremental TLV allocation fix reaches v0.20",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into v0.20.x-branch at 2026-10-20T00:56:22Z",
+      "what_happened": "The #11351 incremental variable-length decoder and int64 length bounds were backported to v0.20.x-branch.",
+      "why_it_matters": "Extends the previously tracked decoder hardening to a maintenance branch, not a separate vulnerability.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11355"
+        }
+      ]
+    },
+    {
+      "id": "cln-9620",
+      "project": "cln",
+      "title": "CLN extracts shared LSPS types and tightens protocol checks",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-20T10:38:04Z",
+      "what_happened": "A shared lsps-types crate carries LSPS0/LSPS2 messages and overflow-checked opening-fee computation. Changes reject oversized short-channel-ID components, preserve valid_until verbatim, constrain promise characters and enforce service payment-size bounds.",
+      "why_it_matters": "Improves client/service agreement. The author explicitly leaves extra_fee mismatch rejection, client subtraction overflow and service error encoding unresolved. Crates.io publication was not independently verified.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/ElementsProject/lightning/pull/9620"
+        }
+      ]
+    },
+    {
+      "id": "eclair-3408",
+      "project": "eclair",
+      "title": "Eclair bounds onion payload lengths before integer conversion",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-20T14:52:11Z",
+      "what_happened": "The author reports that oversized per-hop lengths could wrap during Long-to-Int conversion, escape relayer error handling or be accepted as garbage payloads. The merged change checks non-negative Int bounds first.",
+      "why_it_matters": "Addresses author-reported HTLC slot retention and restart-cleaner disruption; no observed exploitation is established.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub ACINQ/eclair",
+          "type": "merged pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/ACINQ/eclair/pull/3408"
+        }
+      ]
+    },
+    {
+      "id": "eclair-3411",
+      "project": "eclair",
+      "title": "Eclair verifies remote splice input outputs against the blockchain",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-20T15:15:12Z",
+      "what_happened": "For remote taproot-splice inputs supplied without a full previous transaction, Eclair fetches that transaction from its Bitcoin node and aborts on output mismatch. The author describes an HTLC theft scenario involving a falsely claimed input output and an unconfirmable splice.",
+      "why_it_matters": "Validates claimed input amounts and scripts rather than trusting peer-supplied outputs; exploitability is author-reported, not independently reproduced.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub ACINQ/eclair",
+          "type": "merged pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/ACINQ/eclair/pull/3411"
+        }
+      ]
+    },
+    {
+      "id": "eclair-3409",
+      "project": "eclair",
+      "title": "Eclair preserves upstream expiry bounds on trampoline retries",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-20T14:44:24Z",
+      "what_happened": "When path finding retries a trampoline payment, it now relaxes only route length rather than raising maximum CLTV to 2016 blocks. The author reports that the old retry could create outgoing HTLCs expiring after incoming ones.",
+      "why_it_matters": "Closes an author-reported route to upstream refunds while downstream HTLCs remain claimable; no observed theft is asserted.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub ACINQ/eclair",
+          "type": "merged pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/ACINQ/eclair/pull/3409"
         }
       ]
     }
