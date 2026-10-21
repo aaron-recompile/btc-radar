@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-20",
+  "digest_date": "2026-10-21",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-20"
+    "to": "2026-10-21"
   },
-  "generated_at": "2026-10-20T18:31:52.066268+00:00",
+  "generated_at": "2026-10-21T18:31:16.043075+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v31.1",
@@ -1981,6 +1981,180 @@
           "url": "https://github.com/ACINQ/eclair/pull/3409"
         }
       ]
+    },
+    {
+      "id": "bitcoin-core-35919",
+      "project": "bitcoin-core",
+      "title": "Core caps configured connections to reduce orphanage abort risk",
+      "layer": "p2p",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-21T14:03:43Z",
+      "what_happened": "The author reports that orphan announcements from more than 3,000 peers can abort the orphanage. The merged change caps maxconnections at 2,000 with a warning before reserving file descriptors; the default remains 200.",
+      "why_it_matters": "Reduces an author-reported crash risk for unusually high connection limits; no observed exploitation or independent severity rating is established.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-21",
+          "url": "https://github.com/bitcoin/bitcoin/pull/35919"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-core-36449",
+      "project": "bitcoin-core",
+      "title": "Core samples occupied address-bucket slots uniformly",
+      "layer": "p2p",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-21T10:26:07Z",
+      "what_happened": "The merged change copies occupied addrman bucket positions into a temporary array and samples uniformly, replacing a random-start linear scan.",
+      "why_it_matters": "Removes the author-described selection bias between occupied positions; no claim of proven eclipse-attack prevention is made.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-21",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36449"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11388",
+      "project": "lnd",
+      "title": "LND fee-update validation backport reaches v0.20",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into v0.20.x-branch at 2026-10-21T02:21:15Z",
+      "what_happened": "The #11380 fee-floor validation, anchor-cap overflow bound and funding reservation handling changes were merged into the maintenance branch.",
+      "why_it_matters": "Preserves the same limitation: an existing channel unable to afford the fee floor remains unable to update. This is branch coverage, not a new vulnerability.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted. Critical is the upstream expert-review label, not an independent vulnerability rating.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-21",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11388"
+        }
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "lnd-11389",
+      "project": "lnd",
+      "title": "LND fee-update validation backport reaches v0.21",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into v0.21.x-branch at 2026-10-21T02:17:10Z",
+      "what_happened": "The #11380 fee-floor validation, anchor-cap overflow bound and funding reservation handling changes were merged into the maintenance branch.",
+      "why_it_matters": "Preserves the same limitation: an existing channel unable to afford the fee floor remains unable to update. This is branch coverage, not a new vulnerability.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted. Critical is the upstream expert-review label, not an independent vulnerability rating.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-21",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11389"
+        }
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "lnd-11378",
+      "project": "lnd",
+      "title": "LND channel fee-floor enforcement reaches v0.20",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into v0.20.x-branch at 2026-10-21T02:14:23Z",
+      "what_happened": "The #11373 channel-opening and outgoing fee-floor enforcement was backported to the maintenance branch.",
+      "why_it_matters": "Older peers proposing below-floor channels may be rejected. This tracks integration, not a tagged release or support for zero-fee commitments.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted. Critical is the upstream expert-review label, not an independent vulnerability rating.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-21",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11378"
+        }
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "lnd-11380",
+      "project": "lnd",
+      "title": "LND rejects below-floor fee updates before changing channel logs",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-21T01:03:30Z",
+      "what_happened": "Local and remote fee updates now share a fee-floor check before log mutation. The anchor fee-cap option is bounded at 10,000 sat/vbyte to avoid integer wraparound; funding reservation cleanup and locking are tightened.",
+      "why_it_matters": "The author reports that existing underfunded below-floor channels still cannot update; they now fail before log mutation or sending an invalid update. This does not repair channel affordability.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted. Critical is the upstream expert-review label, not an independent vulnerability rating.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-21",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11380"
+        }
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "lnd-11379",
+      "project": "lnd",
+      "title": "LND channel fee-floor enforcement reaches v0.21",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into v0.21.x-branch at 2026-10-21T01:04:13Z",
+      "what_happened": "The #11373 channel-opening and outgoing fee-floor enforcement was backported to the maintenance branch.",
+      "why_it_matters": "Older peers proposing below-floor channels may be rejected. This tracks integration, not a tagged release or support for zero-fee commitments.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted. Critical is the upstream expert-review label, not an independent vulnerability rating.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-21",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11379"
+        }
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "lnd-11383",
+      "project": "lnd",
+      "title": "LND updates minimum Go version and build toolchain separately",
+      "layer": "tooling",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-20T23:20:01Z",
+      "what_happened": "Tracked modules move to Go 1.26.10 while build-toolchain pins move to Go 1.27.3. The custom linter moves to v2.15.0 for V5 export-data compatibility.",
+      "why_it_matters": "Records an upstream critical-review-labeled toolchain change without inferring a specific vulnerability or independently reproducing the reported tests.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted. Critical is the upstream expert-review label, not an independent vulnerability rating.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11383"
+        }
+      ],
+      "severity": "critical"
     }
   ],
   "sources_checked": [
