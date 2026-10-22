@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-21",
+  "digest_date": "2026-10-22",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-21"
+    "to": "2026-10-22"
   },
-  "generated_at": "2026-10-21T18:31:16.043075+00:00",
+  "generated_at": "2026-10-22T18:31:50.049920+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v31.1",
@@ -2155,6 +2155,180 @@
         }
       ],
       "severity": "critical"
+    },
+    {
+      "id": "bitcoin-core-36596",
+      "project": "bitcoin-core",
+      "title": "Core 32.x backports connection cap and Tor proxy fixes",
+      "layer": "p2p",
+      "status": "backport_merged",
+      "status_note": "Merged into 32.x at 2026-10-22T17:01:20Z",
+      "what_happened": "The 32.x branch merged backports of the 2,000-connection cap, canonical onion proxy naming and an IBD test synchronization fix.",
+      "why_it_matters": "Extends the author-reported orphanage abort-risk reduction to 32.x. The default stays 200; branch integration is not a tagged release.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-22",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36596"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "original pull request",
+          "date": "2026-10-21",
+          "url": "https://github.com/bitcoin/bitcoin/pull/35919"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "original pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36177"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-core-36319",
+      "project": "bitcoin-core",
+      "title": "Core 31.x backports proxy fixes and experimental privacy guidance",
+      "layer": "p2p",
+      "status": "backport_merged",
+      "status_note": "Merged into 31.x at 2026-10-22T15:42:32Z",
+      "what_happened": "The maintenance branch merged canonical onion proxy naming, experimental private-broadcast guidance, BIP461 documentation, Linux upgrade instructions and an IBD test fix.",
+      "why_it_matters": "Private broadcast is described as risk reduction, not a privacy guarantee. Linux upgrades must preserve the wrapper and libexec binaries together.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-22",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36319"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "original pull request",
+          "date": "2026-10-20",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36177"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "original pull request",
+          "date": "2026-09-23",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36309"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "original pull request",
+          "date": "2026-09-30",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36377"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "original pull request",
+          "date": "2026-10-12",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36441"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-core-36581",
+      "project": "bitcoin-core",
+      "title": "Core fixes Windows external-signer process memory leak",
+      "layer": "tooling",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-22T15:34:36Z",
+      "what_happened": "The merged change removes an unreleased command-line allocation and passes the writable string buffer directly to CreateProcessA.",
+      "why_it_matters": "The author limits reachability to Windows with -signer configured, through authenticated RPC or the GUI. Impact is described as limited; this is not an unauthenticated network exploit claim.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-22",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36581"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-core-36456",
+      "project": "bitcoin-core",
+      "title": "Core adds malformed transaction deserialization tests",
+      "layer": "tooling",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-22T09:35:39Z",
+      "what_happened": "Tests reject strict prefixes of witness transactions, unknown optional witness flag 0x02 and incomplete CompactSize encodings.",
+      "why_it_matters": "Adds regression coverage for malformed inputs after gaps were found in another implementation. It does not establish a new Core consensus bug or production behavior change.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-22",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36456"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-core-36401",
+      "project": "bitcoin-core",
+      "title": "Core 30.x clarifies complete Linux upgrades",
+      "layer": "tooling",
+      "status": "backport_merged",
+      "status_note": "Merged into 30.x at 2026-10-22T07:40:45Z",
+      "what_happened": "The 30.x branch merged upgrade guidance covering both bin/ and libexec/ plus documentation of existing BIP461 low-R signing behavior.",
+      "why_it_matters": "Copying only bitcoind or bitcoin-qt can leave multiprocess binaries stale. BIP461 documentation is not new consensus activation.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-22",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36401"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "original pull request",
+          "date": "2026-09-30",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36377"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "original pull request",
+          "date": "2026-10-12",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36441"
+        }
+      ]
+    },
+    {
+      "id": "cln-9638",
+      "project": "cln",
+      "title": "CLN adds independent LSPS2 mock for misbehaving-provider tests",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-22T10:08:26Z",
+      "what_happened": "A Python test plugin implements LSPS2 from bLIP-50/52 and can simulate transport, purchase, channel-open and HTLC-forwarding misbehavior.",
+      "why_it_matters": "Provides a separate implementation to exercise the client without reusing the in-tree service code. Changes are test-only; shared specification misunderstandings remain possible.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim. Backport labels do not establish completed backports.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request",
+          "date": "2026-10-22",
+          "url": "https://github.com/ElementsProject/lightning/pull/9638"
+        }
+      ]
     }
   ],
   "sources_checked": [
