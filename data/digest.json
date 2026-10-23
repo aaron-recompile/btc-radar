@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-22",
+  "digest_date": "2026-10-23",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-22"
+    "to": "2026-10-23"
   },
-  "generated_at": "2026-10-22T18:31:50.049920+00:00",
+  "generated_at": "2026-10-23T18:31:20.332978+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v31.1",
@@ -2327,6 +2327,101 @@
           "type": "merged pull request",
           "date": "2026-10-22",
           "url": "https://github.com/ElementsProject/lightning/pull/9638"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11398",
+      "project": "lnd",
+      "title": "LND 0.20 backports PostgreSQL error mapping and queue synchronization",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into v0.20.x-branch at 2026-10-23T16:24:21Z",
+      "what_happened": "The v0.20 maintenance branch consumes kvdb v1.4.18, queue v1.2.1 and a branch-compatible sqldb fix for pgx/v5 error recognition.",
+      "why_it_matters": "The author reports that mismatched PostgreSQL error types expose raw SQLSTATE 23505 instead of expected duplicate-invoice and AMP-set errors, disrupting invoice, AMP and keysend replay handling. The queue update consumes a synchronized circular buffer.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted. Critical denotes the upstream expert-review label, not an independently rated vulnerability.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-23",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11398"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "supporting pull request",
+          "date": "2026-05-07",
+          "url": "https://github.com/lightningnetwork/lnd/pull/10793"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "supporting pull request",
+          "date": "2026-05-14",
+          "url": "https://github.com/lightningnetwork/lnd/pull/10729"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "supporting pull request",
+          "date": "2026-08-28",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11130"
+        }
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "lnd-11287",
+      "project": "lnd",
+      "title": "LND adds submodule linting to CI with targeted error-handling fixes",
+      "layer": "tooling",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-10-23T03:48:41Z",
+      "what_happened": "The merged change enables linting for all 12 submodules, removes unused helpers and applies mostly mechanical cleanups, plus errors.Is handling for migration errors and checked assertions in a kvdb test.",
+      "why_it_matters": "Makes submodule lint checks continuous rather than opt-in. Upstream marks this for critical expert review; that label does not establish an exploitable vulnerability. Reported test passes were not independently reproduced.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted. Critical denotes the upstream expert-review label, not an independently rated vulnerability.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-23",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11287"
+        }
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "lnd-11399",
+      "project": "lnd",
+      "title": "LND 0.21 backports kvdb Go vet and pgx/v5 compatibility fixes",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into v0.21.x-branch at 2026-10-23T02:14:16Z",
+      "what_happened": "The v0.21 maintenance branch merged constant-format-string fixes and registration of the pgx/v5 SQL driver expected by PostgreSQL bulk migration.",
+      "why_it_matters": "Addresses author-reported Go 1.24+ vet failures and a driver-version mismatch. A merged backport alone does not prove a module tag was published or consumed by a release.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-23",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11399"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "supporting pull request",
+          "date": "2026-05-07",
+          "url": "https://github.com/lightningnetwork/lnd/pull/10793"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "supporting pull request",
+          "date": "2026-05-14",
+          "url": "https://github.com/lightningnetwork/lnd/pull/10729"
         }
       ]
     }
