@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-23",
+  "digest_date": "2026-10-24",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-23"
+    "to": "2026-10-24"
   },
-  "generated_at": "2026-10-23T18:31:20.332978+00:00",
+  "generated_at": "2026-10-24T18:30:55.468496+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v31.1",
@@ -2424,6 +2424,28 @@
           "url": "https://github.com/lightningnetwork/lnd/pull/10729"
         }
       ]
+    },
+    {
+      "id": "lnd-11397",
+      "project": "lnd",
+      "title": "LND 0.21 root module consumes coordinated PostgreSQL and queue fixes",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "status_note": "Merged into v0.21.x-branch at 2026-10-23T22:08:44Z",
+      "what_happened": "The v0.21 root module now consumes kvdb v1.4.18, queue v1.2.1 and sqldb v1.0.14 alongside the pgx/v5 PostgreSQL error-mapping backport.",
+      "why_it_matters": "Closes the dependency-consumption gap left after nested-module fixes. The author reports that mismatched PostgreSQL error types leaked raw SQLSTATE 23505 for duplicate invoice and AMP-set IDs; the queue bump consumes a synchronized circular buffer.",
+      "not_yet": "Not verified in a tagged release; not a deployment claim.",
+      "verification": "author-reported",
+      "uncertainty": "Behavior and test results are author-reported, not independently reproduced. No observed exploitation, fund loss or independent vulnerability severity assessment is asserted. Critical denotes the upstream expert-review label, not an independently rated vulnerability.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-23",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11397"
+        }
+      ],
+      "severity": "critical"
     }
   ],
   "sources_checked": [
