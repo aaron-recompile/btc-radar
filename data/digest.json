@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-24",
+  "digest_date": "2026-10-25",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-24"
+    "to": "2026-10-25"
   },
-  "generated_at": "2026-10-24T18:30:55.468496+00:00",
+  "generated_at": "2026-10-25T18:31:27.663592+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v31.1",
@@ -2446,6 +2446,33 @@
         }
       ],
       "severity": "critical"
+    },
+    {
+      "id": "eclair-v0.14.5",
+      "project": "eclair",
+      "title": "Eclair v0.14.5 publishes security-hardening patch",
+      "layer": "lightning",
+      "status": "released",
+      "status_note": "Published 2026-10-20; added as a coverage-gap correction on 2026-10-25, not a new release today.",
+      "what_happened": "ACINQ published Eclair v0.14.5 as a security-hardening patch and credits responsible disclosures. The maintainers report that some addressed issues can be exploited by malicious nodes.",
+      "why_it_matters": "Adds an operator-relevant released security milestone missing from the digest. ACINQ recommends upgrading and reports compatibility with previous versions without channel closure.",
+      "not_yet": "No independent exploit reproduction, binary/signature verification, deployment measurement or observed exploitation is established by this record.",
+      "verification": "author-reported",
+      "uncertainty": "Publication is verified via the original GitHub release. Security impact and upgrade compatibility remain maintainer-reported. The tagged notes retain an unfilled changelog placeholder; specific vulnerabilities, affected-version ranges and severity are not inferred.",
+      "sources": [
+        {
+          "publisher": "ACINQ",
+          "type": "release announcement",
+          "date": "2026-10-20",
+          "url": "https://github.com/ACINQ/eclair/releases/tag/v0.14.5"
+        },
+        {
+          "publisher": "ACINQ",
+          "type": "tagged release notes",
+          "date": "2026-10-20",
+          "url": "https://github.com/ACINQ/eclair/blob/v0.14.5/docs/release-notes/eclair-v0.14.5.md"
+        }
+      ]
     }
   ],
   "sources_checked": [
