@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-25",
+  "digest_date": "2026-10-26",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-25"
+    "to": "2026-10-26"
   },
-  "generated_at": "2026-10-25T18:31:27.663592+00:00",
+  "generated_at": "2026-10-26T18:31:37.391420+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v31.1",
@@ -2471,6 +2471,69 @@
           "type": "tagged release notes",
           "date": "2026-10-20",
           "url": "https://github.com/ACINQ/eclair/blob/v0.14.5/docs/release-notes/eclair-v0.14.5.md"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-core-36667",
+      "project": "bitcoin-core",
+      "layer": "p2p",
+      "title": "Bitcoin Core merges timeout for paused-send peers",
+      "status": "merged",
+      "status_note": "Merged 2026-10-26T16:47:41Z; tagged release inclusion not established.",
+      "what_happened": "The merged change enforces a timeout for peers whose slow reading keeps the send buffer above its resume threshold. The author selected 20 minutes, matching the existing ping-timeout interval.",
+      "why_it_matters": "Bounds connection-slot occupancy by persistently slow readers; this is merged P2P resource management, not a verified vulnerability disclosure.",
+      "not_yet": "Not verified in a tagged release or deployed network; no independent behavior, signature or exploit reproduction.",
+      "verification": "author-reported",
+      "uncertainty": "Merge state verified via upstream GitHub API. Behavior and test claims remain author-reported. No vulnerability severity, observed exploitation or fund loss is inferred.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-26",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36667"
+        }
+      ]
+    },
+    {
+      "id": "core-lightning-9627",
+      "project": "core-lightning",
+      "layer": "lightning",
+      "title": "Core Lightning merges onion-budget-aware route length limits",
+      "status": "merged",
+      "status_note": "Merged 2026-10-26T17:58:29Z; tagged release inclusion not established.",
+      "what_happened": "The merged change adds an askrene maxhops constraint and passes an xpay onion-budget-derived limit to route finding. The author describes scaling per-hop costs until routes fit, or returning no solution.",
+      "why_it_matters": "Targets author-reported payment-onion construction failures for oversized routes, including payments with large final or blinded payloads. No payment-success improvement has been independently measured.",
+      "not_yet": "Not verified in a tagged release or deployed network; no independent behavior, signature or exploit reproduction.",
+      "verification": "author-reported",
+      "uncertainty": "Merge state verified via upstream GitHub API. Behavior and test claims remain author-reported. No vulnerability severity, observed exploitation or fund loss is inferred.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request",
+          "date": "2026-10-26",
+          "url": "https://github.com/ElementsProject/lightning/pull/9627"
+        }
+      ]
+    },
+    {
+      "id": "core-lightning-9647",
+      "project": "core-lightning",
+      "layer": "tooling",
+      "title": "Core Lightning refreshes release-verification key and examples",
+      "status": "merged",
+      "status_note": "Merged 2026-10-26T12:05:14Z; tagged release inclusion not established.",
+      "what_happened": "The merged change refreshes the repository copy of a signing subkey and updates reproducible-build verification examples. The author reports the refreshed public key verifies the v26.06.9 tag signature in a clean keyring.",
+      "why_it_matters": "Addresses an author-reported release-verification obstacle from an expired repository key copy. This record does not independently authenticate a signing key, signature, binary or build.",
+      "not_yet": "Not verified in a tagged release or deployed network; no independent behavior, signature or exploit reproduction.",
+      "verification": "author-reported",
+      "uncertainty": "Merge state verified via upstream GitHub API. Behavior and test claims remain author-reported. No vulnerability severity, observed exploitation or fund loss is inferred.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request",
+          "date": "2026-10-26",
+          "url": "https://github.com/ElementsProject/lightning/pull/9647"
         }
       ]
     }
