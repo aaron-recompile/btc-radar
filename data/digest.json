@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-26",
+  "digest_date": "2026-10-28",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-26"
+    "to": "2026-10-28"
   },
-  "generated_at": "2026-10-26T18:31:37.391420+00:00",
+  "generated_at": "2026-10-28T18:32:36.708295+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v31.1",
@@ -2534,6 +2534,194 @@
           "type": "merged pull request",
           "date": "2026-10-26",
           "url": "https://github.com/ElementsProject/lightning/pull/9647"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-core-36676",
+      "project": "bitcoin-core",
+      "layer": "rpc",
+      "title": "Bitcoin Core fixes client timeout handling while sending",
+      "status": "merged",
+      "status_note": "Merged 2026-10-28T15:49:52Z; this record describes the upstream merge.",
+      "what_happened": "The author reports that bitcoin-cli could retry socket waits indefinitely after a timeout or error. The merged change returns instead, so rpcclienttimeout is respected during sending.",
+      "why_it_matters": "Corrects an RPC client timeout regression; no independently reproduced denial of service or deployment impact is claimed.",
+      "not_yet": "No independent behavior or exploit reproduction; release inclusion and deployment are not established by this merge record.",
+      "verification": "author-reported",
+      "uncertainty": "Merge state verified via upstream GitHub API; behavior and test outcomes remain author-reported. No independent severity rating, observed exploitation or fund loss is inferred.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-28",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36676"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-core-36678",
+      "project": "bitcoin-core",
+      "layer": "tooling",
+      "title": "Bitcoin Core updates vulnerability-disclosure release-note template",
+      "status": "merged",
+      "status_note": "Merged 2026-10-28T13:39:14Z; this record describes the upstream merge.",
+      "what_happened": "The merged template says easily discoverable vulnerabilities will be disclosed once fixed releases are available for all maintained major versions, separately from the regular disclosure schedule.",
+      "why_it_matters": "Makes the disclosure timing distinction explicit. This documentation change does not establish that any particular vulnerability has been disclosed.",
+      "not_yet": "No independent behavior or exploit reproduction; release inclusion and deployment are not established by this merge record.",
+      "verification": "author-reported",
+      "uncertainty": "Merge state verified via upstream GitHub API; behavior and test outcomes remain author-reported. No independent severity rating, observed exploitation or fund loss is inferred.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-28",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36678"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11357",
+      "project": "lnd",
+      "layer": "lightning",
+      "title": "LND tightens BOLT 11 invoice decoding",
+      "status": "merged",
+      "status_note": "Merged 2026-10-28T01:53:05Z; this record describes the upstream merge.",
+      "what_happened": "The author reports new rejections for invalid fixed-field lengths, duplicate payment-secret fields, and high-S signatures with an explicit payee key. Missing payment-secret and unknown-feature handling retain documented exceptions.",
+      "why_it_matters": "Removes author-reported decoder ambiguities and accepts fewer malformed third-party invoices; upstream labels describe review priority, not independently verified exploit severity.",
+      "not_yet": "No independent behavior or exploit reproduction; release inclusion and deployment are not established by this merge record.",
+      "verification": "author-reported",
+      "uncertainty": "Merge state verified via upstream GitHub API; behavior and test outcomes remain author-reported. No independent severity rating, observed exploitation or fund loss is inferred.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-28",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11357"
+        }
+      ]
+    },
+    {
+      "id": "lnd-11413",
+      "project": "lnd",
+      "layer": "lightning",
+      "title": "LND replaces per-row network-result pruning",
+      "status": "merged",
+      "status_note": "Merged 2026-10-26T20:25:01Z; this record describes the upstream merge.",
+      "what_happened": "The author reports replacing per-result database operations with a streamed retained-result pass and bucket recreation when pruning is needed, while preserving the no-op case.",
+      "why_it_matters": "Addresses author-reported hours-long startup cleanup on remote SQL databases. Retained despite its critical-review label; that label is not proof of a critical vulnerability or measured speedup.",
+      "not_yet": "No independent behavior or exploit reproduction; release inclusion and deployment are not established by this merge record.",
+      "verification": "author-reported",
+      "uncertainty": "Merge state verified via upstream GitHub API; behavior and test outcomes remain author-reported. No independent severity rating, observed exploitation or fund loss is inferred.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-26",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11413"
+        }
+      ]
+    },
+    {
+      "id": "core-lightning-9664",
+      "project": "core-lightning",
+      "layer": "lightning",
+      "title": "Core Lightning rejects malformed gRPC request values",
+      "status": "merged",
+      "status_note": "Merged 2026-10-28T14:49:24Z; this record describes the upstream merge.",
+      "what_happened": "The merged patch replaces infallible request conversions with fallible conversions returning InvalidArgument. Source tests cover malformed public keys, missing fields and out-of-range integer values.",
+      "why_it_matters": "Hardens the gRPC request boundary against panic or truncation paths visible in the patch. Tests were inspected, not executed; remote exploitability and severity remain unverified.",
+      "not_yet": "No independent behavior or exploit reproduction; release inclusion and deployment are not established by this merge record.",
+      "verification": "author-reported",
+      "uncertainty": "Merge state verified via upstream GitHub API; behavior and test outcomes remain author-reported. No independent severity rating, observed exploitation or fund loss is inferred.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request",
+          "date": "2026-10-28",
+          "url": "https://github.com/ElementsProject/lightning/pull/9664"
+        }
+      ]
+    },
+    {
+      "id": "eclair-3417",
+      "project": "eclair",
+      "layer": "lightning",
+      "title": "Eclair hardens unconfirmed-splice handling",
+      "status": "merged",
+      "status_note": "Merged 2026-10-27T15:44:19Z; this record describes the upstream merge.",
+      "what_happened": "The author reports confirmed-input requirements for splicing by default, peer input/output limits, funding-aware force-close selection and CPFP handling, and a warning about zero_fee_commitments with untrusted peers.",
+      "why_it_matters": "Targets robustness and security risks around unconfirmed splice transactions; behavior and attack resistance have not been independently reproduced.",
+      "not_yet": "No independent behavior or exploit reproduction; release inclusion and deployment are not established by this merge record.",
+      "verification": "author-reported",
+      "uncertainty": "Merge state verified via upstream GitHub API; behavior and test outcomes remain author-reported. No independent severity rating, observed exploitation or fund loss is inferred.",
+      "sources": [
+        {
+          "publisher": "GitHub ACINQ/eclair",
+          "type": "merged pull request",
+          "date": "2026-10-27",
+          "url": "https://github.com/ACINQ/eclair/pull/3417"
+        }
+      ]
+    },
+    {
+      "id": "eclair-3419",
+      "project": "eclair",
+      "layer": "lightning",
+      "title": "Eclair recognizes stale local commitments during force-close",
+      "status": "merged",
+      "status_note": "Merged 2026-10-27T15:17:58Z; this record describes the upstream merge.",
+      "what_happened": "The author reports that an earlier local commitment could confirm after the node switched commitments, leading to misclassification and unclaimed local or HTLC outputs. The fix recognizes local commitments and resumes the matching force-close path.",
+      "why_it_matters": "Preserves an important author-reported output-claim failure mode rather than treating it as routine maintenance; no observed fund loss or exploit is established.",
+      "not_yet": "No independent behavior or exploit reproduction; release inclusion and deployment are not established by this merge record.",
+      "verification": "author-reported",
+      "uncertainty": "Merge state verified via upstream GitHub API; behavior and test outcomes remain author-reported. No independent severity rating, observed exploitation or fund loss is inferred.",
+      "sources": [
+        {
+          "publisher": "GitHub ACINQ/eclair",
+          "type": "merged pull request",
+          "date": "2026-10-27",
+          "url": "https://github.com/ACINQ/eclair/pull/3419"
+        }
+      ]
+    },
+    {
+      "id": "eclair-3416",
+      "project": "eclair",
+      "layer": "lightning",
+      "title": "Eclair flags unpaid future-HTLC liquidity fees",
+      "status": "merged",
+      "status_note": "Merged 2026-10-27T13:11:44Z; this record describes the upstream merge.",
+      "what_happened": "The author reports tracking underpaid from_future_htlc purchases by funding transaction, flagging the peer, and preventing unrelated payments with reused hashes from clearing that debt. Aborted unpublished purchases are forgotten.",
+      "why_it_matters": "Addresses an author-reported repeatable unpaid-fee path. The description is not evidence of real-world exploitation or quantified losses.",
+      "not_yet": "No independent behavior or exploit reproduction; release inclusion and deployment are not established by this merge record.",
+      "verification": "author-reported",
+      "uncertainty": "Merge state verified via upstream GitHub API; behavior and test outcomes remain author-reported. No independent severity rating, observed exploitation or fund loss is inferred.",
+      "sources": [
+        {
+          "publisher": "GitHub ACINQ/eclair",
+          "type": "merged pull request",
+          "date": "2026-10-27",
+          "url": "https://github.com/ACINQ/eclair/pull/3416"
+        }
+      ]
+    },
+    {
+      "id": "eclair-v0-14-6-release",
+      "project": "eclair",
+      "layer": "lightning",
+      "title": "Eclair v0.14.6 released with security-hardening warning",
+      "status": "released",
+      "what_happened": "The upstream release announcement describes security-hardening fixes and a new option controlling unconfirmed splice inputs, disabled by default. Maintainers recommend upgrading and report that malicious nodes can exploit some of the issues.",
+      "why_it_matters": "Provides a concrete released-version signal alongside the individual merged fixes, without presenting the maintainer warning as independently reproduced exploitation.",
+      "not_yet": "No binary, signature or build verification performed; no independent exploit reproduction or deployed-network adoption measurement.",
+      "verification": "author-reported",
+      "uncertainty": "Release publication verified via upstream API; security and compatibility claims remain maintainer-reported. Exact per-fix release mapping has not been independently audited.",
+      "sources": [
+        {
+          "publisher": "GitHub ACINQ/eclair",
+          "type": "release announcement",
+          "date": "2026-10-27",
+          "url": "https://github.com/ACINQ/eclair/releases/tag/v0.14.6"
         }
       ]
     }
