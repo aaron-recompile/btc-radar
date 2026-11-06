@@ -1,16 +1,16 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-28",
+  "digest_date": "2026-11-05",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-10-28"
+    "to": "2026-11-05"
   },
-  "generated_at": "2026-10-28T18:32:36.708295+00:00",
+  "generated_at": "2026-11-06T06:54:57.663054+00:00",
   "context": {
     "latest_bitcoin_core_release": {
-      "version": "v31.1",
-      "date": "2026-07-08",
-      "url": "https://github.com/bitcoin/bitcoin/releases/tag/v31.1"
+      "version": "v32.1",
+      "date": "2026-10-28",
+      "url": "https://github.com/bitcoin/bitcoin/releases/tag/v32.1"
     },
     "note": "Items marked merged are integrated into the development branch specified by their source; backport_merged denotes maintenance-branch integration. Neither status establishes tagged release inclusion."
   },
@@ -2722,6 +2722,219 @@
           "type": "release announcement",
           "date": "2026-10-27",
           "url": "https://github.com/ACINQ/eclair/releases/tag/v0.14.6"
+        }
+      ]
+    },
+    {
+      "id": "lnd-remote-signing-20261105",
+      "project": "lnd",
+      "layer": "lightning",
+      "title": "LND hardens outbound remote-signer configuration",
+      "status": "merged",
+      "what_happened": "The author reports preventing creation of a no-op remote signer when the node is configured as an outbound remote signer.",
+      "why_it_matters": "Retains a critical-review configuration-hardening change without claiming a confirmed exploit.",
+      "not_yet": "No independent exploit reproduction, upstream test execution, binary/signature verification or adoption measurement. Merge alone does not establish release inclusion.",
+      "verification": "author-reported",
+      "status_note": "Merged into master. Critical-review items retained; no tagged-release inference.",
+      "uncertainty": "Publication/merge metadata verified against original upstream API; behavior, security impact and test outcomes remain author/maintainer-reported. Critical-review labels are not independently verified vulnerability severity.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11292"
+        }
+      ]
+    },
+    {
+      "id": "lnd-sweep-retry-20261105",
+      "project": "lnd",
+      "layer": "lightning",
+      "title": "LND preserves sweeps after transient mempool rejection",
+      "status": "merged",
+      "what_happened": "The author reports keeping sweep inputs available for unknown or transient acceptance errors and retaining already accepted initial transactions under management; recognized script and initialization failures remain terminal.",
+      "why_it_matters": "Distinguishes retryable backend uncertainty from terminal errors in on-chain recovery.",
+      "not_yet": "No independent exploit reproduction, upstream test execution, binary/signature verification or adoption measurement. Merge alone does not establish release inclusion.",
+      "verification": "author-reported",
+      "status_note": "Merged into master. Critical-review items retained; no tagged-release inference.",
+      "uncertainty": "Publication/merge metadata verified against original upstream API; behavior, security impact and test outcomes remain author/maintainer-reported. Critical-review labels are not independently verified vulnerability severity.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11472"
+        }
+      ]
+    },
+    {
+      "id": "lnd-amp-recovery-20261105",
+      "project": "lnd",
+      "layer": "lightning",
+      "title": "LND adds settled AMP preimages to on-chain resolution",
+      "status": "merged",
+      "what_happened": "The author reports a side-effect-free lookup scoped by AMP set ID and child hash, returning preimages only for settled invoice HTLCs. Lookups are deferred to the broadcast window and errors retried on the next block.",
+      "why_it_matters": "Tracks recovery of settled AMP HTLCs while preserving the author-reported boundary.",
+      "not_yet": "No independent exploit reproduction, upstream test execution, binary/signature verification or adoption measurement. Merge alone does not establish release inclusion.",
+      "verification": "author-reported",
+      "status_note": "Merged into master. Critical-review items retained; no tagged-release inference.",
+      "uncertainty": "Publication/merge metadata verified against original upstream API; behavior, security impact and test outcomes remain author/maintainer-reported. Critical-review labels are not independently verified vulnerability severity.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11492"
+        }
+      ]
+    },
+    {
+      "id": "lnd-link-failure-backports-20261105",
+      "project": "lnd",
+      "layer": "lightning",
+      "title": "LND backports asynchronous link-failure delivery",
+      "status": "backport_merged",
+      "what_happened": "Authors report a peer-owned queue separating terminal link failures from channel-manager processing, avoiding a mutual wait during cooperative-close hook registration.",
+      "why_it_matters": "Both maintenance branches receive the reported cleanup and on-chain progress fix; merge is not release.",
+      "not_yet": "No independent exploit reproduction, upstream test execution, binary/signature verification or adoption measurement. Merge alone does not establish release inclusion.",
+      "verification": "author-reported",
+      "status_note": "Merged into v0.20.x-branch, v0.21.x-branch. Critical-review items retained; no tagged-release inference.",
+      "uncertainty": "Publication/merge metadata verified against original upstream API; behavior, security impact and test outcomes remain author/maintainer-reported. Critical-review labels are not independently verified vulnerability severity.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11496"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11495"
+        }
+      ]
+    },
+    {
+      "id": "lnd-replacement-fee-backports-20261105",
+      "project": "lnd",
+      "layer": "lightning",
+      "title": "LND backports replacement-fee rejection handling",
+      "status": "backport_merged",
+      "what_happened": "Authors report allowing contractcourt commitment and legacy timeout processing to continue after insufficient replacement-fee rejection. Legacy HTLC success publication is intentionally unchanged.",
+      "why_it_matters": "Preserves a critical-review fix and its explicit recovery-path limitation.",
+      "not_yet": "No independent exploit reproduction, upstream test execution, binary/signature verification or adoption measurement. Merge alone does not establish release inclusion.",
+      "verification": "author-reported",
+      "status_note": "Merged into v0.20.x-branch, v0.21.x-branch. Critical-review items retained; no tagged-release inference.",
+      "uncertainty": "Publication/merge metadata verified against original upstream API; behavior, security impact and test outcomes remain author/maintainer-reported. Critical-review labels are not independently verified vulnerability severity.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11513"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11514"
+        }
+      ]
+    },
+    {
+      "id": "lnd-update-log-backport-20261105",
+      "project": "lnd",
+      "layer": "lightning",
+      "title": "LND v0.20 branch guards unsigned update-list overflow",
+      "status": "backport_merged",
+      "what_happened": "The author reports rejecting oversized unsigned acknowledged update lists before revocation and serialization, and recovering complete older trailing records only when their lengths match the wrapped count. Malformed trailing data is rejected.",
+      "why_it_matters": "The author reports that a wrapped 16-bit count could omit a previously settled HTLC after restart; this is not independently reproduced.",
+      "not_yet": "No independent exploit reproduction, upstream test execution, binary/signature verification or adoption measurement. Merge alone does not establish release inclusion.",
+      "verification": "author-reported",
+      "status_note": "Merged into v0.20.x-branch. Critical-review items retained; no tagged-release inference.",
+      "uncertainty": "Publication/merge metadata verified against original upstream API; behavior, security impact and test outcomes remain author/maintainer-reported. Critical-review labels are not independently verified vulnerability severity.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11512"
+        }
+      ]
+    },
+    {
+      "id": "lnd-alias-backports-20261105",
+      "project": "lnd",
+      "layer": "lightning",
+      "title": "LND backports rejection of cross-channel peer aliases",
+      "status": "backport_merged",
+      "what_happened": "Authors report checking that peer aliases are not assigned in the graph to another funding outpoint, at initial storage, rotation and signing time, including the zero-conf RemoteAlias path.",
+      "why_it_matters": "Tracks both maintenance-branch protections against signing updates attributed to a different channel.",
+      "not_yet": "No independent exploit reproduction, upstream test execution, binary/signature verification or adoption measurement. Merge alone does not establish release inclusion.",
+      "verification": "author-reported",
+      "status_note": "Merged into v0.20.x-branch, v0.21.x-branch. Critical-review items retained; no tagged-release inference.",
+      "uncertainty": "Publication/merge metadata verified against original upstream API; behavior, security impact and test outcomes remain author/maintainer-reported. Critical-review labels are not independently verified vulnerability severity.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11503"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11502"
+        }
+      ]
+    },
+    {
+      "id": "lnd-mptcp-mitigation-20261030",
+      "project": "lnd",
+      "layer": "lightning",
+      "title": "LND releases disable MPTCP listeners as a kernel-exploit mitigation",
+      "status": "released",
+      "what_happened": "Maintainers report that both releases disable MPTCP listeners by default to close the demonstrated exploit path for Linux CVE-2026-98432. They explicitly describe this as mitigation, not a kernel fix, and say other host services remain outside its scope.",
+      "why_it_matters": "Separates a released application mitigation from the kernel patch maintainers say is still required.",
+      "not_yet": "No independent exploit reproduction, upstream test execution, binary/signature verification or adoption measurement. Merge alone does not establish release inclusion.",
+      "verification": "author-reported",
+      "status_note": "Tagged release publication verified. Security claims remain maintainer-reported; no independent severity or exploitation finding.",
+      "uncertainty": "Publication/merge metadata verified against original upstream API; behavior, security impact and test outcomes remain author/maintainer-reported. Critical-review labels are not independently verified vulnerability severity.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "release announcement",
+          "date": "2026-10-30",
+          "url": "https://github.com/lightningnetwork/lnd/releases/tag/v0.21.6-beta"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "release announcement",
+          "date": "2026-10-30",
+          "url": "https://github.com/lightningnetwork/lnd/releases/tag/v0.20.7-beta"
+        }
+      ]
+    },
+    {
+      "id": "cln-v26-06-10-security",
+      "project": "core-lightning",
+      "layer": "lightning",
+      "title": "CLN v26.06.10 announces broad security fixes",
+      "status": "released",
+      "what_happened": "Maintainers announce fixes covering dual-funding and splice signature checks, on-chain HTLC resolution, gossip resource limits, connectd, runes/commando, plugin hooks and hsmd, plus remote-crash hardening. They recommend upgrading and say security tests are temporarily withheld.",
+      "why_it_matters": "Retains the original security warning and incomplete public-test boundary instead of treating release publication as independent verification.",
+      "not_yet": "No independent exploit reproduction, upstream test execution, binary/signature verification or adoption measurement. Merge alone does not establish release inclusion.",
+      "verification": "author-reported",
+      "status_note": "Tagged release publication verified. Security claims remain maintainer-reported; no independent severity or exploitation finding.",
+      "uncertainty": "Publication/merge metadata verified against original upstream API; behavior, security impact and test outcomes remain author/maintainer-reported. Critical-review labels are not independently verified vulnerability severity.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "release announcement",
+          "date": "2026-11-04",
+          "url": "https://github.com/ElementsProject/lightning/releases/tag/v26.06.10"
         }
       ]
     }
