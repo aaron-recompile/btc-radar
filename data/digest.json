@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-11-05",
+  "digest_date": "2026-11-06",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-11-05"
+    "to": "2026-11-06"
   },
-  "generated_at": "2026-11-06T06:54:57.663054+00:00",
+  "generated_at": "2026-11-06T19:31:29.645466+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v32.1",
@@ -2935,6 +2935,168 @@
           "type": "release announcement",
           "date": "2026-11-04",
           "url": "https://github.com/ElementsProject/lightning/releases/tag/v26.06.10"
+        }
+      ]
+    },
+    {
+      "id": "lnd-amp-maintenance-20261106",
+      "project": "lnd",
+      "layer": "lightning",
+      "title": "LND backports settled AMP on-chain recovery to both maintenance branches",
+      "status": "backport_merged",
+      "what_happened": "Authors report retaining the AMP preimage production lookup and all AMP-specific tests while omitting two unrelated BOLT12 tests unavailable on the maintenance branches. The lookup returns only settled HTLC preimages scoped by set ID and child hash; lookup failures retry on the next block.",
+      "why_it_matters": "Adds maintenance-branch availability to the previously tracked master fix; both upstream PRs carry severity-critical labels, not independently verified severity.",
+      "not_yet": "No independent upstream test execution, exploit reproduction, binary/signature verification or deployment measurement. Maintenance-branch merge does not establish tagged-release inclusion.",
+      "verification": "author-reported",
+      "status_note": "Merge metadata verified for v0.20.x-branch, v0.21.x-branch. Critical/security items retained; upstream labels are not independent severity ratings.",
+      "uncertainty": "Behavior, security impact and test results remain author-reported. Historical draft wording in a PR body is not its current merge state.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-06",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11519"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-06",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11518"
+        }
+      ]
+    },
+    {
+      "id": "lnd-batch-state-maintenance-20261106",
+      "project": "lnd",
+      "layer": "lightning",
+      "title": "LND backports pending batch-funding state preservation",
+      "status": "backport_merged",
+      "what_happened": "Authors report preserving pending channels after a funding publication attempt returns an error, because the transaction may already have reached the network. Cleanup before publication is unchanged. The RPC still returns the error; retries are not made idempotent and restart republication is not guaranteed.",
+      "why_it_matters": "Tracks explicit recovery-state preservation and its limitations on both maintenance branches.",
+      "not_yet": "No independent upstream test execution, exploit reproduction, binary/signature verification or deployment measurement. Maintenance-branch merge does not establish tagged-release inclusion.",
+      "verification": "author-reported",
+      "status_note": "Merge metadata verified for v0.20.x-branch, v0.21.x-branch. Critical/security items retained; upstream labels are not independent severity ratings.",
+      "uncertainty": "Behavior, security impact and test results remain author-reported. Historical draft wording in a PR body is not its current merge state.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11510"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11509"
+        }
+      ]
+    },
+    {
+      "id": "lnd-update-log-v021-20261106",
+      "project": "lnd",
+      "layer": "lightning",
+      "title": "LND v0.21 backport guards unsigned update-log overflow",
+      "status": "backport_merged",
+      "what_happened": "The author reports rejecting oversized unsigned acknowledged update lists before revocation and serialization, and recovering only complete trailing records matching a wrapped count. On this branch the serializer and recovery live in channeldb/channel.go rather than chanstate.",
+      "why_it_matters": "Complements the already recorded v0.20 backport without implying a released fix or independently confirming the reported restart-state omission.",
+      "not_yet": "No independent upstream test execution, exploit reproduction, binary/signature verification or deployment measurement. Maintenance-branch merge does not establish tagged-release inclusion.",
+      "verification": "author-reported",
+      "status_note": "Merge metadata verified for v0.21.x-branch. Critical/security items retained; upstream labels are not independent severity ratings.",
+      "uncertainty": "Behavior, security impact and test results remain author-reported. Historical draft wording in a PR body is not its current merge state.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11511"
+        }
+      ]
+    },
+    {
+      "id": "lnd-confirmation-hints-maintenance-20261106",
+      "project": "lnd",
+      "layer": "lightning",
+      "title": "LND backports script-scoped confirmation hints and repairs integration-test imports",
+      "status": "backport_merged",
+      "what_happened": "Authors report keying confirmation hints by txid plus output script so different watches sharing a txid cannot advance each other. Legacy txid-only entries are ignored, allowing rescans. Follow-up PRs switch the new integration test to btcd v1 module paths used by both maintenance branches.",
+      "why_it_matters": "Retains the reported breach-confirmation isolation fix and the subsequent test compilation repair; upstream test success is not independently reproduced.",
+      "not_yet": "No independent upstream test execution, exploit reproduction, binary/signature verification or deployment measurement. Maintenance-branch merge does not establish tagged-release inclusion.",
+      "verification": "author-reported",
+      "status_note": "Merge metadata verified for v0.20.x-branch, v0.21.x-branch. Critical/security items retained; upstream labels are not independent severity ratings.",
+      "uncertainty": "Behavior, security impact and test results remain author-reported. Historical draft wording in a PR body is not its current merge state.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11494"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11493"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11526"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11527"
+        }
+      ]
+    },
+    {
+      "id": "lnd-restored-close-maintenance-20261106",
+      "project": "lnd",
+      "layer": "lightning",
+      "title": "LND backports restored-channel local force-close guard",
+      "status": "backport_merged",
+      "what_happened": "Authors report treating restored channel shells as local data loss and waiting for the remote close instead of attempting to sign a missing local commitment. The peer handler accepts a nil close transaction rather than dereferencing it.",
+      "why_it_matters": "Tracks the reported restart-panic prevention on both maintenance branches, without claiming recovery is complete or released.",
+      "not_yet": "No independent upstream test execution, exploit reproduction, binary/signature verification or deployment measurement. Maintenance-branch merge does not establish tagged-release inclusion.",
+      "verification": "author-reported",
+      "status_note": "Merge metadata verified for v0.20.x-branch, v0.21.x-branch. Critical/security items retained; upstream labels are not independent severity ratings.",
+      "uncertainty": "Behavior, security impact and test results remain author-reported. Historical draft wording in a PR body is not its current merge state.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11491"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11490"
+        }
+      ]
+    },
+    {
+      "id": "cln-security-forward-port-20261106",
+      "project": "core-lightning",
+      "layer": "lightning",
+      "title": "CLN forwards v26.06.10 security fixes to master",
+      "status": "merged",
+      "what_happened": "The author reports forwarding the released security fixes to master, including channel opening and splicing checks, on-chain resolution, gossip resource limits, runes/commando and signer permission hardening. Security-specific tests remain temporarily withheld; reported build and test success was not independently reproduced.",
+      "why_it_matters": "Distinguishes the master forward-port from the already recorded tagged release and retains the incomplete public-test boundary.",
+      "not_yet": "No independent upstream test execution, exploit reproduction, binary/signature verification or deployment measurement. Maintenance-branch merge does not establish tagged-release inclusion.",
+      "verification": "author-reported",
+      "status_note": "Merge metadata verified for master. Critical/security items retained; upstream labels are not independent severity ratings.",
+      "uncertainty": "Behavior, security impact and test results remain author-reported. Historical draft wording in a PR body is not its current merge state.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/ElementsProject/lightning/pull/9693"
         }
       ]
     }
