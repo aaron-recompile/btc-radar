@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-11-06",
+  "digest_date": "2026-11-07",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-11-06"
+    "to": "2026-11-07"
   },
-  "generated_at": "2026-11-06T19:31:29.645466+00:00",
+  "generated_at": "2026-11-07T19:31:50.172173+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v32.1",
@@ -3097,6 +3097,33 @@
           "type": "pull request",
           "date": "2026-11-05",
           "url": "https://github.com/ElementsProject/lightning/pull/9693"
+        }
+      ]
+    },
+    {
+      "id": "lnd-switchrpc-external-dispatch-20261107",
+      "project": "lnd",
+      "layer": "lightning",
+      "title": "LND merges opt-in external HTLC dispatch; linked safety guard closed unmerged",
+      "status": "merged",
+      "what_happened": "LND merged the switchrpc external-routing subsystem into master. Authors describe onion construction, dispatch, tracking and attempt deletion RPCs, persistent attempt handling and multi-origin pathfinding behind a non-default build tag. The linked local-dispatch guard PR #11013 is closed with no merge timestamp; its proposed protection must not be described as merged.",
+      "why_it_matters": "Authors warn that local and external routers share a flat attempt-ID store: concurrent dispatch can collide and risk funds. This opt-in integration groundwork is not evidence that simultaneous routers are safe; standard builds are reported unaffected.",
+      "not_yet": "No verified tagged-release inclusion, deployment measurement, independent test execution or fund-safety reproduction. The subsystem is described as early and not recommended for general use. Closure of #11013 does not establish a replacement guard or resolution.",
+      "verification": "author-reported",
+      "status_note": "Master merge metadata verified for #11282; #11013 closed unmerged at retrieval. Historical draft wording in the merged PR body is not its current state.",
+      "uncertainty": "Behavior and safety impact are author-reported. A replacement guard, if any, was not verified; no inference that the underlying issue is fixed.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-06",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11282"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "pull request",
+          "date": "2026-11-06",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11013"
         }
       ]
     }
