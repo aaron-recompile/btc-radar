@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-11-07",
+  "digest_date": "2026-11-11",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-11-07"
+    "to": "2026-11-11"
   },
-  "generated_at": "2026-11-07T19:31:50.172173+00:00",
+  "generated_at": "2026-11-11T19:31:44.189656+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v32.1",
@@ -3126,6 +3126,30 @@
           "url": "https://github.com/lightningnetwork/lnd/pull/11013"
         }
       ]
+    },
+    {
+      "id": "cln-9449",
+      "project": "core-lightning",
+      "title": "Defensive error-pointer initialization in connection and splice-abort paths",
+      "layer": "lightning",
+      "status": "merged",
+      "what_happened": "Core Lightning PR #9449 merged on November 11. The diff initializes error pointers to NULL in connect_activate_subd() and handle_splice_abort(), replacing uninitialized declarations.",
+      "why_it_matters": "This hardens connection and splice-abort error handling defensively. The author says sockpair() already sets the pointer on failure, so the existing pattern is not exploitable under that invariant; this is not a demonstrated live vulnerability.",
+      "affects": [
+        "Core Lightning connection handling",
+        "Core Lightning splice-abort handling"
+      ],
+      "not_yet": "Merge does not establish tagged release inclusion. No demonstrated exploit or changed behavior on existing paths is claimed.",
+      "uncertainty": "Non-exploitability and clean compilation are author-reported; no independent exploit analysis or build reproduction was performed.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request and implementation diff",
+          "date": "2026-11-11",
+          "url": "https://github.com/ElementsProject/lightning/pull/9449"
+        }
+      ],
+      "verification": "primary"
     }
   ],
   "sources_checked": [
