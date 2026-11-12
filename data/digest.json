@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-11-11",
+  "digest_date": "2026-11-12",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-11-11"
+    "to": "2026-11-12"
   },
-  "generated_at": "2026-11-11T19:31:44.189656+00:00",
+  "generated_at": "2026-11-12T19:31:55.983618+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v32.1",
@@ -3150,6 +3150,69 @@
         }
       ],
       "verification": "primary"
+    },
+    {
+      "id": "bitcoin-core-36757",
+      "project": "bitcoin-core",
+      "layer": "p2p",
+      "title": "Ignore privacy-network peers’ claimed view of the local address",
+      "what_happened": "Bitcoin Core merged a check excluding privacy-network peers from peer-reported local-address selection. The diff adds inbound I2P and outbound Tor test cases.",
+      "why_it_matters": "The author reports closing a clearnet/privacy-network correlation fingerprint requiring an outbound connection to an adversarial Tor/I2P peer and a sufficiently distinctive port. This privacy-relevant change is retained without an independent severity rating.",
+      "status": "merged",
+      "verification": "author-reported",
+      "status_note": "Master merge metadata and implementation diff verified; no independent severity rating assigned.",
+      "not_yet": "Merge does not establish tagged-release inclusion or deployment. No independent upstream build, test execution or exploit reproduction.",
+      "uncertainty": "Behavior, impact and any test results remain author-reported; inspected code and test assertions are not independent runtime reproduction.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request and implementation diff",
+          "date": "2026-11-12",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36757"
+        }
+      ]
+    },
+    {
+      "id": "cln-9731",
+      "project": "core-lightning",
+      "layer": "lightning",
+      "title": "Refresh payment state before reporting sendpay failures",
+      "what_happened": "Core Lightning merged a reload of the wallet payment record before notifying failure waiters, including the self-payment failure path. A regression test checks that notifications and waiting or later waitsendpay calls agree on failed status, completed_at and updated_index.",
+      "why_it_matters": "Consumers of sendpay_failure need the final payment state rather than a stale pending record. The change targets inconsistent error data, not settlement success or fund recovery.",
+      "status": "merged",
+      "verification": "author-reported",
+      "status_note": "Master merge metadata and implementation diff verified; no independent severity rating assigned.",
+      "not_yet": "Merge does not establish tagged-release inclusion or deployment. No independent upstream build, test execution or exploit reproduction.",
+      "uncertainty": "Behavior, impact and any test results remain author-reported; inspected code and test assertions are not independent runtime reproduction.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request and implementation diff",
+          "date": "2026-11-12",
+          "url": "https://github.com/ElementsProject/lightning/pull/9731"
+        }
+      ]
+    },
+    {
+      "id": "cln-9732",
+      "project": "core-lightning",
+      "layer": "lightning",
+      "title": "Fall back to stderr when the plugin log writer exits",
+      "what_happened": "Core Lightning replaced an unwrap on plugin log-channel send failure with a stderr fallback and added a dropped-writer regression test.",
+      "why_it_matters": "Logging after the writer exits no longer uses the unconditional panic path in the inspected diff. The fallback avoids stdout, which carries the plugin JSON-RPC channel.",
+      "status": "merged",
+      "verification": "author-reported",
+      "status_note": "Master merge metadata and implementation diff verified; no independent severity rating assigned.",
+      "not_yet": "Merge does not establish tagged-release inclusion or deployment. No independent upstream build, test execution or exploit reproduction.",
+      "uncertainty": "Behavior, impact and any test results remain author-reported; inspected code and test assertions are not independent runtime reproduction.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request and implementation diff",
+          "date": "2026-11-12",
+          "url": "https://github.com/ElementsProject/lightning/pull/9732"
+        }
+      ]
     }
   ],
   "sources_checked": [
