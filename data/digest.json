@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-11-12",
+  "digest_date": "2026-11-16",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-11-12"
+    "to": "2026-11-16"
   },
-  "generated_at": "2026-11-12T19:31:55.983618+00:00",
+  "generated_at": "2026-11-16T19:32:47.418226+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v32.1",
@@ -3155,7 +3155,7 @@
       "id": "bitcoin-core-36757",
       "project": "bitcoin-core",
       "layer": "p2p",
-      "title": "Ignore privacy-network peers’ claimed view of the local address",
+      "title": "Ignore privacy-network peers\u2019 claimed view of the local address",
       "what_happened": "Bitcoin Core merged a check excluding privacy-network peers from peer-reported local-address selection. The diff adds inbound I2P and outbound Tor test cases.",
       "why_it_matters": "The author reports closing a clearnet/privacy-network correlation fingerprint requiring an outbound connection to an adversarial Tor/I2P peer and a sufficiently distinctive port. This privacy-relevant change is retained without an independent severity rating.",
       "status": "merged",
@@ -3213,6 +3213,121 @@
           "url": "https://github.com/ElementsProject/lightning/pull/9732"
         }
       ]
+    },
+    {
+      "id": "lnd-10842",
+      "project": "lnd",
+      "title": "LND isolates rejected sweep inputs with no-broadcast probes",
+      "layer": "lightning",
+      "status": "merged",
+      "what_happened": "The merged change probes input subsets without broadcasting, isolates input-specific failures and retries survivors while retaining their starting fee rates. Rejected replacements preserve monitoring of accepted transactions.",
+      "why_it_matters": "One invalid input need not block healthy inputs in the batch. Inconclusive fee checks remain retryable rather than identifying a bad input.",
+      "affects": [
+        "lnd node operators"
+      ],
+      "not_yet": "Merged into master; not in a release established by this evidence. No consensus activation claimed.",
+      "uncertainty": "Upstream labels severity-critical; not an independent severity assessment. Full-RBF fee rejection alone cannot identify a bad input; TRUC/package validation is outside scope. Behavior and tests are author-reported, not independently reproduced.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-11-13",
+          "url": "https://github.com/lightningnetwork/lnd/pull/10842"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "lnd-11528",
+      "project": "lnd",
+      "title": "LND adds opt-in partial channel-policy updates",
+      "layer": "rpc",
+      "status": "merged",
+      "what_happened": "UpdateChannelPolicy gains a partial_update mask; unmarked fields retain their values. Requests without it retain legacy behavior. lncli uses partial updates and checks server versions before fee-omitting calls that could reset fees to zero.",
+      "why_it_matters": "Operators can update one policy field without resupplying all three. Compatibility protection matters because older servers ignore the new mask.",
+      "affects": [
+        "lnd node operators"
+      ],
+      "not_yet": "Merged into master; not in a release established by this evidence. No consensus activation claimed.",
+      "uncertainty": "Upstream labels severity-critical; not an independent severity assessment. The author reports a CLI version gate below 0.21.99 for affected calls, not evidence of a tagged release. Behavior and tests are author-reported, not independently reproduced.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-11-14",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11528"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "lnd-10891",
+      "project": "lnd",
+      "title": "LND removes staging-bit RBF cooperative-close negotiation",
+      "layer": "lightning",
+      "status": "merged",
+      "what_happened": "LND stops advertising and negotiating staging bits 160/161 while retaining final bits 60/61. Staging-only peers fall back to legacy cooperative close, including in-flight closes renegotiated after reconnect.",
+      "why_it_matters": "Upstream warns that a previously broadcast close with a staging-only peer can no longer receive protocol RBF bumps after fallback; confirmation or a child spend depends on the existing transaction and local output.",
+      "affects": [
+        "lnd node operators"
+      ],
+      "not_yet": "Merged into master; not in a release established by this evidence. No consensus activation claimed.",
+      "uncertainty": "Upstream labels both severity-critical and severity-override-low; neither is silently resolved here. Staging bits remain recognized on the wire, without connection rejection solely for their presence. Behavior and tests are author-reported, not independently reproduced.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-11-14",
+          "url": "https://github.com/lightningnetwork/lnd/pull/10891"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "bitcoin-core-36142",
+      "project": "bitcoin-core",
+      "title": "Bitcoin Core validates Tor service replies and cached key format",
+      "layer": "p2p",
+      "status": "merged",
+      "what_happened": "Bitcoin Core validates each returned Tor v3 service ID and checks returned and cached onion key formats before use. Reply-local fields prevent stale service-ID reuse.",
+      "why_it_matters": "The author reports that a malicious control endpoint could seed a cached value that injects a command or argument on reconnect. Validation addresses this trust boundary.",
+      "affects": [
+        "bitcoin-core node operators"
+      ],
+      "not_yet": "Merged into master; not in a release established by this evidence. No consensus activation claimed.",
+      "uncertainty": "Author-reported preconditions: local endpoint impersonation while Tor is unavailable, or a compromised configured endpoint. No exploit reproduced. Malformed cached keys leave the onion service unavailable pending operator remediation. Behavior and tests are author-reported, not independently reproduced.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36142"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "cln-9730",
+      "project": "cln",
+      "title": "Core Lightning adds bounded HTLC recovery after channel-state loss",
+      "layer": "lightning",
+      "status": "merged",
+      "what_happened": "The merged hsmtool command reconstructs HTLC scripts and matches commitment outputs before signing. Documentation covers offered and received HTLCs, anchor and non-anchor channels and identical MPP outputs; it does not broadcast.",
+      "why_it_matters": "Recovery can extend beyond the main output when the necessary channel data, HTLC details and peer commitment point remain available. Trimmed or unmatched outputs are not recoverable through this path.",
+      "affects": [
+        "cln node operators"
+      ],
+      "not_yet": "Merged into master; not in a release established by this evidence. No consensus activation claimed.",
+      "uncertainty": "Not recovery from hsm_secret alone: channel details, HTLC data, commitment transaction and peer assistance remain necessary. No recovery operation was performed. Behavior and tests are author-reported, not independently reproduced.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request",
+          "date": "2026-11-16",
+          "url": "https://github.com/ElementsProject/lightning/pull/9730"
+        }
+      ],
+      "verification": "primary"
     }
   ],
   "sources_checked": [
