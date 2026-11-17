@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-11-16",
+  "digest_date": "2026-11-17",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-11-16"
+    "to": "2026-11-17"
   },
-  "generated_at": "2026-11-16T19:32:47.418226+00:00",
+  "generated_at": "2026-11-17T19:31:42.940360+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v32.1",
@@ -3325,6 +3325,98 @@
           "type": "merged pull request",
           "date": "2026-11-16",
           "url": "https://github.com/ElementsProject/lightning/pull/9730"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "cln-9571",
+      "project": "cln",
+      "title": "Core Lightning rejects splice RBF after peer lock notification",
+      "layer": "lightning",
+      "status": "merged",
+      "what_happened": "The merged change rejects tx_init_rbf when the peer has already sent splice_locked, using the recorded remote lock transaction ID.",
+      "why_it_matters": "Enforces the splice protocol ordering boundary instead of starting another RBF session after the peer signals that the splice is locked.",
+      "affects": [
+        "cln node operators"
+      ],
+      "not_yet": "Merged into master; tagged release inclusion is not established. No consensus activation claimed.",
+      "uncertainty": "The author says no funds were at risk because balance checks and signing still applied. The author reports an existing splice test passes but no regression test for this peer message sequence. Behavior and tests are author-reported, not independently reproduced.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request",
+          "date": "2026-11-16",
+          "url": "https://github.com/ElementsProject/lightning/pull/9571"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "cln-9742",
+      "project": "cln",
+      "title": "Core Lightning fixes missing-table upgrade failure from v26.06.10",
+      "layer": "lightning",
+      "status": "merged",
+      "what_happened": "The backfill migration now creates our_outputs and our_txs with IF NOT EXISTS before inserting rows. The PR adds a unit test shaped like the affected older database.",
+      "why_it_matters": "The author reports that v26.06.10 databases already at migration 284 skipped the earlier table-creation migrations, causing the subsequent backfill to fail with a missing-table error.",
+      "affects": [
+        "cln node operators"
+      ],
+      "not_yet": "Merged into master; tagged release inclusion is not established. No consensus activation claimed.",
+      "uncertainty": "The upgrade failure and no-op behavior on databases already containing the tables are author-reported; no database migration was performed here. Behavior and tests are author-reported, not independently reproduced.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request",
+          "date": "2026-11-17",
+          "url": "https://github.com/ElementsProject/lightning/pull/9742"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "cln-9488",
+      "project": "cln",
+      "title": "Core Lightning keeps bookkeeper balance underflow from shutting down the node",
+      "layer": "lightning",
+      "status": "merged",
+      "what_happened": "bkpr-listbalances now logs BROKEN and reports 0msat for an account whose recorded debits exceed credits, instead of terminating the important bookkeeper plugin. Documentation and a SQLite regression test accompany the change.",
+      "why_it_matters": "Avoids the reported lightningd shutdown path when the account ledger is inconsistent. Consumers must not interpret the fallback zero as proof of an actual zero balance.",
+      "affects": [
+        "cln node operators"
+      ],
+      "not_yet": "Merged into master; tagged release inclusion is not established. No consensus activation claimed.",
+      "uncertainty": "The fallback does not repair the inconsistent ledger. The regression test edits a stopped test-node database; no live database or runtime behavior was tested here. Behavior and tests are author-reported, not independently reproduced.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request",
+          "date": "2026-11-17",
+          "url": "https://github.com/ElementsProject/lightning/pull/9488"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "cln-9741",
+      "project": "cln",
+      "title": "Core Lightning updates libwally with author-reported parsing and secret-data hardening",
+      "layer": "lightning",
+      "status": "merged",
+      "what_happened": "The merged dependency change advances libwally-core from the prior submodule commit to f7b0a15b8d6fc79a5c4ed0123955dd482934483e, identified by the author as v1.6.1.",
+      "why_it_matters": "The author reports PSBT/PSET correctness fixes, stricter malformed-PSBT handling, descriptor parsing hardening and improved handling of secret data. This security-relevant dependency update is retained despite having no severity label.",
+      "affects": [
+        "cln node operators"
+      ],
+      "not_yet": "Merged into master; tagged release inclusion is not established. No consensus activation claimed.",
+      "uncertainty": "The author reports libwally tests passed 9/9, but the CLN build stopped at generated gRPC bindings because grpc_tools.protoc was missing. Release contents and runtime effects were not independently reproduced. Behavior and tests are author-reported, not independently reproduced.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request",
+          "date": "2026-11-17",
+          "url": "https://github.com/ElementsProject/lightning/pull/9741"
         }
       ],
       "verification": "primary"
