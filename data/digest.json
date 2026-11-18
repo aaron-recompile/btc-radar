@@ -1,18 +1,19 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-10-09",
+  "digest_date": "2026-11-18",
   "window": {
-    "from": "2026-09-26",
-    "to": "2026-10-09"
+    "from": "2026-10-10",
+    "to": "2026-11-18"
   },
-  "generated_at": "2026-10-09T00:09:08.425627Z",
+  "generated_at": "2026-11-18T21:02:13Z",
   "context": {
     "latest_bitcoin_core_release": {
-      "version": "v31.1",
-      "date": "2026-07-08",
-      "url": "https://github.com/bitcoin/bitcoin/releases/tag/v31.1"
+      "version": "v32.1",
+      "date": "2026-10-28",
+      "url": "https://github.com/bitcoin/bitcoin/releases/tag/v32.1"
     },
-    "note": "Items marked merged are in the master branch only. They are not in a release until a release containing them is published."
+    "note": "Items marked merged are in the master branch only. They are not in a release until a release containing them is published.",
+    "release_note": "v31.2, v30.4 and v29.5 published the same day. v32.0 was tagged 2026-10-21 but never released. v31.3 and v30.5 were tagged 2026-11-17 with no published release as of 2026-11-18."
   },
   "status_scale": {
     "discussion": "talked about on a list or forum, no concrete proposal",
@@ -37,683 +38,989 @@
   ],
   "items": [
     {
-      "id": "core-36080",
+      "id": "core-v32.1",
       "project": "bitcoin-core",
-      "title": "Peers are no longer disconnected for a missed ping while they are sending us blocks",
-      "layer": "p2p",
-      "status": "merged",
-      "what_happened": "Bitcoin Core stops enforcing the 20-minute ping timeout against a peer while blocks are being downloaded from that peer.",
-      "why_it_matters": "During initial block download on a slow link, a peer busy serving our block requests could miss the ping deadline and be dropped although it was not at fault. This avoids needless disconnects for low-bandwidth nodes.",
+      "title": "Bitcoin Core 32.1 released as the new major version (32.0 was tagged but never released)",
+      "layer": "tooling",
+      "status": "released",
+      "what_happened": "Bitcoin Core 32.1 was published on 2026-10-28. Its release notes state that 32.0, although tagged, was never fully announced or released due to last-minute issues, so 32.1 is the first release of the 32.x series.",
+      "why_it_matters": "Notable changes per the release notes include default -maxconnections raised from 125 to 200 with a new -inboundrelaypercent option, a global transaction-relay rate limit (-txsendrate), a new mempool-based fee estimator combined into estimatesmartfee, PSBT v2 as the default for PSBT-creating RPCs, a custom HTTP server replacing libevent, a smaller txindex, and a fix for a -walletnotify command-injection issue via crafted wallet names. With this release, 29.x and older are End of Life.",
       "affects": [
-        "node operators on low-bandwidth connections",
-        "initial block download"
+        "node operators",
+        "wallet developers",
+        "RPC/API consumers",
+        "miners using IPC or getblocktemplate"
       ],
-      "not_yet": "In master only; not in a release. No consensus or policy change.",
+      "not_yet": "Release notes say medium/high severity vulnerability disclosures (stated as 3, fixed in 30.0) are scheduled for about two weeks after release; those disclosures are not covered here.",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "release",
+          "date": "2026-10-28",
+          "url": "https://github.com/bitcoin/bitcoin/releases/tag/v32.1"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "release notes",
+          "date": "2026-10-28",
+          "url": "https://github.com/bitcoin/bitcoin/blob/master/doc/release-notes/release-notes-32.1.md"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "core-v31.2",
+      "project": "bitcoin-core",
+      "title": "Bitcoin Core 31.2 maintenance release",
+      "layer": "tooling",
+      "status": "released",
+      "what_happened": "Bitcoin Core 31.2 was published on 2026-10-28 with bug fixes and backports.",
+      "why_it_matters": "It brings BIP 323 handling (version bits 5-28 ignored for soft-fork signaling warnings), a 10,000-entry cap on the private-broadcast queue, chainstate compaction, a timeout for peers whose send buffer stays paused, and Tor/network fixes to the 31.x line.",
+      "affects": [
+        "node operators on 31.x"
+      ],
+      "not_yet": "none",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "release",
+          "date": "2026-10-28",
+          "url": "https://github.com/bitcoin/bitcoin/releases/tag/v31.2"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "release notes",
+          "date": "2026-10-28",
+          "url": "https://github.com/bitcoin/bitcoin/blob/master/doc/release-notes/release-notes-31.2.md"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "core-v30.4",
+      "project": "bitcoin-core",
+      "title": "Bitcoin Core 30.4 maintenance release",
+      "layer": "tooling",
+      "status": "released",
+      "what_happened": "Bitcoin Core 30.4 was published on 2026-10-28 with a small set of backports.",
+      "why_it_matters": "Includes BIP 323 version-bit handling, assuming v2 transport for addresses from DNS seeds, and the paused-send-peer timeout.",
+      "affects": [
+        "node operators on 30.x"
+      ],
+      "not_yet": "none",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "release",
+          "date": "2026-10-28",
+          "url": "https://github.com/bitcoin/bitcoin/releases/tag/v30.4"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "release notes",
+          "date": "2026-10-28",
+          "url": "https://github.com/bitcoin/bitcoin/blob/master/doc/release-notes/release-notes-30.4.md"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "core-v29.5",
+      "project": "bitcoin-core",
+      "title": "Bitcoin Core 29.5 released; 29.x now End of Life",
+      "layer": "tooling",
+      "status": "released",
+      "what_happened": "Bitcoin Core 29.5 was published on 2026-10-28 with network and build backports.",
+      "why_it_matters": "The 32.1 release notes state that with the new major version, 29.x and older are End of Life and will no longer receive updates, so 29.x users should plan to upgrade.",
+      "affects": [
+        "node operators on 29.x"
+      ],
+      "not_yet": "none",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "release",
+          "date": "2026-10-28",
+          "url": "https://github.com/bitcoin/bitcoin/releases/tag/v29.5"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "release notes",
+          "date": "2026-10-28",
+          "url": "https://github.com/bitcoin/bitcoin/blob/master/doc/release-notes/release-notes-32.1.md"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "core-36892",
+      "project": "bitcoin-core",
+      "title": "31.3 and 30.5 prepared with a backport of 'process unique tx INVs only'",
+      "layer": "p2p",
+      "status": "backport_merged",
+      "what_happened": "Backport PRs merged into the 31.x and 30.x branches pull in #35878 (only process unique transaction INV announcements) and prepare versions 31.3 and 30.5; git tags v31.3 and v30.5 were created on 2026-11-17.",
+      "why_it_matters": "Indicates new maintenance releases are imminent. #35878 avoids processing conflicting transaction announcements that cannot both be accepted.",
+      "affects": [
+        "node operators on 31.x and 30.x"
+      ],
+      "not_yet": "No published GitHub release for v31.3 or v30.5 as of 2026-11-18.",
+      "uncertainty": "author-reported: #35878 states there should be no change in observable behavior; the reason for backporting it is not stated in the backport PRs.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-11-17",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36892"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-11-17",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36893"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-08-06",
+          "url": "https://github.com/bitcoin/bitcoin/pull/35878"
+        }
+      ],
+      "verification": "primary",
+      "status_note": "Tags exist (2026-11-17) but no release has been published; do not treat as released."
+    },
+    {
+      "id": "core-35919",
+      "project": "bitcoin-core",
+      "title": "-maxconnections capped at 2,000 to avoid an orphanage crash",
+      "layer": "p2p",
+      "status": "released",
+      "what_happened": "Values of -maxconnections above 2,000 are now clamped with a warning. The PR merged to master on 2026-10-21, was backported to 32.x, and is listed in the 32.1 release notes.",
+      "why_it_matters": "The PR states the orphanage can abort when more than 3,000 peers have orphan announcements; the cap removes that crash path for operators using very high connection counts.",
+      "affects": [
+        "node operators with very high -maxconnections"
+      ],
+      "not_yet": "none",
       "uncertainty": "none noted",
       "sources": [
         {
           "publisher": "GitHub bitcoin/bitcoin",
           "type": "merged pull request",
-          "date": "2026-10-05",
-          "url": "https://github.com/bitcoin/bitcoin/pull/36080"
+          "date": "2026-10-21",
+          "url": "https://github.com/bitcoin/bitcoin/pull/35919"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-22",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36596"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "release",
+          "date": "2026-10-28",
+          "url": "https://github.com/bitcoin/bitcoin/releases/tag/v32.1"
         }
       ],
       "verification": "primary"
     },
     {
-      "id": "core-36277",
+      "id": "core-36667",
       "project": "bitcoin-core",
-      "title": "Private transaction broadcast now always completes all three initial connections",
+      "title": "Peers that never drain a paused send buffer are now disconnected after 20 minutes",
       "layer": "p2p",
-      "status": "merged",
-      "what_happened": "When a node initiates a private broadcast of a transaction, it now completes all three initial broadcast connections instead of stopping early when the transaction comes back or conflicts.",
-      "why_it_matters": "Stopping early could leak timing information that helps link a transaction to its origin. The PR addresses theoretical timing attacks raised in earlier review of the private-broadcast work.",
+      "status": "released",
+      "what_happened": "A peer whose send buffer stays paused (not drained below the 1MB threshold) is now disconnected after a 20-minute timeout. Merged to master 2026-10-26 and listed in the 31.2, 30.4 and 29.5 release notes.",
+      "why_it_matters": "Frees connection slots held by extremely slow or stalled peers.",
       "affects": [
-        "users who broadcast transactions privately through Bitcoin Core",
-        "transaction-origin privacy"
+        "node operators"
       ],
-      "not_yet": "In master only; not in a release. Check release notes for when private broadcast and this fix ship.",
-      "uncertainty": "The attacks addressed are described as theoretical in the PR.",
+      "not_yet": "Not listed in the 32.1 release notes; on 32.x it is not established to be in a release.",
+      "uncertainty": "none noted",
       "sources": [
         {
           "publisher": "GitHub bitcoin/bitcoin",
           "type": "merged pull request",
-          "date": "2026-10-06",
-          "url": "https://github.com/bitcoin/bitcoin/pull/36277"
+          "date": "2026-10-26",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36667"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "release",
+          "date": "2026-10-28",
+          "url": "https://github.com/bitcoin/bitcoin/releases/tag/v31.2"
         }
       ],
       "verification": "primary"
     },
     {
-      "id": "core-32895",
+      "id": "core-29843",
       "project": "bitcoin-core",
-      "title": "Wallets track client versions and features for future upgrades",
+      "title": "-acceptnonstdtxn=1 now also admits non-standard scripts on test networks",
+      "layer": "policy",
+      "status": "merged",
+      "what_happened": "On test networks, -acceptnonstdtxn=1 now also skips non-mandatory script checks, allowing transactions that use e.g. OP_NOPx or OP_SUCCESS into the mempool.",
+      "why_it_matters": "Makes it easier to experiment with upgrade-hook opcodes (e.g. covenant or soft-fork prototypes) on test nets without custom builds. Mainnet policy is unchanged.",
+      "affects": [
+        "test-net developers",
+        "soft-fork researchers"
+      ],
+      "not_yet": "In master only; not in a release.",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-29",
+          "url": "https://github.com/bitcoin/bitcoin/pull/29843"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "core-36294",
+      "project": "bitcoin-core",
+      "title": "-persistmempoolv1 option removed",
+      "layer": "policy",
+      "status": "merged",
+      "what_happened": "The temporary -persistmempoolv1 option, which wrote mempool.dat in the old non-obfuscated format for downgrades to v26 and earlier, was removed. Reading v1 files is still supported.",
+      "why_it_matters": "Configurations that set this option will need updating; downgrade to unmaintained v26-and-older with a persisted mempool is no longer supported.",
+      "affects": [
+        "node operators"
+      ],
+      "not_yet": "In master only; not in a release.",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-13",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36294"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "core-36333",
+      "project": "bitcoin-core",
+      "title": "removeprunedfunds RPC deleted",
       "layer": "wallet",
       "status": "merged",
-      "what_happened": "Bitcoin Core separates its recorded wallet-client version from the node version and records client feature flags, including those of the last client to decrypt the wallet.",
-      "why_it_matters": "Groundwork for future automatic wallet upgrades: if a wallet is upgraded, opened in an older version, then opened in a newer one again, the newer client can detect this and redo the upgrade instead of leaving mixed upgraded and non-upgraded data.",
+      "what_happened": "The removeprunedfunds wallet RPC, deprecated in v32, was removed from master.",
+      "why_it_matters": "Scripts that still call removeprunedfunds (even with -deprecatedrpc) will fail on the next major version.",
       "affects": [
-        "wallet users who switch between Bitcoin Core versions",
-        "future wallet format upgrades"
+        "wallet users",
+        "RPC integrators"
       ],
-      "not_yet": "In master only; not in a release. Prepares for future automatic upgrades rather than introducing one.",
-      "uncertainty": "The PR describes downgrade detection back to v24.0; later upgrade features still need implementation.",
+      "not_yet": "In master only; not in a release.",
+      "uncertainty": "none noted",
       "sources": [
         {
           "publisher": "GitHub bitcoin/bitcoin",
           "type": "merged pull request",
-          "date": "2026-10-05",
-          "url": "https://github.com/bitcoin/bitcoin/pull/32895"
+          "date": "2026-11-06",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36333"
         }
       ],
       "verification": "primary"
     },
     {
-      "id": "lnd-11267",
-      "project": "lnd",
-      "title": "Postgres migration connections are closed to allow startup with small pools",
-      "layer": "lightning",
+      "id": "core-36489",
+      "project": "bitcoin-core",
+      "title": "Wallet RPC options get documented snake_case aliases; camelCase confTarget deprecation scheduled",
+      "layer": "rpc",
       "status": "merged",
-      "what_happened": "LND gives migration drivers separate database handles and closes each driver after use.",
-      "why_it_matters": "Fresh databases previously retained 19 migration connections, preventing startup with a configured maximum below 20.",
+      "what_happened": "snake_case aliases for wallet funding options and listunspent options were added to the CLI, docs and schema; supplying both spellings is rejected; subtract_fee_from_outputs is no longer silently ignored. Separately, deprecation of the mixed-case confTarget option was scheduled for the next cycle.",
+      "why_it_matters": "Fixes a case where a documented-looking option was silently ignored, and signals future removal of camelCase option names that integrators should migrate away from.",
       "affects": [
-        "LND PostgreSQL operators"
+        "RPC integrators",
+        "wallet developers"
       ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "Database lifecycle fix, not a Lightning protocol change.",
+      "not_yet": "In master only; not in a release. The camelCase removal itself has not happened.",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36489"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-11-10",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36785"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-11-12",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36488"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "core-36494",
+      "project": "bitcoin-core",
+      "title": "sendall now rejects unknown options and duplicate inputs",
+      "layer": "wallet",
+      "status": "merged",
+      "what_happened": "sendall now errors on unknown keys in its options object and on duplicated entries in inputs.",
+      "why_it_matters": "Per the PRs, a misspelled key could previously spend all UTXOs or broadcast a transaction the caller asked not to broadcast, and a duplicated input double-counted value and produced an invalid transaction that left the wallet in a confusing state until abandoned.",
+      "affects": [
+        "wallet users",
+        "RPC integrators"
+      ],
+      "not_yet": "In master only; not in a release.",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-11-03",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36494"
+        },
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-11-03",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36344"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "core-36339",
+      "project": "bitcoin-core",
+      "title": "listtransactions crash from integer overflow fixed",
+      "layer": "wallet",
+      "status": "merged",
+      "what_happened": "listtransactions now parses count and skip as unsigned 32-bit values and sums them in 64 bits.",
+      "why_it_matters": "Per the PR, a large count+skip previously overflowed and crashed the node; it is reachable by an authenticated RPC caller.",
+      "affects": [
+        "node operators exposing wallet RPC"
+      ],
+      "not_yet": "In master only; not in a release.",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-19",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36339"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "core-36142",
+      "project": "bitcoin-core",
+      "title": "Tor control replies and cached onion keys are now validated",
+      "layer": "p2p",
+      "status": "merged",
+      "what_happened": "The node now validates the onion service ID and private key returned by Tor's control port, and validates cached keys before reuse.",
+      "why_it_matters": "The PR describes a command-injection path into ADD_ONION via a malicious key value returned by an impersonated or compromised Tor control endpoint, including by an unprivileged local process under certain timing conditions.",
+      "affects": [
+        "node operators using automatic Tor onion services"
+      ],
+      "not_yet": "In master only; not in a release.",
+      "uncertainty": "author-reported: the attack scenario and its preconditions are described by the PR author; no advisory or severity rating is linked.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-11-05",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36142"
+        }
+      ],
+      "verification": "author-reported",
+      "status_note": "Security hardening in master only; no backport or release established."
+    },
+    {
+      "id": "core-36757",
+      "project": "bitcoin-core",
+      "title": "Node ignores a privacy-network peer's view of its address (fingerprint fix)",
+      "layer": "p2p",
+      "status": "merged",
+      "what_happened": "When processing a VERSION message from a Tor/I2P peer, the node now ignores the peer-reported addrMe field.",
+      "why_it_matters": "Per the PR, this closes a fingerprint that could help correlate a node's clearnet and privacy-network identities under fairly hard preconditions.",
+      "affects": [
+        "nodes running on both clearnet and Tor/I2P"
+      ],
+      "not_yet": "In master only; not in a release.",
+      "uncertainty": "author-reported: the fingerprint and its preconditions are described by the PR author.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-11-12",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36757"
+        }
+      ],
+      "verification": "author-reported",
+      "status_note": "Privacy fix in master only; no backport or release established."
+    },
+    {
+      "id": "core-36894",
+      "project": "bitcoin-core",
+      "title": "Misbehaving peer disconnect no longer drops every peer sharing its IP",
+      "layer": "p2p",
+      "status": "merged",
+      "what_happened": "Discouraging a misbehaving peer now disconnects only that connection rather than every connection from the same IP address.",
+      "why_it_matters": "Per the PR, an attacker sharing a Tor exit node with honest clearnet-over-Tor inbound peers could otherwise get all of them disconnected by sending one invalid message.",
+      "affects": [
+        "node operators accepting inbound connections"
+      ],
+      "not_yet": "In master only; not in a release.",
+      "uncertainty": "author-reported: the attack scenario is the PR author's description.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-11-18",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36894"
+        }
+      ],
+      "verification": "author-reported",
+      "status_note": "Merged on the last day of the window; master only."
+    },
+    {
+      "id": "core-36594",
+      "project": "bitcoin-core",
+      "title": "Orphan transactions are reconsidered one per message-processing turn",
+      "layer": "p2p",
+      "status": "merged",
+      "what_happened": "Instead of validating all of an assigned peer's reconsiderable orphans in one turn, the node now processes a single orphan per turn.",
+      "why_it_matters": "Reduces latency imposed on other peers' message processing when one peer's orphans need re-evaluation.",
+      "affects": [
+        "node operators"
+      ],
+      "not_yet": "In master only; not in a release.",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-30",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36594"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "core-35714",
+      "project": "bitcoin-core",
+      "title": "Block-file flush failures now stop chainstate metadata from advancing",
+      "layer": "tooling",
+      "status": "merged",
+      "what_happened": "If flushing block or undo data fails, FlushStateToDisk now returns the error before writing block-index metadata and coins data, and ConnectTip/DisconnectTip propagate it.",
+      "why_it_matters": "Prevents on-disk metadata from referring to block data that was never made durable (for example with a separate, failing -blocksdir), reducing corruption risk after disk errors.",
+      "affects": [
+        "node operators",
+        "especially those using a separate -blocksdir"
+      ],
+      "not_yet": "In master only; not in a release.",
+      "uncertainty": "Classified as tooling for lack of a node-storage category: this is validation/storage robustness and does not change consensus rules.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-10-28",
+          "url": "https://github.com/bitcoin/bitcoin/pull/35714"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "bips-2212",
+      "project": "bips",
+      "title": "BIP460 draft merged: cross-input signature aggregation for a new witness version 2",
+      "layer": "consensus",
+      "status": "proposal",
+      "what_happened": "BIP460 was merged as a draft. It proposes witness version 2 with Taproot-style key-path spends where inputs can opt into half-aggregation or full-aggregation of signatures across a transaction.",
+      "why_it_matters": "Cross-input signature aggregation could reduce transaction size and fees, especially for many-input transactions such as consolidations and coinjoins. This is a proposed soft fork.",
+      "affects": [
+        "protocol developers",
+        "wallet developers",
+        "eventually all users if adopted"
+      ],
+      "not_yet": "Draft BIP only; no implementation merged in Bitcoin Core, no activation mechanism, no deployment.",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bips",
+          "type": "merged pull request",
+          "date": "2026-11-04",
+          "url": "https://github.com/bitcoin/bips/pull/2212"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "bips-2205",
+      "project": "bips",
+      "title": "BIP458 (half-aggregation) and BIP459 (DahLIAS full aggregation) signature schemes merged as drafts",
+      "layer": "standards",
+      "status": "proposal",
+      "what_happened": "Two cryptographic BIPs were merged as drafts: BIP458 for non-interactive half-aggregation of BIP340 signatures, and BIP459 for the DahLIAS interactive full-aggregation scheme yielding a constant 64-byte signature.",
+      "why_it_matters": "These are the signature-scheme building blocks referenced by BIP460's cross-input aggregation proposal.",
+      "affects": [
+        "protocol developers",
+        "cryptography library maintainers"
+      ],
+      "not_yet": "Draft specifications only; no consensus use.",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bips",
+          "type": "merged pull request",
+          "date": "2026-11-02",
+          "url": "https://github.com/bitcoin/bips/pull/2205"
+        },
+        {
+          "publisher": "GitHub bitcoin/bips",
+          "type": "merged pull request",
+          "date": "2026-11-03",
+          "url": "https://github.com/bitcoin/bips/pull/2210"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "bips-2130",
+      "project": "bips",
+      "title": "BIP139 wallet metadata backup format merged as draft",
+      "layer": "standards",
+      "status": "proposal",
+      "what_happened": "BIP139 was added, defining a backup format for wallet metadata with a field registry.",
+      "why_it_matters": "A common format could let wallets export and restore labels and other metadata beyond seeds and descriptors across software.",
+      "affects": [
+        "wallet developers",
+        "users migrating wallets"
+      ],
+      "not_yet": "Draft only; no known implementation established by the PR.",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bips",
+          "type": "merged pull request",
+          "date": "2026-10-24",
+          "url": "https://github.com/bitcoin/bips/pull/2130"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "bips-2251",
+      "project": "bips",
+      "title": "BIP394 documents the rawtr() output script descriptor",
+      "layer": "standards",
+      "status": "proposal",
+      "what_happened": "BIP394 was added to specify the rawtr() descriptor expression, which Bitcoin Core has implemented since 24.0 without a BIP; BIP380 was updated to reference it.",
+      "why_it_matters": "Closes a specification gap that, per the PR, has led other descriptor libraries to skip or mislabel rawtr().",
+      "affects": [
+        "descriptor library maintainers",
+        "wallet developers"
+      ],
+      "not_yet": "Draft BIP; no change to Bitcoin Core behavior.",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bips",
+          "type": "merged pull request",
+          "date": "2026-11-06",
+          "url": "https://github.com/bitcoin/bips/pull/2251"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "bips-2359",
+      "project": "bips",
+      "title": "BIP379 (Miniscript) advanced to Deployed",
+      "layer": "standards",
+      "status": "documentation",
+      "what_happened": "BIP379's status was changed from Draft to Deployed, citing Miniscript support released in Bitcoin Core v26 and other implementations. Test vectors from rust-miniscript were also added.",
+      "why_it_matters": "Formal status change signals the Miniscript spec is considered stable and in use.",
+      "affects": [
+        "wallet developers",
+        "descriptor library maintainers"
+      ],
+      "not_yet": "Status change only.",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bips",
+          "type": "merged pull request",
+          "date": "2026-11-17",
+          "url": "https://github.com/bitcoin/bips/pull/2359"
+        },
+        {
+          "publisher": "GitHub bitcoin/bips",
+          "type": "merged pull request",
+          "date": "2026-11-16",
+          "url": "https://github.com/bitcoin/bips/pull/2240"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "bips-2356",
+      "project": "bips",
+      "title": "BIP95 Testnet 5: genesis parameters added, genesis structure and port changed",
+      "layer": "standards",
+      "status": "proposal",
+      "what_happened": "BIP95 received the Testnet 5 genesis block parameters, a revised genesis structure (anti-pre-mine commitment in pszTimestamp, OP_RETURN output) and a new default P2P port 18353.",
+      "why_it_matters": "Moves the proposed replacement test network toward being usable; developers and infrastructure providers should note the port and genesis.",
+      "affects": [
+        "test-net users",
+        "infrastructure providers",
+        "developers"
+      ],
+      "not_yet": "The Bitcoin Core implementation (bitcoin/bitcoin#35861) is still open; Testnet 5 is not in any Bitcoin Core release.",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bips",
+          "type": "merged pull request",
+          "date": "2026-11-17",
+          "url": "https://github.com/bitcoin/bips/pull/2356"
+        },
+        {
+          "publisher": "GitHub bitcoin/bips",
+          "type": "merged pull request",
+          "date": "2026-11-06",
+          "url": "https://github.com/bitcoin/bips/pull/2347"
+        },
+        {
+          "publisher": "GitHub bitcoin/bips",
+          "type": "merged pull request",
+          "date": "2026-11-04",
+          "url": "https://github.com/bitcoin/bips/pull/2346"
+        }
+      ],
+      "verification": "primary",
+      "status_note": "Spec edits to a draft BIP; Core PR open."
+    },
+    {
+      "id": "bips-2336",
+      "project": "bips",
+      "title": "BIP322 upgradeable rules now name Taproot upgrade hooks (v2.1.0)",
+      "layer": "standards",
+      "status": "documentation",
+      "what_happened": "BIP322 now treats signatures using an unknown leaf version, the annex, OP_SUCCESSx or an unknown public key type as inconclusive rather than valid.",
+      "why_it_matters": "Per the PR, verifiers following the old text could call such message signatures valid, and implementations disagreed on the annex case.",
+      "affects": [
+        "message-signing library maintainers",
+        "wallet developers"
+      ],
+      "not_yet": "Spec change only; implementations must update separately.",
+      "uncertainty": "none noted",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bips",
+          "type": "merged pull request",
+          "date": "2026-10-23",
+          "url": "https://github.com/bitcoin/bips/pull/2336"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "lnd-v0.21.6",
+      "project": "lnd",
+      "title": "lnd 0.21.6 and 0.20.7 disable MPTCP listeners to mitigate a Linux kernel exploit path",
+      "layer": "lightning",
+      "status": "released",
+      "what_happened": "lnd v0.21.6-beta and v0.20.7-beta (2026-10-30) stop opening Multipath TCP listeners by default; the release notes tie this to a Linux kernel use-after-free (CVE-2026-98432) whose demonstrated remote exploit requires an MPTCP listener, which Go 1.24+ enables by default.",
+      "why_it_matters": "Linux lnd nodes exposed peer/gRPC/REST ports via MPTCP. The notes instruct operators to upgrade, disable MPTCP host-wide, and install a patched kernel; disabling MPTCP is a mitigation, not a fix for the kernel bug.",
+      "affects": [
+        "lnd operators on Linux"
+      ],
+      "not_yet": "The underlying kernel bug is fixed only by a patched kernel; Windows and macOS are stated to be unaffected.",
+      "uncertainty": "CVE-2026-98432 is listed in NVD (published 2026-10-15); details as stated by lnd's release notes.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "release",
+          "date": "2026-10-30",
+          "url": "https://github.com/lightningnetwork/lnd/releases/tag/v0.21.6-beta"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "release",
+          "date": "2026-10-30",
+          "url": "https://github.com/lightningnetwork/lnd/releases/tag/v0.20.7-beta"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-10-30",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11456"
+        }
+      ],
+      "verification": "primary",
+      "status_note": "Security-related release."
+    },
+    {
+      "id": "lnd-v0.21.5",
+      "project": "lnd",
+      "title": "lnd 0.21.5 / 0.20.6 enforce a 253 sat/kw commitment fee floor and fix several bugs",
+      "layer": "lightning",
+      "status": "released",
+      "what_happened": "lnd v0.21.5-beta and v0.20.6-beta (2026-10-27) stop proposing or accepting commitment fee rates below 253 sat/kw, reject open_channel below that floor, tighten auxiliary HTLC signature checks on taproot overlay channels, clamp external fee API estimates, and fix a SQLite connection-pool deadlock.",
+      "why_it_matters": "Channels opened below the floor could not carry HTLCs. Older lnd nodes with max-commit-fee-rate-anchors=1 cannot open anchor or taproot channels to upgraded nodes until they change that setting.",
+      "affects": [
+        "lnd operators",
+        "peers of lnd nodes",
+        "Taproot Assets users"
+      ],
+      "not_yet": "none",
+      "uncertainty": "The taproot overlay check can force close channels with peers running lnd without an aux signer; see release notes.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "release",
+          "date": "2026-10-27",
+          "url": "https://github.com/lightningnetwork/lnd/releases/tag/v0.21.5-beta"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "release",
+          "date": "2026-10-27",
+          "url": "https://github.com/lightningnetwork/lnd/releases/tag/v0.20.6-beta"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "release notes",
+          "date": "2026-10-27",
+          "url": "https://github.com/lightningnetwork/lnd/blob/master/docs/release-notes/release-notes-0.21.5.md"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "lnd-v0.21.8",
+      "project": "lnd",
+      "title": "lnd 0.21.8 / 0.20.8: batch of correctness fixes for sweeping, channel state and reconnects",
+      "layer": "lightning",
+      "status": "released",
+      "what_happened": "lnd v0.21.8-beta and v0.20.8-beta (2026-11-11) fix low-level bugs across wire decoding, sweeper, channel persistence and gossip; reject duplicate peer channel aliases; preserve funding batch state after publish errors; recover settled AMP HTLCs on-chain; and send channel_reestablish for unconfirmed channels on reconnect.",
+      "why_it_matters": "Several fixes affect fund recovery and channel availability. Operator-visible changes: etcd transactions now fail when an internal read fails, and channels negotiating a zero CSV delay are rejected.",
+      "affects": [
+        "lnd operators"
+      ],
+      "not_yet": "none",
+      "uncertainty": "Release notes state the v0.21.7-beta tag is the same build; v0.21.8 corrects release metadata and notes.",
+      "sources": [
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "release",
+          "date": "2026-11-11",
+          "url": "https://github.com/lightningnetwork/lnd/releases/tag/v0.21.8-beta"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "release",
+          "date": "2026-11-11",
+          "url": "https://github.com/lightningnetwork/lnd/releases/tag/v0.20.8-beta"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "release notes",
+          "date": "2026-11-11",
+          "url": "https://github.com/lightningnetwork/lnd/blob/master/docs/release-notes/release-notes-0.21.8.md"
+        }
+      ],
+      "verification": "primary"
+    },
+    {
+      "id": "lnd-11553",
+      "project": "lnd",
+      "title": "lnd backports MPP/AMP HTLC expiry revalidation at set completion",
+      "layer": "lightning",
+      "status": "backport_merged",
+      "what_happened": "A fix that re-checks the expiry of every accepted HTLC in a multi-part or AMP payment set when the set completes was backported to the v0.21.x and v0.20.x branches on 2026-11-12, after the 0.21.8/0.20.8 releases.",
+      "why_it_matters": "Previously only the final shard was checked, so earlier shards could fall below the required CLTV margin while waiting for the set to complete.",
+      "affects": [
+        "lnd operators receiving multi-part payments"
+      ],
+      "not_yet": "Not in a tagged release as of 2026-11-18.",
+      "uncertainty": "none noted",
       "sources": [
         {
           "publisher": "GitHub lightningnetwork/lnd",
           "type": "merged pull request",
-          "date": "2026-10-06",
-          "url": "https://github.com/lightningnetwork/lnd/pull/11267"
+          "date": "2026-11-12",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11553"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-11-12",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11552"
+        },
+        {
+          "publisher": "GitHub lightningnetwork/lnd",
+          "type": "merged pull request",
+          "date": "2026-11-11",
+          "url": "https://github.com/lightningnetwork/lnd/pull/11551"
         }
       ],
       "verification": "primary"
     },
     {
-      "id": "cln-9601",
+      "id": "cln-v26.06.10",
       "project": "cln",
-      "title": "Gossip CPU throttling no longer charges unrelated peer messages",
+      "title": "Core Lightning 26.06.10 ships security fixes across dual funding, splicing, gossip and runes",
       "layer": "lightning",
       "status": "released",
-      "what_happened": "Core Lightning charges the gossip CPU budget only for incoming gossip queries and active replies.",
-      "why_it_matters": "Ordinary traffic could exhaust small per-peer budgets and delay channel messages on busy nodes. Query-flood protection remains.",
+      "what_happened": "Core Lightning v26.06.10 (2026-11-04) is a point release with fixes for responsibly reported vulnerabilities in dual funding and splicing (including tx_signatures signature checks), onchaind HTLC resolution, gossip resource limits, connectd, runes/commando, plugin hooks and hsmd. Tests for the security fixes are temporarily withheld.",
+      "why_it_matters": "Maintainers strongly recommend upgrading. Operator-visible changes include refusing peer dust limits above 5000 sat and tighter zero-conf handling for v2 opens; the notes also recommend binding and rotating runes.",
       "affects": [
-        "Core Lightning operators"
+        "CLN node operators",
+        "apps using runes/commando"
       ],
-      "not_yet": "Shipped in Core Lightning v26.06.9; limited to this implementation, not a Bitcoin consensus activation.",
-      "uncertainty": "The budget is still split evenly across peers.",
+      "not_yet": "Technical details of the vulnerabilities have not been published.",
+      "uncertainty": "Severity of individual issues is not stated.",
       "sources": [
         {
           "publisher": "GitHub ElementsProject/lightning",
-          "type": "merged pull request",
-          "date": "2026-10-06",
-          "url": "https://github.com/ElementsProject/lightning/pull/9601"
-        },
-        {
-          "publisher": "GitHub ElementsProject/lightning",
-          "type": "tagged release notes",
-          "date": "2026-10-07",
-          "url": "https://github.com/ElementsProject/lightning/releases/tag/v26.06.9"
+          "type": "release",
+          "date": "2026-11-04",
+          "url": "https://github.com/ElementsProject/lightning/releases/tag/v26.06.10"
         }
       ],
-      "verification": "primary"
+      "verification": "primary",
+      "status_note": "Security point release."
     },
     {
-      "id": "cln-9535",
+      "id": "cln-v26.12rc1",
       "project": "cln",
-      "title": "Elements challenge bounds are checked before hashing",
-      "layer": "lightning",
-      "status": "merged",
-      "what_happened": "Core Lightning checks challenge bytes before hashing Elements headers and safely handles failed parsing.",
-      "why_it_matters": "Malformed backend blocks could trigger an out-of-bounds read or assertion failure.",
-      "affects": [
-        "Core Lightning Elements users"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "Requires malformed data from an Elements backend, not direct peer delivery.",
-      "sources": [
-        {
-          "publisher": "GitHub ElementsProject/lightning",
-          "type": "merged pull request",
-          "date": "2026-10-06",
-          "url": "https://github.com/ElementsProject/lightning/pull/9535"
-        }
-      ],
-      "verification": "primary"
-    },
-    {
-      "id": "cln-9564",
-      "project": "cln",
-      "title": "macOS channel opening avoids a signer socket handoff race",
+      "title": "Core Lightning v26.12 release candidate 1 published",
       "layer": "lightning",
       "status": "released",
-      "what_happened": "The signer retains a passed client socket until the next lightningd request confirms the handoff.",
-      "why_it_matters": "Closing the sender copy too early could cause channeld to read EOF and exit, leaving channel opening stuck.",
+      "what_happened": "Core Lightning published v26.12rc1 on 2026-11-18; v26.09 was skipped to handle vulnerability reports. Highlights include deprecating pay in favor of xpay in v27.03, HTLC recovery in lightning-hsmtool, a frozen gRPC wire format, and experimental option_simple_close.",
+      "why_it_matters": "Breaking API changes for developers (cln-rpc required fields, removed notification fields, deprecated runes commands) should be tested before the final release.",
       "affects": [
-        "Core Lightning macOS operators"
+        "CLN operators",
+        "CLN application developers"
       ],
-      "not_yet": "Shipped in Core Lightning v26.06.9; limited to this implementation, not a Bitcoin consensus activation.",
-      "uncertainty": "The reported failure is macOS-specific and appears under load.",
+      "not_yet": "Release candidate only; final v26.12 not released.",
+      "uncertainty": "none noted",
       "sources": [
         {
           "publisher": "GitHub ElementsProject/lightning",
-          "type": "merged pull request",
-          "date": "2026-10-06",
-          "url": "https://github.com/ElementsProject/lightning/pull/9564"
-        },
-        {
-          "publisher": "GitHub ElementsProject/lightning",
-          "type": "tagged release notes",
-          "date": "2026-10-07",
-          "url": "https://github.com/ElementsProject/lightning/releases/tag/v26.06.9"
+          "type": "release (pre-release)",
+          "date": "2026-11-18",
+          "url": "https://github.com/ElementsProject/lightning/releases/tag/v26.12rc1"
         }
       ],
-      "verification": "primary"
+      "verification": "primary",
+      "status_note": "Pre-release (rc1), not a final release."
     },
     {
-      "id": "cln-9485",
-      "project": "cln",
-      "title": "Truncated backend blocks are rejected without crashing",
-      "layer": "lightning",
-      "status": "merged",
-      "what_happened": "Core Lightning checks transaction parsing before dereferencing the result and fixes a failed-parse memory leak.",
-      "why_it_matters": "A block truncated inside a transaction could otherwise crash lightningd rather than be rejected.",
-      "affects": [
-        "Core Lightning operators"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "Requires a backend supplying malformed blocks, not direct Lightning peer delivery.",
-      "sources": [
-        {
-          "publisher": "GitHub ElementsProject/lightning",
-          "type": "merged pull request",
-          "date": "2026-10-06",
-          "url": "https://github.com/ElementsProject/lightning/pull/9485"
-        }
-      ],
-      "verification": "primary"
-    },
-    {
-      "id": "cln-9396",
-      "project": "cln",
-      "title": "CCAN update brings I/O and file-descriptor reliability fixes",
-      "layer": "lightning",
-      "status": "merged",
-      "what_happened": "Core Lightning updates CCAN with fixes including I/O busy-spinning, nonblocking listeners, subprocess handling, descriptor leaks and path simplification.",
-      "why_it_matters": "Several fixes can affect connection and subprocess behavior, beyond tests or library cleanup.",
-      "affects": [
-        "Core Lightning operators"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "The PR distinguishes potentially relevant fixes from many upstream changes unused by CLN; no general exploit claim is established.",
-      "sources": [
-        {
-          "publisher": "GitHub ElementsProject/lightning",
-          "type": "merged pull request",
-          "date": "2026-10-05",
-          "url": "https://github.com/ElementsProject/lightning/pull/9396"
-        }
-      ],
-      "verification": "primary"
-    },
-    {
-      "id": "eclair-3387",
+      "id": "eclair-v0.14.4",
       "project": "eclair",
-      "title": "Replacement closing scripts are validated throughout shutdown",
+      "title": "Eclair 0.14.4: security hardening and API now rejects browser requests",
       "layer": "lightning",
-      "status": "merged",
-      "what_happened": "Eclair validates changed peer closing scripts in later shutdown and closing messages, ignoring invalid replacements and warning.",
-      "why_it_matters": "A peer could otherwise bypass upfront shutdown-script constraints or inflate closing fees using a large replacement script.",
+      "status": "released",
+      "what_happened": "Eclair v0.14.4 (2026-10-15) is a security hardening patch release; its API now rejects requests carrying an Origin header.",
+      "why_it_matters": "Closes a cross-site request forgery path where a web page visited by the operator could trigger authenticated API calls. Web front-ends calling the API directly will break.",
       "affects": [
-        "Eclair channel operators"
+        "Eclair node operators",
+        "web front-ends for Eclair"
       ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "Implementation enforcement of existing BOLT 2 requirements, not a new protocol rule.",
+      "not_yet": "none",
+      "uncertainty": "Details of the other hardening fixes are not itemized in the release notes.",
       "sources": [
         {
           "publisher": "GitHub ACINQ/eclair",
-          "type": "merged pull request",
-          "date": "2026-10-06",
-          "url": "https://github.com/ACINQ/eclair/pull/3387"
+          "type": "release",
+          "date": "2026-10-15",
+          "url": "https://github.com/ACINQ/eclair/releases/tag/v0.14.4"
         }
       ],
-      "verification": "primary"
+      "verification": "primary",
+      "status_note": "Security patch release."
     },
     {
-      "id": "eclair-3391",
+      "id": "eclair-v0.14.6",
       "project": "eclair",
-      "title": "Previously accepted closing scripts survive feature renegotiation",
+      "title": "Eclair 0.14.5 and 0.14.6: more security fixes; splices require confirmed inputs by default",
       "layer": "lightning",
-      "status": "merged",
-      "what_happened": "Eclair skips redundant checks for unchanged accepted closing scripts, preserving fresh nonce processing after reconnection.",
-      "why_it_matters": "Revalidating against renegotiated features could reject an unchanged script and leave cooperative closing stuck with a stale nonce.",
-      "affects": [
-        "Eclair channel operators"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "Initially merged into remote-closing-script; its merge commit is included in master PR #3387, merged October 6.",
-      "sources": [
-        {
-          "publisher": "GitHub ACINQ/eclair",
-          "type": "merged pull request",
-          "date": "2026-10-05",
-          "url": "https://github.com/ACINQ/eclair/pull/3391"
-        },
-        {
-          "publisher": "GitHub ACINQ/eclair",
-          "type": "main-branch integration pull request",
-          "date": "2026-10-06",
-          "url": "https://github.com/ACINQ/eclair/pull/3387"
-        }
-      ],
-      "verification": "primary"
-    },
-    {
-      "id": "eclair-3390",
-      "project": "eclair",
-      "title": "Interactive funding is hardened against a dishonest bitcoind",
-      "layer": "lightning",
-      "status": "merged",
-      "what_happened": "Eclair verifies actual fees from spent outputs when a fee budget applies and checks reconstructed funding contributions and change positions.",
-      "why_it_matters": "In Eclair signer mode, a compromised backend without signing keys could manipulate dual-funding or splicing to waste funds on excessive mining fees.",
-      "affects": [
-        "Eclair signer users"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "Hardens specific funding paths, not every interaction with a compromised backend.",
-      "sources": [
-        {
-          "publisher": "GitHub ACINQ/eclair",
-          "type": "merged pull request",
-          "date": "2026-10-05",
-          "url": "https://github.com/ACINQ/eclair/pull/3390"
-        }
-      ],
-      "verification": "primary"
-    },
-    {
-      "id": "eclair-3389",
-      "project": "eclair",
-      "title": "Invalid seed lengths now prevent startup",
-      "layer": "lightning",
-      "status": "merged",
-      "what_happened": "Eclair requires 32-byte seeds or its legacy 33-byte format ending in 0x01, retaining legacy bytes unchanged.",
-      "why_it_matters": "A crash before seed writing could leave an empty file; restarting previously derived node and channel keys from that empty input.",
+      "status": "released",
+      "what_happened": "Eclair v0.14.5 (2026-10-20) and v0.14.6 (2026-10-27) are security hardening patch releases. v0.14.6 adds require-confirmed-inputs-for-splicing (default true) and warns against zero_fee_commitments when splicing with untrusted peers.",
+      "why_it_matters": "Maintainers state some issues can be exploited by malicious nodes. Spending unconfirmed peer inputs in splices could let a peer invalidate the splice and put HTLCs at risk.",
       "affects": [
         "Eclair node operators"
       ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "Rejects malformed files but does not recover a lost seed.",
+      "not_yet": "Vulnerability details are not published in the release notes.",
+      "uncertainty": "Severity of individual issues is not stated.",
       "sources": [
         {
           "publisher": "GitHub ACINQ/eclair",
-          "type": "merged pull request",
-          "date": "2026-10-05",
-          "url": "https://github.com/ACINQ/eclair/pull/3389"
-        }
-      ],
-      "verification": "primary"
-    },
-    {
-      "id": "core-36340",
-      "project": "bitcoin-core",
-      "title": "Large RPC timeouts work again on macOS",
-      "layer": "rpc",
-      "status": "merged",
-      "what_happened": "Bitcoin Core caps socket waits at INT_MAX milliseconds to avoid platform timeout overflow.",
-      "why_it_matters": "The no-timeout bitcoin-cli setting previously failed to connect on macOS.",
-      "affects": [
-        "bitcoin-core users and integrators"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "Reported in v32.0 release candidates.",
-      "sources": [
+          "type": "release",
+          "date": "2026-10-20",
+          "url": "https://github.com/ACINQ/eclair/releases/tag/v0.14.5"
+        },
         {
-          "publisher": "GitHub bitcoin/bitcoin",
-          "type": "merged pull request",
-          "date": "2026-10-07",
-          "url": "https://github.com/bitcoin/bitcoin/pull/36340"
+          "publisher": "GitHub ACINQ/eclair",
+          "type": "release",
+          "date": "2026-10-27",
+          "url": "https://github.com/ACINQ/eclair/releases/tag/v0.14.6"
         }
       ],
-      "verification": "primary"
+      "verification": "primary",
+      "status_note": "Security patch releases."
     },
     {
-      "id": "core-36338",
-      "project": "bitcoin-core",
-      "title": "Silent Payments extracts the correct P2PKH key",
-      "layer": "wallet",
-      "status": "merged",
-      "what_happened": "The authors report: Bitcoin Core scans compressed key pushes for a match to the spent output hash instead of using a dummy signature checker. We have not independently reproduced these claims.",
-      "why_it_matters": "A malleated scriptSig could otherwise cause extraction of the wrong public key.",
-      "affects": [
-        "bitcoin-core users and integrators"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "The author reports no affected existing Silent Payments implementations.",
-      "sources": [
-        {
-          "publisher": "GitHub bitcoin/bitcoin",
-          "type": "merged pull request",
-          "date": "2026-10-07",
-          "url": "https://github.com/bitcoin/bitcoin/pull/36338"
-        }
-      ],
-      "verification": "author-reported"
-    },
-    {
-      "id": "lnd-11290",
-      "project": "lnd",
-      "title": "Blinded-path fee aggregation rejects overflow",
-      "layer": "lightning",
-      "status": "merged",
-      "what_happened": "LND uses checked 64-bit arithmetic and skips routes whose aggregate fees cannot fit invoice fields.",
-      "why_it_matters": "Wrapped fees could cause underpayment and failures after the multipart-payment timeout.",
-      "affects": [
-        "lnd users and integrators"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "The PR traces the bug to receiving support in v0.18.3.",
-      "sources": [
-        {
-          "publisher": "GitHub lightningnetwork/lnd",
-          "type": "merged pull request",
-          "date": "2026-10-07",
-          "url": "https://github.com/lightningnetwork/lnd/pull/11290"
-        }
-      ],
-      "verification": "primary"
-    },
-    {
-      "id": "lnd-11219",
-      "project": "lnd",
-      "title": "NodeAnnouncement2 decoding preserves distinct addresses",
-      "layer": "lightning",
-      "status": "merged",
-      "what_happened": "LND allocates separate address storage and requires complete fixed-width reads.",
-      "why_it_matters": "Addresses no longer collapse onto the last entry and truncated records are rejected.",
-      "affects": [
-        "lnd users and integrators"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "This concerns NodeAnnouncement2 parsing, not proof of network-wide deployment.",
-      "sources": [
-        {
-          "publisher": "GitHub lightningnetwork/lnd",
-          "type": "merged pull request",
-          "date": "2026-10-07",
-          "url": "https://github.com/lightningnetwork/lnd/pull/11219"
-        }
-      ],
-      "verification": "primary"
-    },
-    {
-      "id": "cln-v26.06.9",
-      "project": "cln",
-      "title": "Core Lightning v26.06.9 ships security and gossip fixes",
+      "id": "ldk-v0.2.8",
+      "project": "ldk",
+      "title": "LDK 0.2.8 fixes counterparty-triggerable bugs including invalid co-op close broadcasts",
       "layer": "lightning",
       "status": "released",
-      "what_happened": "The authors report: Core Lightning released fixes for reestablishment, splicing, shutdown HTLCs, runes and remote crashes, plus the gossip CPU-throttling regression. We have not independently reproduced these claims.",
-      "why_it_matters": "Maintainers recommend upgrading. Restricted runes cannot create unrestricted ones, sensitive listconfigs values are masked, and accepted splices enforce negotiated feerates.",
+      "what_happened": "LDK v0.2.8 was tagged on 2026-11-11 (CHANGELOG dated Nov 10). Fixes include preventing a malicious counterparty from causing an invalid cooperative close broadcast, avoiding claims of already-spent HTLC outputs, preventing a malicious BOLT 11 invoice from removing a public channel from the graph, and stricter gossip-validation and per-peer queue limits.",
+      "why_it_matters": "Applications built on LDK should update; one fix addresses delays in handling OpenChannelRequest that the changelog says could at worst lead to funds loss.",
       "affects": [
-        "cln users and integrators"
+        "LDK-based wallets and nodes"
       ],
-      "not_yet": "Released in Core Lightning v26.06.9 only; not a Bitcoin consensus activation. Dual funding remains experimental.",
-      "uncertainty": "Security tests are temporarily withheld. Development-build databases cannot downgrade to 26.06.x.",
+      "not_yet": "0.3 is still in release candidates (v0.3-rc4 tagged 2026-11-11).",
+      "uncertainty": "LDK publishes git tags rather than GitHub releases; status is based on the tag and CHANGELOG.",
       "sources": [
         {
-          "publisher": "GitHub ElementsProject/lightning",
-          "type": "tagged release",
-          "date": "2026-10-07",
-          "url": "https://github.com/ElementsProject/lightning/releases/tag/v26.06.9"
-        }
-      ],
-      "verification": "author-reported"
-    },
-    {
-      "id": "core-36462",
-      "project": "bitcoin-core",
-      "title": "OpenRPC hex schema accepts empty byte strings",
-      "layer": "rpc",
-      "status": "merged",
-      "what_happened": "The generated schema now accepts zero or more complete hex-encoded bytes.",
-      "why_it_matters": "Schema-validating clients can accept valid empty scriptSig values and empty-hex requests.",
-      "affects": [
-        "bitcoin-core users and integrators"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "A schema correction, not a consensus validation change.",
-      "sources": [
+          "publisher": "GitHub lightningdevkit/rust-lightning",
+          "type": "git tag",
+          "date": "2026-11-11",
+          "url": "https://github.com/lightningdevkit/rust-lightning/tree/v0.2.8"
+        },
         {
-          "publisher": "GitHub bitcoin/bitcoin",
-          "type": "merged pull request",
-          "date": "2026-10-08",
-          "url": "https://github.com/bitcoin/bitcoin/pull/36462"
+          "publisher": "GitHub lightningdevkit/rust-lightning",
+          "type": "changelog",
+          "date": "2026-11-10",
+          "url": "https://github.com/lightningdevkit/rust-lightning/blob/v0.2.8/CHANGELOG.md"
         }
       ],
-      "verification": "primary"
-    },
-    {
-      "id": "eclair-3392",
-      "project": "eclair",
-      "title": "Recovery signing discards its nonce after one signature",
-      "layer": "lightning",
-      "status": "merged",
-      "what_happened": "The authors report: Eclair removes the spendfromchanneladdress nonce after signing. We have not independently reproduced these claims.",
-      "why_it_matters": "One-use handling prevents retained nonces from being reused during manual recovery.",
-      "affects": [
-        "eclair users and integrators"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "The PR does not establish exploitation or fund loss.",
-      "sources": [
-        {
-          "publisher": "GitHub ACINQ/eclair",
-          "type": "merged pull request",
-          "date": "2026-10-08",
-          "url": "https://github.com/ACINQ/eclair/pull/3392"
-        }
-      ],
-      "verification": "author-reported"
-    },
-    {
-      "id": "core-36471",
-      "project": "bitcoin-core",
-      "title": "getchainparams displays the genesis hash in RPC order",
-      "layer": "tooling",
-      "status": "merged",
-      "what_happened": "bitcoin-util prints the genesis hash using standard display encoding instead of reversed bytes.",
-      "why_it_matters": "Integrations comparing the result with getblockhash 0 receive consistent strings.",
-      "affects": [
-        "bitcoin-core users and integrators"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "A requested v32.0 backport is not evidence of release inclusion.",
-      "sources": [
-        {
-          "publisher": "GitHub bitcoin/bitcoin",
-          "type": "merged pull request",
-          "date": "2026-10-08",
-          "url": "https://github.com/bitcoin/bitcoin/pull/36471"
-        }
-      ],
-      "verification": "primary"
-    },
-    {
-      "id": "core-35037",
-      "project": "bitcoin-core",
-      "title": "IPC listeners gain individual connection limits",
-      "layer": "tooling",
-      "status": "merged",
-      "what_happened": "Bitcoin Core accepts max-connections options on individual ipcbind addresses.",
-      "why_it_matters": "Operators can set different connection limits for separate IPC listeners.",
-      "affects": [
-        "bitcoin-core users and integrators"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "This does not change Bitcoin P2P peer limits.",
-      "sources": [
-        {
-          "publisher": "GitHub bitcoin/bitcoin",
-          "type": "merged pull request",
-          "date": "2026-10-08",
-          "url": "https://github.com/bitcoin/bitcoin/pull/35037"
-        }
-      ],
-      "verification": "primary"
-    },
-    {
-      "id": "lnd-11278",
-      "project": "lnd",
-      "title": "LND adds persistent storage for BOLT 12 offers",
-      "layer": "lightning",
-      "status": "merged",
-      "what_happened": "LND adds a SQL offers table with encoded offers, disabled state, creation time and lookup by hash.",
-      "why_it_matters": "Long-lived offers gain persistence separate from ordinary invoices.",
-      "affects": [
-        "lnd users and integrators"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "Storage groundwork only, not a complete BOLT 12 receive flow.",
-      "sources": [
-        {
-          "publisher": "GitHub lightningnetwork/lnd",
-          "type": "merged pull request",
-          "date": "2026-10-08",
-          "url": "https://github.com/lightningnetwork/lnd/pull/11278"
-        }
-      ],
-      "verification": "primary"
-    },
-    {
-      "id": "eclair-3393",
-      "project": "eclair",
-      "title": "Restart cleanup uses the published commitment",
-      "layer": "lightning",
-      "status": "merged",
-      "what_happened": "Eclair matches HTLC outputs to the commitment actually published when cleaning up after restart.",
-      "why_it_matters": "Force-closes may use an older commitment, requiring output matching against that state.",
-      "affects": [
-        "eclair users and integrators"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "A targeted restart-cleanup correction.",
-      "sources": [
-        {
-          "publisher": "GitHub ACINQ/eclair",
-          "type": "merged pull request",
-          "date": "2026-10-08",
-          "url": "https://github.com/ACINQ/eclair/pull/3393"
-        }
-      ],
-      "verification": "primary"
-    },
-    {
-      "id": "core-34374",
-      "project": "bitcoin-core",
-      "title": "bitcoinkernel changes its logging callback API",
-      "layer": "tooling",
-      "status": "merged",
-      "what_happened": "Kernel callbacks receive structured entries with minimum-level filtering. Early entries are dropped; messages are unescaped and omit trailing newlines.",
-      "why_it_matters": "Library consumers must adapt callback and filtering code; this changes API behavior, not merely log text.",
-      "affects": [
-        "bitcoin-core users and integrators"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "Bitcoin Core node logging is unchanged.",
-      "sources": [
-        {
-          "publisher": "GitHub bitcoin/bitcoin",
-          "type": "merged pull request",
-          "date": "2026-10-08",
-          "url": "https://github.com/bitcoin/bitcoin/pull/34374"
-        }
-      ],
-      "verification": "primary"
-    },
-    {
-      "id": "core-35989",
-      "project": "bitcoin-core",
-      "title": "Descriptor range checks prevent wallet crashes",
-      "layer": "wallet",
-      "status": "merged",
-      "what_happened": "Bitcoin Core rejects overflowing descriptor endpoints and reversed ranges and widens intermediate keypool calculations.",
-      "why_it_matters": "Extreme importdescriptors ranges or keypool settings could otherwise abort the node.",
-      "affects": [
-        "bitcoin-core users and integrators"
-      ],
-      "not_yet": "In the main development branch only; not in a release. Limited to this implementation.",
-      "uncertainty": "Scanning RPCs still accept INT32_MAX as an inclusive endpoint.",
-      "sources": [
-        {
-          "publisher": "GitHub bitcoin/bitcoin",
-          "type": "merged pull request",
-          "date": "2026-10-08",
-          "url": "https://github.com/bitcoin/bitcoin/pull/35989"
-        }
-      ],
-      "verification": "primary"
-    },
-    {
-      "id": "lnd-11300",
-      "project": "lnd",
-      "title": "LND v0.20.x-branch: critical update_fee and mailbox-handling backport",
-      "layer": "lightning",
-      "status": "backport_merged",
-      "status_note": "Merged into maintenance branch v0.20.x-branch on 2026-10-08, not master. The prior merged category means main-branch merge, so backport_merged records this critical event without claiming a release.",
-      "severity": "critical",
-      "what_happened": "The authors report a backport of #11023: replace fee updates not yet observed by either commitment chain, validate fee-update roles before calculations, and bound channel-mailbox message count and serialized size. We have not independently reproduced these claims.",
-      "why_it_matters": "Operators following v0.20.x-branch need visibility into this severity-critical maintenance fix. Mailbox admission failures trigger reconnection rather than silently omitting ordered messages.",
-      "affects": [
-        "LND operators on v0.20.x-branch"
-      ],
-      "not_yet": "Merged into a maintenance branch only; tagged release inclusion has not been verified. Not a new Lightning protocol rule or Bitcoin consensus activation.",
-      "uncertainty": "Critical severity comes from the upstream label; we did not independently reproduce the tests or establish exploitation or fund loss.",
-      "verification": "author-reported",
-      "sources": [
-        {
-          "publisher": "GitHub lightningnetwork/lnd",
-          "type": "merged maintenance-branch pull request",
-          "date": "2026-10-08",
-          "url": "https://github.com/lightningnetwork/lnd/pull/11300"
-        }
-      ]
-    },
-    {
-      "id": "lnd-11301",
-      "project": "lnd",
-      "title": "LND v0.21.x-branch: critical update_fee and mailbox-handling backport",
-      "layer": "lightning",
-      "status": "backport_merged",
-      "status_note": "Merged into maintenance branch v0.21.x-branch on 2026-10-08, not master. The prior merged category means main-branch merge, so backport_merged records this critical event without claiming a release.",
-      "severity": "critical",
-      "what_happened": "The authors report a backport of #11023: replace fee updates not yet observed by either commitment chain, validate fee-update roles before calculations, and bound channel-mailbox message count and serialized size. We have not independently reproduced these claims.",
-      "why_it_matters": "Operators following v0.21.x-branch need visibility into this severity-critical maintenance fix. Mailbox admission failures trigger reconnection rather than silently omitting ordered messages.",
-      "affects": [
-        "LND operators on v0.21.x-branch"
-      ],
-      "not_yet": "Merged into a maintenance branch only; tagged release inclusion has not been verified. Not a new Lightning protocol rule or Bitcoin consensus activation.",
-      "uncertainty": "Critical severity comes from the upstream label; we did not independently reproduce the tests or establish exploitation or fund loss.",
-      "verification": "author-reported",
-      "sources": [
-        {
-          "publisher": "GitHub lightningnetwork/lnd",
-          "type": "merged maintenance-branch pull request",
-          "date": "2026-10-08",
-          "url": "https://github.com/lightningnetwork/lnd/pull/11301"
-        }
-      ]
+      "verification": "primary",
+      "status_note": "Tagged release with security-relevant fixes."
     }
   ],
   "sources_checked": [
-    "github.com/bitcoin/bitcoin merged pull requests",
-    "github.com/bitcoin/bips merged pull requests",
-    "github.com/bitcoin/bitcoin releases",
-    "github.com/lightningnetwork/lnd merged pull requests",
-    "github.com/ElementsProject/lightning merged pull requests",
     "github.com/ACINQ/eclair merged pull requests",
-    "github.com/ElementsProject/lightning releases"
+    "github.com/ACINQ/eclair releases",
+    "github.com/ElementsProject/lightning merged pull requests",
+    "github.com/ElementsProject/lightning releases",
+    "github.com/bitcoin/bips merged pull requests",
+    "github.com/bitcoin/bitcoin merged pull requests",
+    "github.com/bitcoin/bitcoin releases",
+    "github.com/lightningdevkit/rust-lightning tags and CHANGELOG",
+    "github.com/lightningnetwork/lnd merged pull requests",
+    "github.com/lightningnetwork/lnd releases",
+    "nvd.nist.gov (CVE lookup)"
   ],
   "publisher": {
     "service": "Bitcoin Technical Radar by Aaron Zhang",
