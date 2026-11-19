@@ -20,7 +20,7 @@ const SERVICE = {
   name: "Bitcoin Technical Radar by Aaron Zhang",
   summary: "What actually changed in Bitcoin, as JSON: each item has its status (discussion, proposal, PR, merged, released, activated, documentation), the layer it touches (consensus, policy, p2p, wallet, standards, lightning), why it matters, what has NOT happened yet, and links to the original source.",
   notThis: "Not price data, not general crypto news, not investment advice. A proposal is not support; merged is not released; released is not activated.",
-  maker: `Built and maintained by ${MAKER.name}, an ${MAKER.role} and Bitcoin protocol researcher. Summaries are written in our own words from primary sources (GitHub, BIPs, release notes).`,
+  maker: `Built and maintained by ${MAKER.name}, an ${MAKER.role}. Summaries are written in our own words from primary sources (GitHub, BIPs, release notes).`,
 };
 const PAID_PATH = "/bitcoin/technical-updates";
 const PRICE = "0.01";
