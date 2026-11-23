@@ -1,11 +1,11 @@
 {
   "schema": "btc-radar/v1",
-  "digest_date": "2026-11-17",
+  "digest_date": "2026-11-23",
   "window": {
     "from": "2026-09-26",
-    "to": "2026-11-17"
+    "to": "2026-11-23"
   },
-  "generated_at": "2026-11-17T19:31:42.940360+00:00",
+  "generated_at": "2026-11-23T19:32:34.265877+00:00",
   "context": {
     "latest_bitcoin_core_release": {
       "version": "v32.1",
@@ -3155,7 +3155,7 @@
       "id": "bitcoin-core-36757",
       "project": "bitcoin-core",
       "layer": "p2p",
-      "title": "Ignore privacy-network peers\u2019 claimed view of the local address",
+      "title": "Ignore privacy-network peers’ claimed view of the local address",
       "what_happened": "Bitcoin Core merged a check excluding privacy-network peers from peer-reported local-address selection. The diff adds inbound I2P and outbound Tor test cases.",
       "why_it_matters": "The author reports closing a clearnet/privacy-network correlation fingerprint requiring an outbound connection to an adversarial Tor/I2P peer and a sufficiently distinctive port. This privacy-relevant change is retained without an independent severity rating.",
       "status": "merged",
@@ -3420,6 +3420,90 @@
         }
       ],
       "verification": "primary"
+    },
+    {
+      "id": "cln-9711",
+      "project": "cln",
+      "title": "Core Lightning fixes config filename lifetime after failed setconfig",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-11-23T06:50:29Z; release inclusion unverified.",
+      "what_happened": "The merged change copies an explicit --conf filename rather than returning the shared filename for callers to take ownership. The author reports that a failed setconfig against a read-only directory freed the original name, so a later call read freed memory and could abort the node.",
+      "why_it_matters": "Memory-lifetime and availability hardening is retained without requiring a security severity label. The patch adds a regression test exercising two failed configuration writes and a subsequent getinfo.",
+      "not_yet": "Development-branch integration only; tagged release inclusion and deployment are not established. No consensus activation claimed.",
+      "verification": "author-reported",
+      "uncertainty": "Tests and crash behavior are author-reported, not independently reproduced; no remote exploit or fund loss is established.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request",
+          "date": "2026-11-23",
+          "url": "https://github.com/ElementsProject/lightning/pull/9711"
+        }
+      ]
+    },
+    {
+      "id": "cln-9718",
+      "project": "cln",
+      "title": "Core Lightning separates failed gettxout calls from spent outputs",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-11-23T06:49:25Z; release inclusion unverified.",
+      "what_happened": "The merged bcli change retries gettxout while bitcoind is unreachable or warming up and returns errors for failed calls. A null output now requires successful execution with empty output, rather than treating a backend failure as evidence that an output is spent.",
+      "why_it_matters": "The author reports that false spent answers could exclude channel announcements or make fundchannel_cancel forget a channel whose funding transaction another wallet broadcast. The patch adds retry, error and cancellation regression tests.",
+      "not_yet": "Development-branch integration only; tagged release inclusion and deployment are not established. No consensus activation claimed.",
+      "verification": "author-reported",
+      "uncertainty": "After the retry timeout lightningd still aborts on the backend error; retrying also blocks other bcli calls. The change does not provide general backend-failure tolerance. Behavior and tests are author-reported, not independently reproduced.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request",
+          "date": "2026-11-23",
+          "url": "https://github.com/ElementsProject/lightning/pull/9718"
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-core-36908",
+      "project": "bitcoin-core",
+      "title": "Bitcoin Core waits for a chain tip before exposing the loaded mining interface",
+      "layer": "tooling",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-11-23T15:47:59Z; release inclusion unverified.",
+      "what_happened": "The merged MakeMining change, when wait_loaded is enabled, waits for both loaded chainstate and a non-null tip, unless interrupted. The author reports that an early Mining.checkBlock call on a new or reindexing node could otherwise reach an assertion and abort.",
+      "why_it_matters": "The patch addresses a startup availability failure and extends the IPC mining functional test to call checkBlock after starting with -reindex. It is an interface initialization fix, not a consensus rule change.",
+      "not_yet": "Development-branch integration only; tagged release inclusion and deployment are not established. No consensus activation claimed.",
+      "verification": "author-reported",
+      "uncertainty": "Crash reproduction and functional-test behavior are author-reported and not independently run. No network-wide attack or general consensus vulnerability is established.",
+      "sources": [
+        {
+          "publisher": "GitHub bitcoin/bitcoin",
+          "type": "merged pull request",
+          "date": "2026-11-23",
+          "url": "https://github.com/bitcoin/bitcoin/pull/36908"
+        }
+      ]
+    },
+    {
+      "id": "cln-9720",
+      "project": "cln",
+      "title": "Core Lightning avoids Bitcoin backend requests during shutdown",
+      "layer": "lightning",
+      "status": "merged",
+      "status_note": "Merged into master at 2026-11-23T15:09:57Z; release inclusion unverified.",
+      "what_happened": "The merged change stops bitcoin_plugin_send from sending requests in shutdown, routes fee estimation through that guard, and removes freed backend plugins from the lookup map. The author reports a channel failure during shutdown could otherwise use a freed plugin and crash.",
+      "why_it_matters": "Memory-lifetime hardening preserves the author-reported recovery path: a close not broadcast during shutdown is broadcast on restart from the persisted AWAITING_UNILATERAL state. The patch adds a shutdown/restart regression test.",
+      "not_yet": "Development-branch integration only; tagged release inclusion and deployment are not established. No consensus activation claimed.",
+      "verification": "author-reported",
+      "uncertainty": "Callers receive no callback during shutdown. A plugin querying the backend from its shutdown handler can wait until it is killed after 30 seconds. Peer reconnection during shutdown is not prevented. Recovery and tests are author-reported, not independently reproduced.",
+      "sources": [
+        {
+          "publisher": "GitHub ElementsProject/lightning",
+          "type": "merged pull request",
+          "date": "2026-11-23",
+          "url": "https://github.com/ElementsProject/lightning/pull/9720"
+        }
+      ]
     }
   ],
   "sources_checked": [
